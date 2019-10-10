@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
@@ -151,6 +151,71 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-virtualFunction" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="关于c-虚函数的见解"><a href="#关于c-虚函数的见解" class="headerlink" title="关于c++虚函数的见解"></a>关于c++虚函数的见解</h1><p>c++的虚函数与java的抽象函数有些不同，基本上可以说关系不同。纯虚函数才与抽象函数有些类似。在刚学的时候，不是很明白虚函数的意义。后来仔细研究后发现。</p>
+<p>``using namespace std;<br>class test {<br>public :<br>     virtual void ceshi() { cout &lt;&lt; “good”; }<br>};<br>class testson : public test {<br>    void ceshi() { cout &lt;&lt; “sssss”; }</p>
+<p>};</p>
+<p>int main() {<br>    test a;<br>    test* p;<br>    testson b;</p>
+<pre><code>a.ceshi();
+p = &amp;b;
+p-&gt;ceshi();</code></pre><p>}</p>
+<p>此时输出结果是goodsssss.</p>
+<p>将基类的成员函数改为</p>
+<p><code>void ceshi() { cout &lt;&lt; &quot;good&quot;; }</code></p>
+<p>此时输出结果为</p>
+<p>goodgood</p>
+<p>从上面的例子就可以看出，虚函数实际上是为了满足多态的特性。与java相比，java也可通过声明引用类型为父类，实际类型为子类的对象，若在子类重写方法，则在调用时，会自动调用子类的方法。或者可以进行显示类型转化。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/10/virtualFunction/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
   
     <article id="post-shortTalk" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -407,7 +472,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 
 
 
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script  async  src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
     
 <div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
   <div class="tools-nav header-menu">
@@ -464,7 +529,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         </div>
         <ul class="search-ul">
           <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
-            缺失模块。<br>1、请确保node版本大于6.2<br>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br> npm i hexo-generator-json-content --save<br><br>
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
             3、在根目录_config.yml里添加配置：
 <pre style="font-size: 12px;" q-show="jsonFail">
   jsonContent:
