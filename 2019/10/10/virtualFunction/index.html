@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="关于c++虚函数的见解c++的虚函数与java的抽象函数有些不同，基本上可以说关系不同。纯虚函数才与抽象函数有些类似。在刚学的时候，不是很明白虚函数的意义。后来仔细研究后发现。 `using namespace std;class test {public :     virtual void ceshi() { cout &amp;lt;&amp;lt; “good”; }};class testson : p">
+  <meta name="description" content="关于c++虚函数的见解c++的虚函数与java的抽象函数有些不同，基本上可以说关系不同。纯虚函数才与抽象函数有些类似。在刚学的时候，不是很明白虚函数的意义。后来仔细研究后发现。 using namespace std; class test { public :       void ceshi() { cout &amp;lt;&amp;lt; &amp;quot;good&amp;quot;; } }; class test">
 <meta property="og:type" content="article">
 <meta property="og:title" content="壴加亻夋的博客">
 <meta property="og:url" content="http://yoursite.com/2019/10/10/virtualFunction/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
-<meta property="og:description" content="关于c++虚函数的见解c++的虚函数与java的抽象函数有些不同，基本上可以说关系不同。纯虚函数才与抽象函数有些类似。在刚学的时候，不是很明白虚函数的意义。后来仔细研究后发现。 `using namespace std;class test {public :     virtual void ceshi() { cout &amp;lt;&amp;lt; “good”; }};class testson : p">
+<meta property="og:description" content="关于c++虚函数的见解c++的虚函数与java的抽象函数有些不同，基本上可以说关系不同。纯虚函数才与抽象函数有些类似。在刚学的时候，不是很明白虚函数的意义。后来仔细研究后发现。 using namespace std; class test { public :       void ceshi() { cout &amp;lt;&amp;lt; &amp;quot;good&amp;quot;; } }; class test">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-10T15:22:29.501Z">
+<meta property="og:updated_time" content="2019-10-10T15:27:44.020Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="壴加亻夋的博客">
-<meta name="twitter:description" content="关于c++虚函数的见解c++的虚函数与java的抽象函数有些不同，基本上可以说关系不同。纯虚函数才与抽象函数有些类似。在刚学的时候，不是很明白虚函数的意义。后来仔细研究后发现。 `using namespace std;class test {public :     virtual void ceshi() { cout &amp;lt;&amp;lt; “good”; }};class testson : p">
+<meta name="twitter:description" content="关于c++虚函数的见解c++的虚函数与java的抽象函数有些不同，基本上可以说关系不同。纯虚函数才与抽象函数有些类似。在刚学的时候，不是很明白虚函数的意义。后来仔细研究后发现。 using namespace std; class test { public :       void ceshi() { cout &amp;lt;&amp;lt; &amp;quot;good&amp;quot;; } }; class test">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -163,13 +163,26 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="关于c-虚函数的见解"><a href="#关于c-虚函数的见解" class="headerlink" title="关于c++虚函数的见解"></a>关于c++虚函数的见解</h1><p>c++的虚函数与java的抽象函数有些不同，基本上可以说关系不同。纯虚函数才与抽象函数有些类似。在刚学的时候，不是很明白虚函数的意义。后来仔细研究后发现。</p>
-<p>`using namespace std;<br>class test {<br>public :<br>     virtual void ceshi() { cout &lt;&lt; “good”; }<br>};<br>class testson : public test {<br>    void ceshi() { cout &lt;&lt; “sssss”; }</p>
-<p>};</p>
-<p>int main() {<br>    test a;<br>    test* p;<br>    testson b;</p>
-<pre><code>a.ceshi();
-p = &amp;b;
-p-&gt;ceshi();</code></pre><p>}`</p>
-<p>此时输出结果是goodsssss.</p>
+<pre><code>using namespace std;
+class test {
+public :
+      void ceshi() { cout &lt;&lt; &quot;good&quot;; }
+};
+class testson : public test {
+    void ceshi() { cout &lt;&lt; &quot;sssss&quot;; }
+
+};
+
+
+int main() {
+    test a;
+    test* p;
+    testson b;
+
+    a.ceshi();
+    p = &amp;b;
+    p-&gt;ceshi();
+}</code></pre><p>此时输出结果是goodsssss.</p>
 <p>将基类的成员函数改为</p>
 <p><code>void ceshi() { cout &lt;&lt; &quot;good&quot;; }</code></p>
 <p>此时输出结果为</p>
@@ -267,15 +280,6 @@ p-&gt;ceshi();</code></pre><p>}`</p>
 
   
 <nav id="article-nav">
-  
-    <a href="/2019/10/10/新建文本文档/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          ssssss
-        
-      </div>
-    </a>
   
   
     <a href="/2019/09/22/shortTalk/" id="article-nav-older" class="article-nav-link-wrap">
