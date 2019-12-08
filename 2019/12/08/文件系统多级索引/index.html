@@ -8,13 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="文件系统多级索引文件实现的关键问题就是怎样为文件分配磁盘块 为了解决在内存中使用链表分配的缺点（需要将全部文件的整个表放在内存中的问题）采用多级索引方式为文件分配磁盘块。 具体实现方式如下： 为每个文件单独定义一个索引块，该索引块存储了文件内容真正的块的地址。 简单的说就是，在读取文件时，先将该索引块读入内存，再通过该索引块去磁盘中寻找文件内容真正的块  上图是一级索引 多级索引：  看题：一个U">
+<meta property="og:type" content="article">
 <meta property="og:title" content="壴加亻夋的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/12/08/文件系统多级索引/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
+<meta property="og:description" content="文件系统多级索引文件实现的关键问题就是怎样为文件分配磁盘块 为了解决在内存中使用链表分配的缺点（需要将全部文件的整个表放在内存中的问题）采用多级索引方式为文件分配磁盘块。 具体实现方式如下： 为每个文件单独定义一个索引块，该索引块存储了文件内容真正的块的地址。 简单的说就是，在读取文件时，先将该索引块读入内存，再通过该索引块去磁盘中寻找文件内容真正的块  上图是一级索引 多级索引：  看题：一个U">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="d:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%871.png">
+<meta property="og:image" content="d:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%872.png">
+<meta property="og:updated_time" content="2019-12-08T03:57:52.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="壴加亻夋的博客">
+<meta name="twitter:description" content="文件系统多级索引文件实现的关键问题就是怎样为文件分配磁盘块 为了解决在内存中使用链表分配的缺点（需要将全部文件的整个表放在内存中的问题）采用多级索引方式为文件分配磁盘块。 具体实现方式如下： 为每个文件单独定义一个索引块，该索引块存储了文件内容真正的块的地址。 简单的说就是，在读取文件时，先将该索引块读入内存，再通过该索引块去磁盘中寻找文件内容真正的块  上图是一级索引 多级索引：  看题：一个U">
+<meta name="twitter:image" content="d:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%871.png">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -150,9 +157,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-文件系统多级索引" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-文件系统多级索引" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
     <!-- 目录内容 -->
@@ -177,6 +182,27 @@
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -184,16 +210,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/08/文件系统多级索引/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/12/08/文件系统多级索引/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2019/12/07/多级页表/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -213,498 +298,17 @@
 
 
 
-
-
-
-  
-    <article id="post-多级页表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="多级页表"><a href="#多级页表" class="headerlink" title="多级页表"></a>多级页表</h1><p>基本概念：</p>
-<p><strong>页</strong>:分页存储管理将进程的逻辑地址空间划分为若干页，并对其编号。每个页的大小称为页面大小</p>
-<p><strong>页表</strong>：将比物理地址大的逻辑地址映射到物理地址的一种映射机制，并将对应关系存放在一张表中</p>
-<p><strong>页表项</strong>：在页表中的一行为一个页表项，即一个页号与其对应的物理块号称为一个页表项</p>
-<p>例题：假设一个机器有38位的虚拟地址和32位的物理地址，一个有16KB个页、4字节表项的二级页表，应该对第一级页表域分配多少位，对第二级页表域分配多少位？请解释原因。</p>
-<p>页面数：16kb个，页面大小即为2的38次方-16kb=2的24次方。即偏移量为24位。表项为4字节即说明一个2级页表中有2的平方个页表项，所以pt2=2，即pt1=38-2-24=12</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/07/多级页表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-指针与数组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="指针与数组"><a href="#指针与数组" class="headerlink" title="指针与数组"></a>指针与数组</h1><p>在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> (*p)[<span class="built_in">n</span>];</span><br></pre></td></tr></table></figure>
-
-<p>根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针；</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> *p[<span class="built_in">n</span>];</span><br></pre></td></tr></table></figure>
-
-<p>根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明数组里的元素是指针，再加上int,知道p数组里的元素是指向int类型的指针;</p>
-<p>数组和指针是两种不同的类型，数组具有确定数量的元素，而指针只是一个标量值，数<strong>组可以在某些情况下转换为指针，当数组名在表达式中使用时，编译器会把数组名转换为一个指针常量，是数组中的第一个元素的地址</strong>，类型就是数组元素的地址类型，如：</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a[<span class="number">5</span>]=&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;; </span><br><span class="line">int * p = a;<span class="comment">// 等价于int * p = &amp;a[0]</span></span><br></pre></td></tr></table></figure>
-
-<p>指针实际上存储的是目标元素的地址，上式中当试图将一个数组赋值给指针时，编译器就会将数组名转换为一个指针常量，指向数组中的第一个元素。</p>
-<h6 id="数组与指针下标引用"><a href="#数组与指针下标引用" class="headerlink" title="数组与指针下标引用"></a>数组与指针下标引用</h6><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int A[] = &#123; <span class="number">5</span>,  <span class="number">3</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">44</span>, <span class="number">10</span>, <span class="number">11</span> &#125;;</span><br><span class="line">int* p = A;</span><br><span class="line">cout &lt;&lt; <span class="number">3</span>[p];</span><br><span class="line">cout &lt;&lt; p[<span class="number">3</span>];</span><br><span class="line">cout &lt;&lt; *(p + <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
-
-<p>三条式子都输出为9，前两条表达式看起来有点奇葩，特别是第一条，但实际上3[p]是等价于*（p+3）的，c++中当指针指向一个数组后，可以通过该指针调用数组，即指针等同于数组名。</p>
-<p>根据这个规则还有更奇葩的用法</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">	int aa[<span class="number">2</span>][<span class="number">5</span>] = &#123; <span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,</span><br><span class="line"></span><br><span class="line">						  <span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span> &#125;;</span><br><span class="line">	cout &lt;&lt; <span class="number">1</span>[aa][<span class="number">2</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>1[aa][2] [2],先看1[aa]就是<em>（1+aa）即指向二维数组的第二行元素，1[aa][2] [2] 就是</em> <em>(</em>(1+aa)+2)，也就是aa[1 ][2] </p>
-<p>这个用法看起来十分别扭，实际中并不会这样使用</p>
-<h6 id="数组与指针的定义和声明"><a href="#数组与指针的定义和声明" class="headerlink" title="数组与指针的定义和声明"></a>数组与指针的定义和声明</h6><p>设test1.cpp中有如下定义：</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">char s[]=<span class="string">"abcdefg"</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
-
-<p>test2.cpp中有如下声明：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">char</span> *s;</span><br></pre></td></tr></table></figure>
-
-<p>调用s[3],会出现怎样的结果呢</p>
-<p>（1）从s代表的地址单元的取出内容（4个字节），这里实际上是数组s中的前4个元素，这个值是“abcd”，也就是16进制64636261h，到这一步应该就能看出来问题了；</p>
-<p>（2）然后把取出的首地址和3相加，得到要访问的数据的地址64636261h+3，这个地址是未分配未定义的；</p>
-<p>（3）取地址64636261h+3的内容，这个地址单元是未定义的，访问就会出错。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/28/指针与数组/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-构造函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="c-构造函数特殊用法"><a href="#c-构造函数特殊用法" class="headerlink" title="c++构造函数特殊用法"></a>c++构造函数特殊用法</h1><p><code>class A {
-public:
-    A(int x ):a(x){}
-    int a;
-};</code></p>
-<p>若此时创建A类的实例 <code>A s(3);</code>,则会调用构造方法，将3赋值给a。以java的角度看来这很奇怪，<code>a（x）</code></p>
-<p>相当于 <code>a=x;</code>的效果。</p>
-<p>但实际上这种用法是有要求的，</p>
-<p>1 函数A必须是构造函数<br>2 a必须是A类中的一个成员变量或者是基类</p>
-<p>其代表的意思为 用参数x来初始化成员变量a，和直接a=x类似，但是不等同，这样的方法更高效。</p>
-<p>这种方法还有一种好处</p>
-<p><code>#include &lt;iostream&gt;;</code><br><code>using namespace std;</code><br><code>class A {</code><br><code>public:</code><br>    <code>A(int x ):a(x){}</code><br>    <code>int a;</code><br><code>};</code></p>
-<p><code>class B {</code><br><code>public:</code><br>    <code>B(int x , int y):aa(x)</code><br>    <code>{</code><br>        <code>b = y;</code><br>    <code>}</code><br>    <code>void out() { cout &lt;&lt; &quot;aa=&quot; &lt;&lt; aa.a &lt;&lt; endl &lt;&lt; &quot;b=&quot; &lt;&lt; b &lt;&lt; endl; }</code></p>
-<p><code>private:</code><br>    <code>int b;</code><br>    <code>A aa;</code><br><code>};</code><br><code>int main() {</code><br>    <code>B objB(3, 5);</code><br>    <code>objB.out();</code><br><code>}</code></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/11/构造函数/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-virtualFunction" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="关于c-虚函数的见解"><a href="#关于c-虚函数的见解" class="headerlink" title="关于c++虚函数的见解"></a>关于c++虚函数的见解</h1><p>c++的虚函数与java的抽象函数有些不同，基本上可以说关系不同。纯虚函数才与抽象函数有些类似。在刚学的时候，不是很明白虚函数的意义。后来仔细研究后发现。</p>
-<pre><code>using namespace std;
-class test {
-public :
-      void ceshi() { cout &lt;&lt; &quot;good&quot;; }
-};
-class testson : public test {
-    void ceshi() { cout &lt;&lt; &quot;sssss&quot;; }
-
-};
-
-
-int main() {
-    test a;
-    test* p;
-    testson b;
-
-    a.ceshi();
-    p = &amp;b;
-    p-&gt;ceshi();
-}</code></pre><p>此时输出结果是goodsssss.</p>
-<p>将基类的成员函数改为</p>
-<p><code>void ceshi() { cout &lt;&lt; &quot;good&quot;; }</code></p>
-<p>此时输出结果为</p>
-<p>goodgood</p>
-<p>从上面的例子就可以看出，虚函数实际上是为了满足多态的特性。与java相比，java也可通过声明引用类型为父类，实际类型为子类的对象，若在子类重写方法，则在调用时，会自动调用子类的方法。或者可以进行显示类型转化。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/10/virtualFunction/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-shortTalk" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/22/shortTalk/">谈谈自己写博客的理由</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/22/shortTalk/" class="archive-article-date">
-  	<time datetime="2019-09-22T14:43:42.807Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-22</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>距离自己创建这个博客已经有7个月了，但写的文章不多，中间没写过任何文章。可能是自己也没弄明白博客的作用吧。在昨天听了大佬的话后，发现他讲的挺有道理的。他原话大概是这样：做任何事情都要留下痕迹。所以我决定重新开始我的博客写作。也许不仅仅是这个理由吧，可能我本身也逐渐认识到，做任何事情都默默无闻，或者换句话说，不留下痕迹，最终自己都是没有获得外在正收益的一方。在这里并没有说吃亏，只是之前所付出的精力和努力，都没有获得他人的一句赞扬，欣赏，甚至嫉妒之类的。也许我本身就是这么肤浅的人吧。但自己付出这么多努力，仅仅得到他人的一句赞扬又何尝不可呢。断片了7个月，应该也是我在这7个月里，没有学习吧。现在也只能安慰自己说，今后加油吧</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/22/shortTalk/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-softwareLearning" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/22/softwareLearning/">软工生活点滴</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/22/softwareLearning/" class="archive-article-date">
-  	<time datetime="2019-09-22T14:27:50.109Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-22</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>可以说是正式来软工学习的第一个星期了。刚来就体验到大二生活的艰辛，也从此开启了抄作业的生活，真是满满当当的一周。虽然自己看起来很努力，但愿不是假装努力吧，希望一切有效果吧。在文末来一句话勉励自己吧。喂，要跑啊，少年，要跑。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/22/softwareLearning/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/17/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/17/hello-world/" class="archive-article-date">
-  	<time datetime="2019-02-17T02:29:46.758Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-17</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>欢迎来到壴加亻夋的博客！！<br>第一次搭建自己的博客，似乎很有意思，难道这就是前端的魅力吗？</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/17/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
   
   
+  
+
+  
+
+  
+
+  
+
+
 
 
           </div>
@@ -735,8 +339,8 @@ int main() {
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
