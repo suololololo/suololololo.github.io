@@ -15,13 +15,13 @@
 <meta property="og:site_name" content="壴加亻夋的博客">
 <meta property="og:description" content="文件系统多级索引文件实现的关键问题就是怎样为文件分配磁盘块 为了解决在内存中使用链表分配的缺点（需要将全部文件的整个表放在内存中的问题）采用多级索引方式为文件分配磁盘块。 具体实现方式如下： 为每个文件单独定义一个索引块，该索引块存储了文件内容真正的块的地址。 简单的说就是，在读取文件时，先将该索引块读入内存，再通过该索引块去磁盘中寻找文件内容真正的块  上图是一级索引 多级索引：  看题：一个U">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="d:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%871.png">
-<meta property="og:image" content="d:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%872.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/08/文件系统多级索引/D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%871.png">
+<meta property="og:image" content="http://yoursite.com/2019/12/08/文件系统多级索引/D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%872.png">
 <meta property="og:updated_time" content="2019-12-08T03:57:52.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="壴加亻夋的博客">
 <meta name="twitter:description" content="文件系统多级索引文件实现的关键问题就是怎样为文件分配磁盘块 为了解决在内存中使用链表分配的缺点（需要将全部文件的整个表放在内存中的问题）采用多级索引方式为文件分配磁盘块。 具体实现方式如下： 为每个文件单独定义一个索引块，该索引块存储了文件内容真正的块的地址。 简单的说就是，在读取文件时，先将该索引块读入内存，再通过该索引块去磁盘中寻找文件内容真正的块  上图是一级索引 多级索引：  看题：一个U">
-<meta name="twitter:image" content="d:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%871.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/12/08/文件系统多级索引/D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%871.png">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -170,10 +170,10 @@
 <p>具体实现方式如下：</p>
 <p>为每个文件单独定义一个索引块，该索引块存储了文件内容真正的块的地址。</p>
 <p>简单的说就是，在读取文件时，先将该索引块读入内存，再通过该索引块去磁盘中寻找文件内容真正的块</p>
-<p><img src="D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%871.png" alt></p>
+<p><img src="//yoursite.com/2019/12/08/文件系统多级索引/D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%871.png" alt></p>
 <p>上图是一级索引</p>
 <p>多级索引：</p>
-<p><img src="D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%872.png" alt></p>
+<p><img src="//yoursite.com/2019/12/08/文件系统多级索引/D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%872.png" alt></p>
 <p><strong>看题：一个UNIX 系统使用1KB磁盘块和4字节磁盘地址。如果每个i节点中有10个直接表项以及一个一次间接块、一个二次间接块和一个三次间接块，那么文件的最大尺寸是多少</strong>？</p>
 <p>1kb磁盘块即为文件的一个小块的大小，也就是索引块的大小。所以<strong>一个索引块里存放地址的数目2^10B/4=256个</strong>。故一个一次间接索引块里存放256个地址，二次索引块里存放256*256个地址</p>
 <p>三次间接块存放256*256  *256个地址。而每个地址对应一个磁盘块。</p>
@@ -271,6 +271,15 @@
   
 <nav id="article-nav">
   
+    <a href="/2020/02/13/this与callee与caller/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
   
     <a href="/2019/12/07/多级页表/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title"></div>
@@ -318,7 +327,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 壴加亻夋
+    		&copy; 2020 壴加亻夋
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten

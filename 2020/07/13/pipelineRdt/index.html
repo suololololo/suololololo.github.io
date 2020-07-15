@@ -6,19 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>壴加亻夋的博客</title>
+  <title>pipelineRdt | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="指针与数组在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码 1int (*p)[n];  根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针； 1int *p[n];  根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明">
+  <meta name="description" content="流水线可靠数据传输协议因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能 采取流水线技术的可靠数据传输协议必须具有以下条件： 1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题 2.协议的发送方和接收方两端必须缓存多个分组 3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。 解决流水线的差错的两">
 <meta property="og:type" content="article">
-<meta property="og:title" content="壴加亻夋的博客">
-<meta property="og:url" content="http://yoursite.com/2019/10/28/指针与数组/index.html">
+<meta property="og:title" content="pipelineRdt">
+<meta property="og:url" content="http://yoursite.com/2020/07/13/pipelineRdt/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
-<meta property="og:description" content="指针与数组在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码 1int (*p)[n];  根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针； 1int *p[n];  根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明">
+<meta property="og:description" content="流水线可靠数据传输协议因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能 采取流水线技术的可靠数据传输协议必须具有以下条件： 1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题 2.协议的发送方和接收方两端必须缓存多个分组 3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。 解决流水线的差错的两">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-02-15T12:45:39.817Z">
+<meta property="og:image" content="http://yoursite.com/pipelineRdt/GBN.jpg">
+<meta property="og:image" content="http://yoursite.com/pipelineRdt/gbn_example.png">
+<meta property="og:image" content="http://yoursite.com/pipelineRdt/sr.jpg">
+<meta property="og:image" content="http://yoursite.com/pipelineRdt/sr_example.png">
+<meta property="og:image" content="http://yoursite.com/pipelineRdt/size.jpg">
+<meta property="og:updated_time" content="2020-07-14T03:02:40.828Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="壴加亻夋的博客">
-<meta name="twitter:description" content="指针与数组在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码 1int (*p)[n];  根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针； 1int *p[n];  根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明">
+<meta name="twitter:title" content="pipelineRdt">
+<meta name="twitter:description" content="流水线可靠数据传输协议因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能 采取流水线技术的可靠数据传输协议必须具有以下条件： 1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题 2.协议的发送方和接收方两端必须缓存多个分组 3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。 解决流水线的差错的两">
+<meta name="twitter:image" content="http://yoursite.com/pipelineRdt/GBN.jpg">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -154,49 +160,69 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-指针与数组" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-pipelineRdt" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      pipelineRdt
+    </h1>
+  
+
+        
+        <a href="/2020/07/13/pipelineRdt/" class="archive-article-date">
+  	<time datetime="2020-07-13T12:10:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
+</a>
+        
+      </header>
     
     <!-- 目录内容 -->
          
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="指针与数组"><a href="#指针与数组" class="headerlink" title="指针与数组"></a>指针与数组</h1><p>在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> (*p)[<span class="built_in">n</span>];</span><br></pre></td></tr></table></figure>
-
-<p>根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针；</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> *p[<span class="built_in">n</span>];</span><br></pre></td></tr></table></figure>
-
-<p>根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明数组里的元素是指针，再加上int,知道p数组里的元素是指向int类型的指针;</p>
-<p>数组和指针是两种不同的类型，数组具有确定数量的元素，而指针只是一个标量值，数<strong>组可以在某些情况下转换为指针，当数组名在表达式中使用时，编译器会把数组名转换为一个指针常量，是数组中的第一个元素的地址</strong>，类型就是数组元素的地址类型，如：</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a[<span class="number">5</span>]=&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;; </span><br><span class="line">int * p = a;<span class="comment">// 等价于int * p = &amp;a[0]</span></span><br></pre></td></tr></table></figure>
-
-<p>指针实际上存储的是目标元素的地址，上式中当试图将一个数组赋值给指针时，编译器就会将数组名转换为一个指针常量，指向数组中的第一个元素。</p>
-<p><strong>指针与数组的区别</strong></p>
-<p>看了上述解答，必然会问那么指针与数组的区别在哪？指针与数组大多数情况下是可以互换的，但是有例外</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX = <span class="number">3</span>;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">int</span>  var[MAX] = &#123;<span class="number">10</span>, <span class="number">100</span>, <span class="number">200</span>&#125;;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MAX; i++)</span><br><span class="line">   &#123;</span><br><span class="line">      *var = i;    <span class="comment">// 这是正确的语法</span></span><br><span class="line">      var++;       <span class="comment">// 这是不正确的</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>数组名实际上就是指向数组开头元素的指针常量</strong>，因此不能作为左值，他指向的地址不会变，但该地址存放的值可以改变。把指针运算符*运用到var上是完全可以的，但修改var的值是非法的。</p>
-<h6 id="数组与指针下标引用"><a href="#数组与指针下标引用" class="headerlink" title="数组与指针下标引用"></a>数组与指针下标引用</h6><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int A[] = &#123; <span class="number">5</span>,  <span class="number">3</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">44</span>, <span class="number">10</span>, <span class="number">11</span> &#125;;</span><br><span class="line">int* p = A;</span><br><span class="line">cout &lt;&lt; <span class="number">3</span>[p];</span><br><span class="line">cout &lt;&lt; p[<span class="number">3</span>];</span><br><span class="line">cout &lt;&lt; *(p + <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
-
-<p>三条式子都输出为9，前两条表达式看起来有点奇葩，特别是第一条，但实际上3[p]是等价于*（p+3）的，c++中当指针指向一个数组后，可以通过该指针调用数组，即指针等同于数组名。</p>
-<p>根据这个规则还有更奇葩的用法</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">	int aa[<span class="number">2</span>][<span class="number">5</span>] = &#123; <span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,</span><br><span class="line"></span><br><span class="line">						  <span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span> &#125;;</span><br><span class="line">	cout &lt;&lt; <span class="number">1</span>[aa][<span class="number">2</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>1[aa][2] [2],先看1[aa]就是<em>（1+aa）即指向二维数组的第二行元素，1[aa][2] [2] 就是</em> <em>(</em>(1+aa)+2)，也就是aa[1 ][2] </p>
-<p>这个用法看起来十分别扭，实际中并不会这样使用</p>
-<h6 id="数组与指针的定义和声明"><a href="#数组与指针的定义和声明" class="headerlink" title="数组与指针的定义和声明"></a>数组与指针的定义和声明</h6><p>设test1.cpp中有如下定义：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> s[]=<span class="string">"abcdefg"</span>;</span><br></pre></td></tr></table></figure>
-
-<p>test2.cpp中有如下声明：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">char</span> *s;</span><br></pre></td></tr></table></figure>
-
-<p>调用s[3],会出现怎样的结果呢</p>
-<p>（1）从s代表的地址单元的取出内容（4个字节），这里实际上是数组s中的前4个元素，这个值是“abcd”，也就是16进制64636261h，到这一步应该就能看出来问题了；</p>
-<p>（2）然后把取出的首地址和3相加，得到要访问的数据的地址64636261h+3，这个地址是未分配未定义的；</p>
-<p>（3）取地址64636261h+3的内容，这个地址单元是未定义的，访问就会出错。</p>
-<p><strong>c++不支持在函数外返回局部变量的地址，除非定义局部变量为static</strong></p>
+        <h1 id="流水线可靠数据传输协议"><a href="#流水线可靠数据传输协议" class="headerlink" title="流水线可靠数据传输协议"></a>流水线可靠数据传输协议</h1><p>因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能</p>
+<p>采取流水线技术的可靠数据传输协议必须具有以下条件：</p>
+<p>1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题</p>
+<p>2.协议的发送方和接收方两端必须缓存多个分组</p>
+<p>3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。</p>
+<p>解决流水线的差错的两种基本方法</p>
+<p>1.回退N步 2.选择重传</p>
+<h4 id="回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）"><a href="#回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）" class="headerlink" title="回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）"></a>回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）</h4><p><img src="/pipelineRdt/GBN.jpg" alt></p>
+<p>基序号base 定义为最早未被确认分组的序号，即图中4号</p>
+<p>下一个序号nextseqnum定义为最小未使用序号，即图中7号</p>
+<p>窗口长度N为基序号到最大可使用序号直接的距离，以上图为例，即为6</p>
+<p>每当基序号得到确认，窗口就会向右移动。在实践中，一个分组的序号承载在分组首部的一个固定长度的字段中。如果分组序号字段的比特数是k，则该序号范围是0到2的k次方  -1.因此序号的运算必须使用模2的k次方运算。 即把序号空间看成一个首位相连长度为2的k次方的环。</p>
+<h6 id="GBN发送方响应的事件"><a href="#GBN发送方响应的事件" class="headerlink" title="GBN发送方响应的事件"></a>GBN发送方响应的事件</h6><p>1.上层调用。当上层调用时，发送方检查发送窗口是否已经满了，即是否有N个已发送但未确认的分组。如果未满则产生一个分组发送，并相应更新变量。如果窗口已满，发送方将数据返回上层，隐式地指示上层该窗口已满</p>
+<p>2.收到一个ACK。在GBN协议中<strong>采用累积确认的方式，即收到序号为n的分组的确认，表明接收方已经正确接收到n以前包括n的所有分组</strong></p>
+<p>3.超时事件。当发生ACK超时确认时，发送方重传所有已经发送但还未被确认的分组，即base到nextseqnum的所有分组</p>
+<h6 id="接收方"><a href="#接收方" class="headerlink" title="接收方"></a>接收方</h6><p>如果一个序号为n的分组被正确接收到，并且n的按序的，则接收方为分组n发送一个ACK，并将该分组中的数据部分交付到上层。<strong>其他所有情况下，接收方直接丢弃该分组,并且重新发送最近按需接收分组的ACK</strong></p>
+<p><strong>为什么不将乱序的未接收的分组先缓存下来？</strong></p>
+<p>假定现在期望接收分组n，但是n+1分组却到了，接收方把n+1分组缓存下来，等到接收到分组n，将n+1和n一起交付给上层。然而，加入分组n丢失了，触发了重传规则n和n之后的分组都要重传。这样看来，接收方就没有必要缓存n+1分组。不仅如此，GBN下的接收不需要缓存任何失序分组.这种方法的优点是，<strong>接收缓存简单，接收方不需要缓存任何失序分组</strong>，丢弃正确接收分组的缺点，<strong>随后对该分组的重传可能也会丢失或出错，导致更多的重传</strong></p>
+<p><img src="/pipelineRdt/gbn_example.png" alt></p>
+<p>GBN协议 在窗口长度和带宽时延积很大时，某一个分组的出错，会导致大量的重传</p>
+<h4 id="选择重传-Selective-Repeat"><a href="#选择重传-Selective-Repeat" class="headerlink" title="选择重传 Selective Repeat"></a>选择重传 Selective Repeat</h4><p>选择重传让发送方仅重传它怀疑在接收方出错的分组 而避免不必要的重传</p>
+<p><img src="/pipelineRdt/sr.jpg" alt></p>
+<p><strong>发送方的事件：</strong></p>
+<p>​    1.从上层接收数据。从上层接收到数据后，SR发送方检查下一个可用于该分组的序号。如果序号位于可发送窗口内，则将数据打包并发送。否则将数据缓存 或者返回给上层</p>
+<p>​    2.超时。每个分组拥有自己的逻辑定时器。</p>
+<p>​    3.收到ACK。如果收到的ACK在窗口内，则发送方将那个被确认的分组标记为已接收。 如果分组序号等于send_base，则将窗口基序号向前移动到最小序号的未确认分组处。 如果窗口移动了，且有序号落在窗口内未发送分组 ，则发送这些分组</p>
+<p><strong>接收方的事件</strong></p>
+<p>SR接收方会确认一个正确接收的分组而不管是否按顺序。失序的分组会被缓存直到序号更小的分组都被接收为止</p>
+<p>1.序号在[rcv_base,rcv_base+N-1]内的分组被正确接收。接收方返回一个ACK。如果该分组之前未收到，则缓存该分组。如果分组序号等于rcv_base，则窗口向前移动到最小序号的期望收到分组处，并将该分组以及之前缓存的序号连续且起始于rcv_base的分组交付给上层。如果分组序号不等于rcv_base，则缓存该分组</p>
+<p>2<strong>.序号在[rcv_base-N,rcv_base-1]内分组被正确收到。产生并返回一个ACK</strong></p>
+<p>3.其他情况，忽略该分组</p>
+<p>上面的第二个事件说明，接收方会重新确认之前以及收到的且不在窗口内的分组。</p>
+<p><img src="/pipelineRdt/sr_example.png" alt></p>
+<p><strong>窗口大小选择</strong></p>
+<p><img src="/pipelineRdt/size.jpg" alt></p>
+<p>在这个例子中，有四个分组序号 0、1、2、3 且窗口长度为 3。假定发送了分组 0 至 2，并且接收方被正确接收且确认了。此时，接收方窗口落在 4、5、6 个分组上，其序号分别为 3、0、1.现在考虑两种情况。</p>
+<p>在第一种情况下，如上图中的 a 图所示，对前 3 个分组的 ACK 丢失，因此发送方重传这些分组。因此，接收方下一步要接收序号为 0 的分组，即第一个发送分组的副本。</p>
+<p>在第二种情况下，如上图中的 b 图所示，对前 3 个分组的 ACK 都被正确交付。因此发送方向前移动窗口并发送第 4、5、6 个分组，其序号分别为 3、0、1.序号为 3 的分组丢失，但序号为 0 的分组到达（一个包含新数据的分组）。</p>
+<p>显然，接收方并不知道发送方那边出现了什么问题，对于接收方自己来说，上面两种情况是<strong>等价</strong>的。没有办法区分是第一个分组的重传还是第 5 个分组的初次传输。所以，窗口长度比序号空间小 1 时协议无法正常工作。但窗口应该有多小呢？</p>
+<p>答案是：<strong>窗口长度必须小于或等于序号空间大小的一半</strong>。</p>
 
       
 
@@ -276,7 +302,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/28/指针与数组/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/13/pipelineRdt/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -290,18 +316,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/12/07/多级页表/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/07/14/tcp/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          (no title)
+          tcp
         
       </div>
     </a>
   
   
-    <a href="/2019/10/11/构造函数/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title"></div>
+    <a href="/2020/07/13/rdt/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">rdt</div>
       <i class="icon-circle-right"></i>
     </a>
   

@@ -152,6 +152,487 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-tcp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/14/tcp/">tcp</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/14/tcp/" class="archive-article-date">
+  	<time datetime="2020-07-14T06:36:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-14</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><h5 id="TCP报文格式"><a href="#TCP报文格式" class="headerlink" title="TCP报文格式"></a>TCP报文格式</h5><p><img src="/tcp/format.png" alt></p>
+<p>序号：该报文端首字节的字节流编号</p>
+<p><strong>确认号：主机期望收到的下一字节编号</strong></p>
+<p>接收窗口：指示接收方愿意接受的字节数量，用于流量控制</p>
+<h5 id="往返时间的估计和超时"><a href="#往返时间的估计和超时" class="headerlink" title="往返时间的估计和超时"></a>往返时间的估计和超时</h5><p>为什么要估计往返时间？因为我们要利用往返时间来确定超时时间，超时时间过长会导致丢失的分组，无法快速得到重传。超时时间过短会导致分组还没到达接收方就已经超时，导致不必要的重传</p>
+<p>报文段的样本RTT表示为SampleRTT是从某报文段被发出到对该报文的确认被收到之间的时间量</p>
+<p>大多数TCP仅在某个时刻做一次SampleRTT测量。TCP所维持的SampleRTT均值称为EstimatedRTT。</p>
+<p>EstimatedRTT=（1-α）EstimatedRTT+α*SampleRTT      α的参考值为0.125</p>
+<p>一旦获得一个新的SampleRTT，TCP就会根据上式来更新EstimatedRTT</p>
+<p>RTT偏差DevRTT</p>
+<p>​                DevRTT = (1-β)DevRTT + β*|SampleRTT-EstimatedRTT|  β推荐值为0.25</p>
+<h5 id="设置和管理重传超时间隔"><a href="#设置和管理重传超时间隔" class="headerlink" title="设置和管理重传超时间隔"></a>设置和管理重传超时间隔</h5><p> 超时间隔TimeoutInterval = EstimatedRTT + 4 *DevRTT</p>
+<h4 id="TCP的可靠数据传输"><a href="#TCP的可靠数据传输" class="headerlink" title="TCP的可靠数据传输"></a>TCP的可靠数据传输</h4><p>目的：确保一个进程从其接收缓存中读出的数据流是无损坏，无间隔，非冗余和按序的数据流，即该字节流与连接的另一方端系统发送出的字节流是完全相同的</p>
+<p>发送方主要事件：</p>
+<p>1.从上层应用程序接收数据。将数据封装在一个报文段中，并将该报文段交给ip。如果定时器没有为某些其他报文段而运行，则当报文段被传给ip时，TCP启动该定时器，定时器的超时间隔是TimeoutInterval</p>
+<p>2.超时。tcp通过重传来相应超时事件，重传具有最小序号的还未被确认的报文段</p>
+<p>3.收到ACK。<strong>TCP采用累计确认的方法</strong>，Tcp将收到的ACK值与最小的已发出但未被确认的序号进行比较。如果ACK值&gt;最小序号，则说明ACK值之前的所有分组已经被收到。因此发送方更新最小的已发出但未被确认的序号。如果当前还有未被确认的报文段，重启定时器</p>
+<p>接收方的主要事件：</p>
+<p>1.接收到报文段。若接收的报文段序号恰好为期望收到的报文段，返回下个期望收到的报文段ACK。若接收的报文段大于的已发出但未被确认的序号，且没有缓存过，则缓存该报文段。且返回期望收到的报文段的序号。</p>
+<h5 id="超时间隔加倍"><a href="#超时间隔加倍" class="headerlink" title="超时间隔加倍"></a>超时间隔加倍</h5><p>每次TCP重传时都会将下一次的超时间隔设为先前值得两倍</p>
+<h5 id="快速重传"><a href="#快速重传" class="headerlink" title="快速重传"></a>快速重传</h5><p>长超时周期迫使发送方延迟重传丢失分组。当发送方接收到3个冗余ACK时，TCP就会执行快速重传，即在该报文段得定时器过期之前重传丢失的报文段</p>
+<h4 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h4><h4 id="TCP连接管理"><a href="#TCP连接管理" class="headerlink" title="TCP连接管理"></a>TCP连接管理</h4><p>TCP的三次握手过程</p>
+<p>第一次：客户端TCP向服务器TCP发送一个特殊TCP报文段。报文段中不包含应用层数据，但是报文段首部的标志位SYN被设置为1</p>
+<p>第二次：服务器收到数据段后，从数据报中提取出TCP SYB报文段，为该TCP连接分配TCP缓存和变量，并向客户端TCP发送允许连接的报文段。报文段中不包含应用层数据，但是报文段首部的标志位SYN被设置为1。该报文段也被称为SYNACK报文段</p>
+<p>第三次：客户端收到SYNACK报文段后，客户端也给该连接分配缓存和变量。同时向服务器发送另一个报文端，对服务器允许连接进行了确认，报文段首部的标志位SYN被设置为0，此时报文段负载中可以携带客户端到服务器的数据。</p>
+<p>TCP断开连接的过程：</p>
+<p>第一次：客户端TCP向服务器发送一个特殊的TCP报文段，首部标志位FIN被设置为1</p>
+<p>第二次：服务器接收到该报文段后，返回一个确认报文段</p>
+<p>第三次：服务器发送自己的终止报文段，首部标志位FIN被设置为1</p>
+<p>第四次：客户端收到该报文段后，返回一个确认报文</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/14/tcp/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-pipelineRdt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/13/pipelineRdt/">pipelineRdt</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/13/pipelineRdt/" class="archive-article-date">
+  	<time datetime="2020-07-13T12:10:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="流水线可靠数据传输协议"><a href="#流水线可靠数据传输协议" class="headerlink" title="流水线可靠数据传输协议"></a>流水线可靠数据传输协议</h1><p>因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能</p>
+<p>采取流水线技术的可靠数据传输协议必须具有以下条件：</p>
+<p>1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题</p>
+<p>2.协议的发送方和接收方两端必须缓存多个分组</p>
+<p>3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。</p>
+<p>解决流水线的差错的两种基本方法</p>
+<p>1.回退N步 2.选择重传</p>
+<h4 id="回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）"><a href="#回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）" class="headerlink" title="回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）"></a>回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）</h4><p><img src="/pipelineRdt/GBN.jpg" alt></p>
+<p>基序号base 定义为最早未被确认分组的序号，即图中4号</p>
+<p>下一个序号nextseqnum定义为最小未使用序号，即图中7号</p>
+<p>窗口长度N为基序号到最大可使用序号直接的距离，以上图为例，即为6</p>
+<p>每当基序号得到确认，窗口就会向右移动。在实践中，一个分组的序号承载在分组首部的一个固定长度的字段中。如果分组序号字段的比特数是k，则该序号范围是0到2的k次方  -1.因此序号的运算必须使用模2的k次方运算。 即把序号空间看成一个首位相连长度为2的k次方的环。</p>
+<h6 id="GBN发送方响应的事件"><a href="#GBN发送方响应的事件" class="headerlink" title="GBN发送方响应的事件"></a>GBN发送方响应的事件</h6><p>1.上层调用。当上层调用时，发送方检查发送窗口是否已经满了，即是否有N个已发送但未确认的分组。如果未满则产生一个分组发送，并相应更新变量。如果窗口已满，发送方将数据返回上层，隐式地指示上层该窗口已满</p>
+<p>2.收到一个ACK。在GBN协议中<strong>采用累积确认的方式，即收到序号为n的分组的确认，表明接收方已经正确接收到n以前包括n的所有分组</strong></p>
+<p>3.超时事件。当发生ACK超时确认时，发送方重传所有已经发送但还未被确认的分组，即base到nextseqnum的所有分组</p>
+<h6 id="接收方"><a href="#接收方" class="headerlink" title="接收方"></a>接收方</h6><p>如果一个序号为n的分组被正确接收到，并且n的按序的，则接收方为分组n发送一个ACK，并将该分组中的数据部分交付到上层。<strong>其他所有情况下，接收方直接丢弃该分组,并且重新发送最近按需接收分组的ACK</strong></p>
+<p><strong>为什么不将乱序的未接收的分组先缓存下来？</strong></p>
+<p>假定现在期望接收分组n，但是n+1分组却到了，接收方把n+1分组缓存下来，等到接收到分组n，将n+1和n一起交付给上层。然而，加入分组n丢失了，触发了重传规则n和n之后的分组都要重传。这样看来，接收方就没有必要缓存n+1分组。不仅如此，GBN下的接收不需要缓存任何失序分组.这种方法的优点是，<strong>接收缓存简单，接收方不需要缓存任何失序分组</strong>，丢弃正确接收分组的缺点，<strong>随后对该分组的重传可能也会丢失或出错，导致更多的重传</strong></p>
+<p><img src="/pipelineRdt/gbn_example.png" alt></p>
+<p>GBN协议 在窗口长度和带宽时延积很大时，某一个分组的出错，会导致大量的重传</p>
+<h4 id="选择重传-Selective-Repeat"><a href="#选择重传-Selective-Repeat" class="headerlink" title="选择重传 Selective Repeat"></a>选择重传 Selective Repeat</h4><p>选择重传让发送方仅重传它怀疑在接收方出错的分组 而避免不必要的重传</p>
+<p><img src="/pipelineRdt/sr.jpg" alt></p>
+<p><strong>发送方的事件：</strong></p>
+<p>​    1.从上层接收数据。从上层接收到数据后，SR发送方检查下一个可用于该分组的序号。如果序号位于可发送窗口内，则将数据打包并发送。否则将数据缓存 或者返回给上层</p>
+<p>​    2.超时。每个分组拥有自己的逻辑定时器。</p>
+<p>​    3.收到ACK。如果收到的ACK在窗口内，则发送方将那个被确认的分组标记为已接收。 如果分组序号等于send_base，则将窗口基序号向前移动到最小序号的未确认分组处。 如果窗口移动了，且有序号落在窗口内未发送分组 ，则发送这些分组</p>
+<p><strong>接收方的事件</strong></p>
+<p>SR接收方会确认一个正确接收的分组而不管是否按顺序。失序的分组会被缓存直到序号更小的分组都被接收为止</p>
+<p>1.序号在[rcv_base,rcv_base+N-1]内的分组被正确接收。接收方返回一个ACK。如果该分组之前未收到，则缓存该分组。如果分组序号等于rcv_base，则窗口向前移动到最小序号的期望收到分组处，并将该分组以及之前缓存的序号连续且起始于rcv_base的分组交付给上层。如果分组序号不等于rcv_base，则缓存该分组</p>
+<p>2<strong>.序号在[rcv_base-N,rcv_base-1]内分组被正确收到。产生并返回一个ACK</strong></p>
+<p>3.其他情况，忽略该分组</p>
+<p>上面的第二个事件说明，接收方会重新确认之前以及收到的且不在窗口内的分组。</p>
+<p><img src="/pipelineRdt/sr_example.png" alt></p>
+<p><strong>窗口大小选择</strong></p>
+<p><img src="/pipelineRdt/size.jpg" alt></p>
+<p>在这个例子中，有四个分组序号 0、1、2、3 且窗口长度为 3。假定发送了分组 0 至 2，并且接收方被正确接收且确认了。此时，接收方窗口落在 4、5、6 个分组上，其序号分别为 3、0、1.现在考虑两种情况。</p>
+<p>在第一种情况下，如上图中的 a 图所示，对前 3 个分组的 ACK 丢失，因此发送方重传这些分组。因此，接收方下一步要接收序号为 0 的分组，即第一个发送分组的副本。</p>
+<p>在第二种情况下，如上图中的 b 图所示，对前 3 个分组的 ACK 都被正确交付。因此发送方向前移动窗口并发送第 4、5、6 个分组，其序号分别为 3、0、1.序号为 3 的分组丢失，但序号为 0 的分组到达（一个包含新数据的分组）。</p>
+<p>显然，接收方并不知道发送方那边出现了什么问题，对于接收方自己来说，上面两种情况是<strong>等价</strong>的。没有办法区分是第一个分组的重传还是第 5 个分组的初次传输。所以，窗口长度比序号空间小 1 时协议无法正常工作。但窗口应该有多小呢？</p>
+<p>答案是：<strong>窗口长度必须小于或等于序号空间大小的一半</strong>。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/13/pipelineRdt/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-rdt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/13/rdt/">rdt</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/13/rdt/" class="archive-article-date">
+  	<time datetime="2020-07-13T07:11:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="可靠数据传输原理"><a href="#可靠数据传输原理" class="headerlink" title="可靠数据传输原理"></a>可靠数据传输原理</h1><h5 id="1-经完全可靠信道的可靠数据传输-rdt1-0"><a href="#1-经完全可靠信道的可靠数据传输-rdt1-0" class="headerlink" title="1.经完全可靠信道的可靠数据传输 rdt1.0"></a>1.经完全可靠信道的可靠数据传输 rdt1.0</h5><p>在这种情况下，先假设底层信道是完全可靠的，即运输层提供可靠信道，不会产生错误，不会丢弃分组</p>
+<p>即</p>
+<p><img src="/rdt" alt="description" title="rdt1.jpg"></p>
+<p><img src="/rdt/rdt1.jpg" alt></p>
+<p>状态机如下图</p>
+<p><img src="//yoursite.com/2020/07/13/rdt/D:%5CHexo%5Csource_posts%5Crdt%5CFSM1.jpg" alt></p>
+<p>在发送端，通过rdt_send(data)来等待上层的调用，然后产生一个包含该数据的分组，并发送到信道中</p>
+<p>在接收方，通过rdt_rcv(packet)来等待下层的调用，然后从packet中取出数据，并将数据上传给应用层</p>
+<h5 id="2-经具有比特差错信道的可靠传输-rdt2-0"><a href="#2-经具有比特差错信道的可靠传输-rdt2-0" class="headerlink" title="2.经具有比特差错信道的可靠传输 rdt2.0"></a>2.经具有比特差错信道的可靠传输 rdt2.0</h5><p>采用差错检测，接收方反馈和重传来保证数据传输的可靠性</p>
+<p><img src="/rdt/FSM2.jpg" alt></p>
+<p>发送方：初始状态，等待上层调用发送数据，调用后，发送方产生并发送一个包含待发送数据的分组，且包含校验和。然后进入状态2，等待ACK确认或NAK确认。</p>
+<p>如果接收到分组且为ACK确认则说明最近发送的分组已经被正确接收， 进入状态1，等待上层调用</p>
+<p>如果接收到分组且为NAK确认则说最近发送的分组没有被正确接收，重传该分组，继续等待</p>
+<p>接收方：当接收到分组且分组受损，则返回一个NAK回答</p>
+<p>​                当接收到分组且分组正常，则返回从中取出数据，上传给应用层，并返回一个ACK回答</p>
+<p>这样的协议是一个<strong>停等</strong>协议，因为只有在发送方收到ACK回答时，才能从上层获得更多数据进行传输，否则只会继续等待。</p>
+<p>这个协议存在一个关键性问题，如果回答的ACK分组和NAK分组受损，则无法知道十分正确收到了数据</p>
+<h5 id="3-经具有比特差错信道的可靠传输-rdt2-1"><a href="#3-经具有比特差错信道的可靠传输-rdt2-1" class="headerlink" title="3.经具有比特差错信道的可靠传输 rdt2.1"></a>3.经具有比特差错信道的可靠传输 rdt2.1</h5><p>解决rdt2.0的方法：1.增加足够的检验和比特 2.当收到受损ACK和NAK时，直接选择重传3.增加控制信令。<br>即发送方请求接收方重复ACK或NAK分组。但新的控制信令也可能受损。</p>
+<p>采用方法2出现的问题是，接收方无法知道发送方发送的分组是重传的分组还是新的分组。  </p>
+<p>解决办法：给分组进行编号</p>
+<p><img src="/rdt/FSM31.jpg" alt></p>
+<p>发送方：初始状态 ，等待上层调用rdt_send(data)发送数据， 产生并发送一个带有序号0，数据和校验和的分组。进入下一状态，等待ACK或NAK0,发送方接受到响应报文且报文损坏或者为NAK回答，则重传分组，直到接收到响应报文且报文为正常且为ACK回答，则进入下一状态. 然后继续等待上层调用rdt_send(data)发送数据，产生并发送一个带有序号1，数据和校验和的分组。进入下一状态，等待ACK或NAK1，发送方接受到响应报文且报文损坏或者为NAK回答，则重传分组，直到接收到响应报文且报文为正常且为ACK回答，则回到初始状态。</p>
+<p><strong>这里可能会有个疑问，仅仅只有两个序号0和1就够了吗？</strong>答案是够的，因为对于这种停等协议 ，这里只需区分出发送方是否正在重传前一个分组</p>
+<p><img src="/rdt/FSM3.webp" alt></p>
+<p>接收方这里需要判断分组是否重复，并且当前所处状态提供了期望收到分组的序列号</p>
+<h5 id="rdt2-2"><a href="#rdt2-2" class="headerlink" title="rdt2.2"></a>rdt2.2</h5><p>我们将rdt2.1中NAK改为对上一次正确接收分组的ACK，也可以实现一样的效果。即发送方只要收到对上一次分组的ACK，说明当前分组没有被正确接收。发送方如果接收到两个一样的ACK，就说明接收方没有正确接收到跟在被确认两次的分组后面的分组。</p>
+<p><img src="/rdt/FSM32.jpg" alt></p>
+<p><img src="/rdt/FSM33.jpg" alt></p>
+<h5 id="4-经具有比特差错的丢包信道的可靠数据传输-rdt3-0"><a href="#4-经具有比特差错的丢包信道的可靠数据传输-rdt3-0" class="headerlink" title="4.经具有比特差错的丢包信道的可靠数据传输 rdt3.0"></a>4.经具有比特差错的丢包信道的可靠数据传输 rdt3.0</h5><p>只需在rdt2.2的基础上 解决丢包问题即可</p>
+<p>解决办法：确定一个时间值，在这个时间值内接收方没有收到ACK，则重传该分组。</p>
+<p>为了实现基于时间的重传机制，需要一个倒计时定数器，在一个给定的时间过期后，可中断发送方。因此，发送方需要做到：1.每次发送一个分组时，包括第一次分组和重传分组，便启动一个定时器. 2响应定时器中断3.终止定时器</p>
+<p>状态机如下</p>
+<p><img src="/rdt/rdt3.jpg" alt></p>
+<p><img src="/rdt/FSM41.webp" alt></p>
+<p><img src="/rdt/FSM42.webp" alt></p>
+<h5 id="rdt3-0的效率"><a href="#rdt3-0的效率" class="headerlink" title="rdt3.0的效率"></a>rdt3.0的效率</h5><p>1Gbps的链路，发送一个分组8000比特，15ms端到端传播时延</p>
+<h6 id="一个分组进入1Gps链路的实际时间："><a href="#一个分组进入1Gps链路的实际时间：" class="headerlink" title="一个分组进入1Gps链路的实际时间："></a>一个分组进入1Gps链路的实际时间：</h6><p>8000/10的9次方 =0.008s</p>
+<h6 id="发送发接收到ACK的时间："><a href="#发送发接收到ACK的时间：" class="headerlink" title="发送发接收到ACK的时间："></a>发送发接收到ACK的时间：</h6><p>15+0.008+15=30.008s</p>
+<h6 id="发送方的利用率："><a href="#发送方的利用率：" class="headerlink" title="发送方的利用率："></a>发送方的利用率：</h6><p>0.008/30.008 = 0.00027</p>
+<p>利用率非常低 ，主要原因就是因为协议是停等协议</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/13/rdt/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-reliable_data_transfer_protocol" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="可靠数据传输原理"><a href="#可靠数据传输原理" class="headerlink" title="可靠数据传输原理"></a>可靠数据传输原理</h1><h5 id="1-经完全可靠信道的可靠数据传输"><a href="#1-经完全可靠信道的可靠数据传输" class="headerlink" title="1.经完全可靠信道的可靠数据传输"></a>1.经完全可靠信道的可靠数据传输</h5><p>在这种情况下，先假设底层信道是完全可靠的，即运输层提供可靠信道，</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/13/reliable_data_transfer_protocol/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-lambda" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>C++lambda函数</strong></p>
+<p>语法定义如下</p>
+<p><code>[capture](parameters)-&gt;return_type{body}</code></p>
+<p>定义中比较难理解的就是[]中的内容</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[] <span class="comment">//没有定义任何变量。使用未定义变量会引发错误。</span></span><br><span class="line">[x，&amp;y] <span class="comment">//x以传值方式传入（默认），y以引用方式传入</span></span><br><span class="line">[&amp;] <span class="comment">//任何被使用到的外部变量都隐式地引用方式加以引用</span></span><br><span class="line">[=] <span class="comment">//任何被使用到的外部变量都隐式地以传值的方式加以引用</span></span><br><span class="line">[&amp;,x] <span class="comment">//x显式地以传值方式加以引用。其余变量以引用方式加以引用。</span></span><br><span class="line">[=,&amp;z] <span class="comment">//z显式地以引用方式加以引用。其余变量以传值方式加以引用</span></span><br></pre></td></tr></table></figure>
+
+<p>具体例子</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"> 2 </span>&#123;</span><br><span class="line"> <span class="number">3</span>     <span class="keyword">int</span> a = <span class="number">5</span>, b = <span class="number">7</span>;</span><br><span class="line"> <span class="number">4</span>     <span class="keyword">auto</span> total = [](<span class="keyword">int</span> x, <span class="keyword">int</span> y)-&gt;<span class="keyword">int</span> &#123;<span class="keyword">return</span> x + y; &#125;;    <span class="comment">//接受两个参数</span></span><br><span class="line"> <span class="number">5</span>     <span class="built_in">cout</span> &lt;&lt; total(a, b)&lt;&lt;<span class="built_in">endl</span>;  <span class="comment">//12</span></span><br><span class="line"> <span class="number">6</span>     <span class="keyword">auto</span> fun1 = [=] &#123;<span class="keyword">return</span> a + b; &#125;;   <span class="comment">//值传递捕捉父作用域变量</span></span><br><span class="line"> <span class="number">7</span>     <span class="built_in">cout</span> &lt;&lt; fun1() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//12</span></span><br><span class="line"> <span class="number">8</span>     <span class="keyword">auto</span> fun2 = [&amp;](<span class="keyword">int</span> c) &#123;b = a + c; a = <span class="number">1</span>; &#125;;    <span class="comment">//省略了返回值类型，引用捕获所有</span></span><br><span class="line"> <span class="number">9</span>     fun2(<span class="number">3</span>);    <span class="comment">//1 8</span></span><br><span class="line"><span class="number">10</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt;<span class="string">" "</span>&lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="number">11</span>     a = <span class="number">5</span>; b = <span class="number">7</span>;   <span class="comment">//被修改后，重新赋值</span></span><br><span class="line"><span class="number">12</span>     <span class="keyword">auto</span> fun3 = [=, &amp;b](<span class="keyword">int</span> c) <span class="keyword">mutable</span> &#123;b = a + c; a = <span class="number">1</span>; &#125;;    <span class="comment">//以值传递捕捉的变量，在函数体里如果要修改，要加mutaple,因为默认const修饰</span></span><br><span class="line"><span class="number">13</span>     fun3(<span class="number">3</span>);</span><br><span class="line"><span class="number">14</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">" "</span> &lt;&lt;b&lt;&lt; <span class="built_in">endl</span>;    <span class="comment">//5,8</span></span><br><span class="line"><span class="number">15</span>     a = <span class="number">5</span>; b = <span class="number">7</span>;   <span class="comment">//被修改后，重新赋值</span></span><br><span class="line"><span class="number">16</span>     <span class="keyword">auto</span> fun4 = [=](<span class="keyword">int</span> x, <span class="keyword">int</span> y) <span class="keyword">mutable</span>-&gt;<span class="keyword">int</span> &#123;a += x; b += y; <span class="keyword">return</span> a + b; &#125;;</span><br><span class="line"><span class="number">17</span>     <span class="keyword">int</span> t = fun4(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line"><span class="number">18</span>     <span class="built_in">cout</span> &lt;&lt; t &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//42</span></span><br><span class="line"><span class="number">19</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt;<span class="string">" "</span>&lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;    <span class="comment">//5 7</span></span><br><span class="line"><span class="number">20</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">21</span> &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/14/lambda/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-this与callee与caller" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>js</p>
+<p>this引用的是函数据以执行的环境对象，在全局中this的对象引用就是window</p>
+<p>callee是arguments对象的一个属性，指向拥有这个arguments对象的函数</p>
+<p>caller是一个函数对象属性，保存着调用当前函数的 函数 的 引用</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/13/this与callee与caller/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-文件系统多级索引" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -165,10 +646,10 @@
 <p>具体实现方式如下：</p>
 <p>为每个文件单独定义一个索引块，该索引块存储了文件内容真正的块的地址。</p>
 <p>简单的说就是，在读取文件时，先将该索引块读入内存，再通过该索引块去磁盘中寻找文件内容真正的块</p>
-<p><img src="D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%871.png" alt></p>
+<p><img src="//yoursite.com/2019/12/08/文件系统多级索引/D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%871.png" alt></p>
 <p>上图是一级索引</p>
 <p>多级索引：</p>
-<p><img src="D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%872.png" alt></p>
+<p><img src="//yoursite.com/2019/12/08/文件系统多级索引/D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%872.png" alt></p>
 <p><strong>看题：一个UNIX 系统使用1KB磁盘块和4字节磁盘地址。如果每个i节点中有10个直接表项以及一个一次间接块、一个二次间接块和一个三次间接块，那么文件的最大尺寸是多少</strong>？</p>
 <p>1kb磁盘块即为文件的一个小块的大小，也就是索引块的大小。所以<strong>一个索引块里存放地址的数目2^10B/4=256个</strong>。故一个一次间接索引块里存放256个地址，二次索引块里存放256*256个地址</p>
 <p>三次间接块存放256*256  *256个地址。而每个地址对应一个磁盘块。</p>
@@ -294,6 +775,11 @@
 <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a[<span class="number">5</span>]=&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;; </span><br><span class="line">int * p = a;<span class="comment">// 等价于int * p = &amp;a[0]</span></span><br></pre></td></tr></table></figure>
 
 <p>指针实际上存储的是目标元素的地址，上式中当试图将一个数组赋值给指针时，编译器就会将数组名转换为一个指针常量，指向数组中的第一个元素。</p>
+<p><strong>指针与数组的区别</strong></p>
+<p>看了上述解答，必然会问那么指针与数组的区别在哪？指针与数组大多数情况下是可以互换的，但是有例外</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX = <span class="number">3</span>;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">int</span>  var[MAX] = &#123;<span class="number">10</span>, <span class="number">100</span>, <span class="number">200</span>&#125;;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MAX; i++)</span><br><span class="line">   &#123;</span><br><span class="line">      *var = i;    <span class="comment">// 这是正确的语法</span></span><br><span class="line">      var++;       <span class="comment">// 这是不正确的</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>数组名实际上就是指向数组开头元素的指针常量</strong>，因此不能作为左值，他指向的地址不会变，但该地址存放的值可以改变。把指针运算符*运用到var上是完全可以的，但修改var的值是非法的。</p>
 <h6 id="数组与指针下标引用"><a href="#数组与指针下标引用" class="headerlink" title="数组与指针下标引用"></a>数组与指针下标引用</h6><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int A[] = &#123; <span class="number">5</span>,  <span class="number">3</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">44</span>, <span class="number">10</span>, <span class="number">11</span> &#125;;</span><br><span class="line">int* p = A;</span><br><span class="line">cout &lt;&lt; <span class="number">3</span>[p];</span><br><span class="line">cout &lt;&lt; p[<span class="number">3</span>];</span><br><span class="line">cout &lt;&lt; *(p + <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
 
 <p>三条式子都输出为9，前两条表达式看起来有点奇葩，特别是第一条，但实际上3[p]是等价于*（p+3）的，c++中当指针指向一个数组后，可以通过该指针调用数组，即指针等同于数组名。</p>
@@ -303,7 +789,7 @@
 <p>1[aa][2] [2],先看1[aa]就是<em>（1+aa）即指向二维数组的第二行元素，1[aa][2] [2] 就是</em> <em>(</em>(1+aa)+2)，也就是aa[1 ][2] </p>
 <p>这个用法看起来十分别扭，实际中并不会这样使用</p>
 <h6 id="数组与指针的定义和声明"><a href="#数组与指针的定义和声明" class="headerlink" title="数组与指针的定义和声明"></a>数组与指针的定义和声明</h6><p>设test1.cpp中有如下定义：</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">char s[]=<span class="string">"abcdefg"</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> s[]=<span class="string">"abcdefg"</span>;</span><br></pre></td></tr></table></figure>
 
 <p>test2.cpp中有如下声明：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">char</span> *s;</span><br></pre></td></tr></table></figure>
@@ -312,6 +798,7 @@
 <p>（1）从s代表的地址单元的取出内容（4个字节），这里实际上是数组s中的前4个元素，这个值是“abcd”，也就是16进制64636261h，到这一步应该就能看出来问题了；</p>
 <p>（2）然后把取出的首地址和3相加，得到要访问的数据的地址64636261h+3，这个地址是未分配未定义的；</p>
 <p>（3）取地址64636261h+3的内容，这个地址单元是未定义的，访问就会出错。</p>
+<p><strong>c++不支持在函数外返回局部变量的地址，除非定义局部变量为static</strong></p>
 
       
 
@@ -422,288 +909,10 @@ public:
 
 
   
-    <article id="post-virtualFunction" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="关于c-虚函数的见解"><a href="#关于c-虚函数的见解" class="headerlink" title="关于c++虚函数的见解"></a>关于c++虚函数的见解</h1><p>c++的虚函数与java的抽象函数有些不同，基本上可以说关系不同。纯虚函数才与抽象函数有些类似。在刚学的时候，不是很明白虚函数的意义。后来仔细研究后发现。</p>
-<pre><code>using namespace std;
-class test {
-public :
-      void ceshi() { cout &lt;&lt; &quot;good&quot;; }
-};
-class testson : public test {
-    void ceshi() { cout &lt;&lt; &quot;sssss&quot;; }
-
-};
-
-
-int main() {
-    test a;
-    test* p;
-    testson b;
-
-    a.ceshi();
-    p = &amp;b;
-    p-&gt;ceshi();
-}</code></pre><p>此时输出结果是goodsssss.</p>
-<p>将基类的成员函数改为</p>
-<p><code>void ceshi() { cout &lt;&lt; &quot;good&quot;; }</code></p>
-<p>此时输出结果为</p>
-<p>goodgood</p>
-<p>从上面的例子就可以看出，虚函数实际上是为了满足多态的特性。与java相比，java也可通过声明引用类型为父类，实际类型为子类的对象，若在子类重写方法，则在调用时，会自动调用子类的方法。或者可以进行显示类型转化。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/10/virtualFunction/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
   
-    <article id="post-shortTalk" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/22/shortTalk/">谈谈自己写博客的理由</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/22/shortTalk/" class="archive-article-date">
-  	<time datetime="2019-09-22T14:43:42.807Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-22</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>距离自己创建这个博客已经有7个月了，但写的文章不多，中间没写过任何文章。可能是自己也没弄明白博客的作用吧。在昨天听了大佬的话后，发现他讲的挺有道理的。他原话大概是这样：做任何事情都要留下痕迹。所以我决定重新开始我的博客写作。也许不仅仅是这个理由吧，可能我本身也逐渐认识到，做任何事情都默默无闻，或者换句话说，不留下痕迹，最终自己都是没有获得外在正收益的一方。在这里并没有说吃亏，只是之前所付出的精力和努力，都没有获得他人的一句赞扬，欣赏，甚至嫉妒之类的。也许我本身就是这么肤浅的人吧。但自己付出这么多努力，仅仅得到他人的一句赞扬又何尝不可呢。断片了7个月，应该也是我在这7个月里，没有学习吧。现在也只能安慰自己说，今后加油吧</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/22/shortTalk/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-softwareLearning" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/22/softwareLearning/">软工生活点滴</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/22/softwareLearning/" class="archive-article-date">
-  	<time datetime="2019-09-22T14:27:50.109Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-22</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>可以说是正式来软工学习的第一个星期了。刚来就体验到大二生活的艰辛，也从此开启了抄作业的生活，真是满满当当的一周。虽然自己看起来很努力，但愿不是假装努力吧，希望一切有效果吧。在文末来一句话勉励自己吧。喂，要跑啊，少年，要跑。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/22/softwareLearning/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/17/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/17/hello-world/" class="archive-article-date">
-  	<time datetime="2019-02-17T02:29:46.758Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-17</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>欢迎来到壴加亻夋的博客！！<br>第一次搭建自己的博客，似乎很有意思，难道这就是前端的魅力吗？</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/17/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -714,7 +923,7 @@ int main() {
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 壴加亻夋
+    		&copy; 2020 壴加亻夋
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten

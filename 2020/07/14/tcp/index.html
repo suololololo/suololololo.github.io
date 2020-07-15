@@ -6,19 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>壴加亻夋的博客</title>
+  <title>tcp | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="指针与数组在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码 1int (*p)[n];  根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针； 1int *p[n];  根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明">
+  <meta name="description" content="TCPTCP报文格式 序号：该报文端首字节的字节流编号 确认号：主机期望收到的下一字节编号 接收窗口：指示接收方愿意接受的字节数量，用于流量控制 往返时间的估计和超时为什么要估计往返时间？因为我们要利用往返时间来确定超时时间，超时时间过长会导致丢失的分组，无法快速得到重传。超时时间过短会导致分组还没到达接收方就已经超时，导致不必要的重传 报文段的样本RTT表示为SampleRTT是从某报文段被发出">
 <meta property="og:type" content="article">
-<meta property="og:title" content="壴加亻夋的博客">
-<meta property="og:url" content="http://yoursite.com/2019/10/28/指针与数组/index.html">
+<meta property="og:title" content="tcp">
+<meta property="og:url" content="http://yoursite.com/2020/07/14/tcp/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
-<meta property="og:description" content="指针与数组在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码 1int (*p)[n];  根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针； 1int *p[n];  根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明">
+<meta property="og:description" content="TCPTCP报文格式 序号：该报文端首字节的字节流编号 确认号：主机期望收到的下一字节编号 接收窗口：指示接收方愿意接受的字节数量，用于流量控制 往返时间的估计和超时为什么要估计往返时间？因为我们要利用往返时间来确定超时时间，超时时间过长会导致丢失的分组，无法快速得到重传。超时时间过短会导致分组还没到达接收方就已经超时，导致不必要的重传 报文段的样本RTT表示为SampleRTT是从某报文段被发出">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-02-15T12:45:39.817Z">
+<meta property="og:image" content="http://yoursite.com/tcp/format.png">
+<meta property="og:updated_time" content="2020-07-14T08:49:38.005Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="壴加亻夋的博客">
-<meta name="twitter:description" content="指针与数组在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码 1int (*p)[n];  根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针； 1int *p[n];  根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明">
+<meta name="twitter:title" content="tcp">
+<meta name="twitter:description" content="TCPTCP报文格式 序号：该报文端首字节的字节流编号 确认号：主机期望收到的下一字节编号 接收窗口：指示接收方愿意接受的字节数量，用于流量控制 往返时间的估计和超时为什么要估计往返时间？因为我们要利用往返时间来确定超时时间，超时时间过长会导致丢失的分组，无法快速得到重传。超时时间过短会导致分组还没到达接收方就已经超时，导致不必要的重传 报文段的样本RTT表示为SampleRTT是从某报文段被发出">
+<meta name="twitter:image" content="http://yoursite.com/tcp/format.png">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -154,49 +156,59 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-指针与数组" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-tcp" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      tcp
+    </h1>
+  
+
+        
+        <a href="/2020/07/14/tcp/" class="archive-article-date">
+  	<time datetime="2020-07-14T06:36:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-14</time>
+</a>
+        
+      </header>
     
     <!-- 目录内容 -->
          
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="指针与数组"><a href="#指针与数组" class="headerlink" title="指针与数组"></a>指针与数组</h1><p>在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> (*p)[<span class="built_in">n</span>];</span><br></pre></td></tr></table></figure>
-
-<p>根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针；</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> *p[<span class="built_in">n</span>];</span><br></pre></td></tr></table></figure>
-
-<p>根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明数组里的元素是指针，再加上int,知道p数组里的元素是指向int类型的指针;</p>
-<p>数组和指针是两种不同的类型，数组具有确定数量的元素，而指针只是一个标量值，数<strong>组可以在某些情况下转换为指针，当数组名在表达式中使用时，编译器会把数组名转换为一个指针常量，是数组中的第一个元素的地址</strong>，类型就是数组元素的地址类型，如：</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a[<span class="number">5</span>]=&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;; </span><br><span class="line">int * p = a;<span class="comment">// 等价于int * p = &amp;a[0]</span></span><br></pre></td></tr></table></figure>
-
-<p>指针实际上存储的是目标元素的地址，上式中当试图将一个数组赋值给指针时，编译器就会将数组名转换为一个指针常量，指向数组中的第一个元素。</p>
-<p><strong>指针与数组的区别</strong></p>
-<p>看了上述解答，必然会问那么指针与数组的区别在哪？指针与数组大多数情况下是可以互换的，但是有例外</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX = <span class="number">3</span>;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">int</span>  var[MAX] = &#123;<span class="number">10</span>, <span class="number">100</span>, <span class="number">200</span>&#125;;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MAX; i++)</span><br><span class="line">   &#123;</span><br><span class="line">      *var = i;    <span class="comment">// 这是正确的语法</span></span><br><span class="line">      var++;       <span class="comment">// 这是不正确的</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>数组名实际上就是指向数组开头元素的指针常量</strong>，因此不能作为左值，他指向的地址不会变，但该地址存放的值可以改变。把指针运算符*运用到var上是完全可以的，但修改var的值是非法的。</p>
-<h6 id="数组与指针下标引用"><a href="#数组与指针下标引用" class="headerlink" title="数组与指针下标引用"></a>数组与指针下标引用</h6><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int A[] = &#123; <span class="number">5</span>,  <span class="number">3</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">44</span>, <span class="number">10</span>, <span class="number">11</span> &#125;;</span><br><span class="line">int* p = A;</span><br><span class="line">cout &lt;&lt; <span class="number">3</span>[p];</span><br><span class="line">cout &lt;&lt; p[<span class="number">3</span>];</span><br><span class="line">cout &lt;&lt; *(p + <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
-
-<p>三条式子都输出为9，前两条表达式看起来有点奇葩，特别是第一条，但实际上3[p]是等价于*（p+3）的，c++中当指针指向一个数组后，可以通过该指针调用数组，即指针等同于数组名。</p>
-<p>根据这个规则还有更奇葩的用法</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">	int aa[<span class="number">2</span>][<span class="number">5</span>] = &#123; <span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,</span><br><span class="line"></span><br><span class="line">						  <span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span> &#125;;</span><br><span class="line">	cout &lt;&lt; <span class="number">1</span>[aa][<span class="number">2</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>1[aa][2] [2],先看1[aa]就是<em>（1+aa）即指向二维数组的第二行元素，1[aa][2] [2] 就是</em> <em>(</em>(1+aa)+2)，也就是aa[1 ][2] </p>
-<p>这个用法看起来十分别扭，实际中并不会这样使用</p>
-<h6 id="数组与指针的定义和声明"><a href="#数组与指针的定义和声明" class="headerlink" title="数组与指针的定义和声明"></a>数组与指针的定义和声明</h6><p>设test1.cpp中有如下定义：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> s[]=<span class="string">"abcdefg"</span>;</span><br></pre></td></tr></table></figure>
-
-<p>test2.cpp中有如下声明：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">char</span> *s;</span><br></pre></td></tr></table></figure>
-
-<p>调用s[3],会出现怎样的结果呢</p>
-<p>（1）从s代表的地址单元的取出内容（4个字节），这里实际上是数组s中的前4个元素，这个值是“abcd”，也就是16进制64636261h，到这一步应该就能看出来问题了；</p>
-<p>（2）然后把取出的首地址和3相加，得到要访问的数据的地址64636261h+3，这个地址是未分配未定义的；</p>
-<p>（3）取地址64636261h+3的内容，这个地址单元是未定义的，访问就会出错。</p>
-<p><strong>c++不支持在函数外返回局部变量的地址，除非定义局部变量为static</strong></p>
+        <h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><h5 id="TCP报文格式"><a href="#TCP报文格式" class="headerlink" title="TCP报文格式"></a>TCP报文格式</h5><p><img src="/tcp/format.png" alt></p>
+<p>序号：该报文端首字节的字节流编号</p>
+<p><strong>确认号：主机期望收到的下一字节编号</strong></p>
+<p>接收窗口：指示接收方愿意接受的字节数量，用于流量控制</p>
+<h5 id="往返时间的估计和超时"><a href="#往返时间的估计和超时" class="headerlink" title="往返时间的估计和超时"></a>往返时间的估计和超时</h5><p>为什么要估计往返时间？因为我们要利用往返时间来确定超时时间，超时时间过长会导致丢失的分组，无法快速得到重传。超时时间过短会导致分组还没到达接收方就已经超时，导致不必要的重传</p>
+<p>报文段的样本RTT表示为SampleRTT是从某报文段被发出到对该报文的确认被收到之间的时间量</p>
+<p>大多数TCP仅在某个时刻做一次SampleRTT测量。TCP所维持的SampleRTT均值称为EstimatedRTT。</p>
+<p>EstimatedRTT=（1-α）EstimatedRTT+α*SampleRTT      α的参考值为0.125</p>
+<p>一旦获得一个新的SampleRTT，TCP就会根据上式来更新EstimatedRTT</p>
+<p>RTT偏差DevRTT</p>
+<p>​                DevRTT = (1-β)DevRTT + β*|SampleRTT-EstimatedRTT|  β推荐值为0.25</p>
+<h5 id="设置和管理重传超时间隔"><a href="#设置和管理重传超时间隔" class="headerlink" title="设置和管理重传超时间隔"></a>设置和管理重传超时间隔</h5><p> 超时间隔TimeoutInterval = EstimatedRTT + 4 *DevRTT</p>
+<h4 id="TCP的可靠数据传输"><a href="#TCP的可靠数据传输" class="headerlink" title="TCP的可靠数据传输"></a>TCP的可靠数据传输</h4><p>目的：确保一个进程从其接收缓存中读出的数据流是无损坏，无间隔，非冗余和按序的数据流，即该字节流与连接的另一方端系统发送出的字节流是完全相同的</p>
+<p>发送方主要事件：</p>
+<p>1.从上层应用程序接收数据。将数据封装在一个报文段中，并将该报文段交给ip。如果定时器没有为某些其他报文段而运行，则当报文段被传给ip时，TCP启动该定时器，定时器的超时间隔是TimeoutInterval</p>
+<p>2.超时。tcp通过重传来相应超时事件，重传具有最小序号的还未被确认的报文段</p>
+<p>3.收到ACK。<strong>TCP采用累计确认的方法</strong>，Tcp将收到的ACK值与最小的已发出但未被确认的序号进行比较。如果ACK值&gt;最小序号，则说明ACK值之前的所有分组已经被收到。因此发送方更新最小的已发出但未被确认的序号。如果当前还有未被确认的报文段，重启定时器</p>
+<p>接收方的主要事件：</p>
+<p>1.接收到报文段。若接收的报文段序号恰好为期望收到的报文段，返回下个期望收到的报文段ACK。若接收的报文段大于的已发出但未被确认的序号，且没有缓存过，则缓存该报文段。且返回期望收到的报文段的序号。</p>
+<h5 id="超时间隔加倍"><a href="#超时间隔加倍" class="headerlink" title="超时间隔加倍"></a>超时间隔加倍</h5><p>每次TCP重传时都会将下一次的超时间隔设为先前值得两倍</p>
+<h5 id="快速重传"><a href="#快速重传" class="headerlink" title="快速重传"></a>快速重传</h5><p>长超时周期迫使发送方延迟重传丢失分组。当发送方接收到3个冗余ACK时，TCP就会执行快速重传，即在该报文段得定时器过期之前重传丢失的报文段</p>
+<h4 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h4><h4 id="TCP连接管理"><a href="#TCP连接管理" class="headerlink" title="TCP连接管理"></a>TCP连接管理</h4><p>TCP的三次握手过程</p>
+<p>第一次：客户端TCP向服务器TCP发送一个特殊TCP报文段。报文段中不包含应用层数据，但是报文段首部的标志位SYN被设置为1</p>
+<p>第二次：服务器收到数据段后，从数据报中提取出TCP SYB报文段，为该TCP连接分配TCP缓存和变量，并向客户端TCP发送允许连接的报文段。报文段中不包含应用层数据，但是报文段首部的标志位SYN被设置为1。该报文段也被称为SYNACK报文段</p>
+<p>第三次：客户端收到SYNACK报文段后，客户端也给该连接分配缓存和变量。同时向服务器发送另一个报文端，对服务器允许连接进行了确认，报文段首部的标志位SYN被设置为0，此时报文段负载中可以携带客户端到服务器的数据。</p>
+<p>TCP断开连接的过程：</p>
+<p>第一次：客户端TCP向服务器发送一个特殊的TCP报文段，首部标志位FIN被设置为1</p>
+<p>第二次：服务器接收到该报文段后，返回一个确认报文段</p>
+<p>第三次：服务器发送自己的终止报文段，首部标志位FIN被设置为1</p>
+<p>第四次：客户端收到该报文段后，返回一个确认报文</p>
 
       
 
@@ -276,7 +288,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/28/指针与数组/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/14/tcp/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -290,18 +302,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/12/07/多级页表/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          (no title)
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/10/11/构造函数/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title"></div>
+    <a href="/2020/07/13/pipelineRdt/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">pipelineRdt</div>
       <i class="icon-circle-right"></i>
     </a>
   

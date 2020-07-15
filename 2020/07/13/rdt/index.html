@@ -6,19 +6,31 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>壴加亻夋的博客</title>
+  <title>rdt | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="指针与数组在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码 1int (*p)[n];  根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针； 1int *p[n];  根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明">
+  <meta name="description" content="可靠数据传输原理1.经完全可靠信道的可靠数据传输 rdt1.0在这种情况下，先假设底层信道是完全可靠的，即运输层提供可靠信道，不会产生错误，不会丢弃分组 即   状态机如下图  在发送端，通过rdt_send(data)来等待上层的调用，然后产生一个包含该数据的分组，并发送到信道中 在接收方，通过rdt_rcv(packet)来等待下层的调用，然后从packet中取出数据，并将数据上传给应用层 2">
 <meta property="og:type" content="article">
-<meta property="og:title" content="壴加亻夋的博客">
-<meta property="og:url" content="http://yoursite.com/2019/10/28/指针与数组/index.html">
+<meta property="og:title" content="rdt">
+<meta property="og:url" content="http://yoursite.com/2020/07/13/rdt/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
-<meta property="og:description" content="指针与数组在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码 1int (*p)[n];  根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针； 1int *p[n];  根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明">
+<meta property="og:description" content="可靠数据传输原理1.经完全可靠信道的可靠数据传输 rdt1.0在这种情况下，先假设底层信道是完全可靠的，即运输层提供可靠信道，不会产生错误，不会丢弃分组 即   状态机如下图  在发送端，通过rdt_send(data)来等待上层的调用，然后产生一个包含该数据的分组，并发送到信道中 在接收方，通过rdt_rcv(packet)来等待下层的调用，然后从packet中取出数据，并将数据上传给应用层 2">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-02-15T12:45:39.817Z">
+<meta property="og:image" content="http://yoursite.com/rdt">
+<meta property="og:image" content="http://yoursite.com/rdt/rdt1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/07/13/rdt/D:%5CHexo%5Csource_posts%5Crdt%5CFSM1.jpg">
+<meta property="og:image" content="http://yoursite.com/rdt/FSM2.jpg">
+<meta property="og:image" content="http://yoursite.com/rdt/FSM31.jpg">
+<meta property="og:image" content="http://yoursite.com/rdt/FSM3.webp">
+<meta property="og:image" content="http://yoursite.com/rdt/FSM32.jpg">
+<meta property="og:image" content="http://yoursite.com/rdt/FSM33.jpg">
+<meta property="og:image" content="http://yoursite.com/rdt/rdt3.jpg">
+<meta property="og:image" content="http://yoursite.com/rdt/FSM41.webp">
+<meta property="og:image" content="http://yoursite.com/rdt/FSM42.webp">
+<meta property="og:updated_time" content="2020-07-15T08:18:45.537Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="壴加亻夋的博客">
-<meta name="twitter:description" content="指针与数组在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码 1int (*p)[n];  根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针； 1int *p[n];  根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明">
+<meta name="twitter:title" content="rdt">
+<meta name="twitter:description" content="可靠数据传输原理1.经完全可靠信道的可靠数据传输 rdt1.0在这种情况下，先假设底层信道是完全可靠的，即运输层提供可靠信道，不会产生错误，不会丢弃分组 即   状态机如下图  在发送端，通过rdt_send(data)来等待上层的调用，然后产生一个包含该数据的分组，并发送到信道中 在接收方，通过rdt_rcv(packet)来等待下层的调用，然后从packet中取出数据，并将数据上传给应用层 2">
+<meta name="twitter:image" content="http://yoursite.com/rdt">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -154,49 +166,69 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-指针与数组" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-rdt" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      rdt
+    </h1>
+  
+
+        
+        <a href="/2020/07/13/rdt/" class="archive-article-date">
+  	<time datetime="2020-07-13T07:11:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
+</a>
+        
+      </header>
     
     <!-- 目录内容 -->
          
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="指针与数组"><a href="#指针与数组" class="headerlink" title="指针与数组"></a>指针与数组</h1><p>在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> (*p)[<span class="built_in">n</span>];</span><br></pre></td></tr></table></figure>
-
-<p>根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针；</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> *p[<span class="built_in">n</span>];</span><br></pre></td></tr></table></figure>
-
-<p>根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明数组里的元素是指针，再加上int,知道p数组里的元素是指向int类型的指针;</p>
-<p>数组和指针是两种不同的类型，数组具有确定数量的元素，而指针只是一个标量值，数<strong>组可以在某些情况下转换为指针，当数组名在表达式中使用时，编译器会把数组名转换为一个指针常量，是数组中的第一个元素的地址</strong>，类型就是数组元素的地址类型，如：</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a[<span class="number">5</span>]=&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;; </span><br><span class="line">int * p = a;<span class="comment">// 等价于int * p = &amp;a[0]</span></span><br></pre></td></tr></table></figure>
-
-<p>指针实际上存储的是目标元素的地址，上式中当试图将一个数组赋值给指针时，编译器就会将数组名转换为一个指针常量，指向数组中的第一个元素。</p>
-<p><strong>指针与数组的区别</strong></p>
-<p>看了上述解答，必然会问那么指针与数组的区别在哪？指针与数组大多数情况下是可以互换的，但是有例外</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX = <span class="number">3</span>;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">int</span>  var[MAX] = &#123;<span class="number">10</span>, <span class="number">100</span>, <span class="number">200</span>&#125;;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MAX; i++)</span><br><span class="line">   &#123;</span><br><span class="line">      *var = i;    <span class="comment">// 这是正确的语法</span></span><br><span class="line">      var++;       <span class="comment">// 这是不正确的</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>数组名实际上就是指向数组开头元素的指针常量</strong>，因此不能作为左值，他指向的地址不会变，但该地址存放的值可以改变。把指针运算符*运用到var上是完全可以的，但修改var的值是非法的。</p>
-<h6 id="数组与指针下标引用"><a href="#数组与指针下标引用" class="headerlink" title="数组与指针下标引用"></a>数组与指针下标引用</h6><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int A[] = &#123; <span class="number">5</span>,  <span class="number">3</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">44</span>, <span class="number">10</span>, <span class="number">11</span> &#125;;</span><br><span class="line">int* p = A;</span><br><span class="line">cout &lt;&lt; <span class="number">3</span>[p];</span><br><span class="line">cout &lt;&lt; p[<span class="number">3</span>];</span><br><span class="line">cout &lt;&lt; *(p + <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
-
-<p>三条式子都输出为9，前两条表达式看起来有点奇葩，特别是第一条，但实际上3[p]是等价于*（p+3）的，c++中当指针指向一个数组后，可以通过该指针调用数组，即指针等同于数组名。</p>
-<p>根据这个规则还有更奇葩的用法</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">	int aa[<span class="number">2</span>][<span class="number">5</span>] = &#123; <span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,</span><br><span class="line"></span><br><span class="line">						  <span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span> &#125;;</span><br><span class="line">	cout &lt;&lt; <span class="number">1</span>[aa][<span class="number">2</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>1[aa][2] [2],先看1[aa]就是<em>（1+aa）即指向二维数组的第二行元素，1[aa][2] [2] 就是</em> <em>(</em>(1+aa)+2)，也就是aa[1 ][2] </p>
-<p>这个用法看起来十分别扭，实际中并不会这样使用</p>
-<h6 id="数组与指针的定义和声明"><a href="#数组与指针的定义和声明" class="headerlink" title="数组与指针的定义和声明"></a>数组与指针的定义和声明</h6><p>设test1.cpp中有如下定义：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> s[]=<span class="string">"abcdefg"</span>;</span><br></pre></td></tr></table></figure>
-
-<p>test2.cpp中有如下声明：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">char</span> *s;</span><br></pre></td></tr></table></figure>
-
-<p>调用s[3],会出现怎样的结果呢</p>
-<p>（1）从s代表的地址单元的取出内容（4个字节），这里实际上是数组s中的前4个元素，这个值是“abcd”，也就是16进制64636261h，到这一步应该就能看出来问题了；</p>
-<p>（2）然后把取出的首地址和3相加，得到要访问的数据的地址64636261h+3，这个地址是未分配未定义的；</p>
-<p>（3）取地址64636261h+3的内容，这个地址单元是未定义的，访问就会出错。</p>
-<p><strong>c++不支持在函数外返回局部变量的地址，除非定义局部变量为static</strong></p>
+        <h1 id="可靠数据传输原理"><a href="#可靠数据传输原理" class="headerlink" title="可靠数据传输原理"></a>可靠数据传输原理</h1><h5 id="1-经完全可靠信道的可靠数据传输-rdt1-0"><a href="#1-经完全可靠信道的可靠数据传输-rdt1-0" class="headerlink" title="1.经完全可靠信道的可靠数据传输 rdt1.0"></a>1.经完全可靠信道的可靠数据传输 rdt1.0</h5><p>在这种情况下，先假设底层信道是完全可靠的，即运输层提供可靠信道，不会产生错误，不会丢弃分组</p>
+<p>即</p>
+<p><img src="/rdt" alt="description" title="rdt1.jpg"></p>
+<p><img src="/rdt/rdt1.jpg" alt></p>
+<p>状态机如下图</p>
+<p><img src="//yoursite.com/2020/07/13/rdt/D:%5CHexo%5Csource_posts%5Crdt%5CFSM1.jpg" alt></p>
+<p>在发送端，通过rdt_send(data)来等待上层的调用，然后产生一个包含该数据的分组，并发送到信道中</p>
+<p>在接收方，通过rdt_rcv(packet)来等待下层的调用，然后从packet中取出数据，并将数据上传给应用层</p>
+<h5 id="2-经具有比特差错信道的可靠传输-rdt2-0"><a href="#2-经具有比特差错信道的可靠传输-rdt2-0" class="headerlink" title="2.经具有比特差错信道的可靠传输 rdt2.0"></a>2.经具有比特差错信道的可靠传输 rdt2.0</h5><p>采用差错检测，接收方反馈和重传来保证数据传输的可靠性</p>
+<p><img src="/rdt/FSM2.jpg" alt></p>
+<p>发送方：初始状态，等待上层调用发送数据，调用后，发送方产生并发送一个包含待发送数据的分组，且包含校验和。然后进入状态2，等待ACK确认或NAK确认。</p>
+<p>如果接收到分组且为ACK确认则说明最近发送的分组已经被正确接收， 进入状态1，等待上层调用</p>
+<p>如果接收到分组且为NAK确认则说最近发送的分组没有被正确接收，重传该分组，继续等待</p>
+<p>接收方：当接收到分组且分组受损，则返回一个NAK回答</p>
+<p>​                当接收到分组且分组正常，则返回从中取出数据，上传给应用层，并返回一个ACK回答</p>
+<p>这样的协议是一个<strong>停等</strong>协议，因为只有在发送方收到ACK回答时，才能从上层获得更多数据进行传输，否则只会继续等待。</p>
+<p>这个协议存在一个关键性问题，如果回答的ACK分组和NAK分组受损，则无法知道十分正确收到了数据</p>
+<h5 id="3-经具有比特差错信道的可靠传输-rdt2-1"><a href="#3-经具有比特差错信道的可靠传输-rdt2-1" class="headerlink" title="3.经具有比特差错信道的可靠传输 rdt2.1"></a>3.经具有比特差错信道的可靠传输 rdt2.1</h5><p>解决rdt2.0的方法：1.增加足够的检验和比特 2.当收到受损ACK和NAK时，直接选择重传3.增加控制信令。<br>即发送方请求接收方重复ACK或NAK分组。但新的控制信令也可能受损。</p>
+<p>采用方法2出现的问题是，接收方无法知道发送方发送的分组是重传的分组还是新的分组。  </p>
+<p>解决办法：给分组进行编号</p>
+<p><img src="/rdt/FSM31.jpg" alt></p>
+<p>发送方：初始状态 ，等待上层调用rdt_send(data)发送数据， 产生并发送一个带有序号0，数据和校验和的分组。进入下一状态，等待ACK或NAK0,发送方接受到响应报文且报文损坏或者为NAK回答，则重传分组，直到接收到响应报文且报文为正常且为ACK回答，则进入下一状态. 然后继续等待上层调用rdt_send(data)发送数据，产生并发送一个带有序号1，数据和校验和的分组。进入下一状态，等待ACK或NAK1，发送方接受到响应报文且报文损坏或者为NAK回答，则重传分组，直到接收到响应报文且报文为正常且为ACK回答，则回到初始状态。</p>
+<p><strong>这里可能会有个疑问，仅仅只有两个序号0和1就够了吗？</strong>答案是够的，因为对于这种停等协议 ，这里只需区分出发送方是否正在重传前一个分组</p>
+<p><img src="/rdt/FSM3.webp" alt></p>
+<p>接收方这里需要判断分组是否重复，并且当前所处状态提供了期望收到分组的序列号</p>
+<h5 id="rdt2-2"><a href="#rdt2-2" class="headerlink" title="rdt2.2"></a>rdt2.2</h5><p>我们将rdt2.1中NAK改为对上一次正确接收分组的ACK，也可以实现一样的效果。即发送方只要收到对上一次分组的ACK，说明当前分组没有被正确接收。发送方如果接收到两个一样的ACK，就说明接收方没有正确接收到跟在被确认两次的分组后面的分组。</p>
+<p><img src="/rdt/FSM32.jpg" alt></p>
+<p><img src="/rdt/FSM33.jpg" alt></p>
+<h5 id="4-经具有比特差错的丢包信道的可靠数据传输-rdt3-0"><a href="#4-经具有比特差错的丢包信道的可靠数据传输-rdt3-0" class="headerlink" title="4.经具有比特差错的丢包信道的可靠数据传输 rdt3.0"></a>4.经具有比特差错的丢包信道的可靠数据传输 rdt3.0</h5><p>只需在rdt2.2的基础上 解决丢包问题即可</p>
+<p>解决办法：确定一个时间值，在这个时间值内接收方没有收到ACK，则重传该分组。</p>
+<p>为了实现基于时间的重传机制，需要一个倒计时定数器，在一个给定的时间过期后，可中断发送方。因此，发送方需要做到：1.每次发送一个分组时，包括第一次分组和重传分组，便启动一个定时器. 2响应定时器中断3.终止定时器</p>
+<p>状态机如下</p>
+<p><img src="/rdt/rdt3.jpg" alt></p>
+<p><img src="/rdt/FSM41.webp" alt></p>
+<p><img src="/rdt/FSM42.webp" alt></p>
+<h5 id="rdt3-0的效率"><a href="#rdt3-0的效率" class="headerlink" title="rdt3.0的效率"></a>rdt3.0的效率</h5><p>1Gbps的链路，发送一个分组8000比特，15ms端到端传播时延</p>
+<h6 id="一个分组进入1Gps链路的实际时间："><a href="#一个分组进入1Gps链路的实际时间：" class="headerlink" title="一个分组进入1Gps链路的实际时间："></a>一个分组进入1Gps链路的实际时间：</h6><p>8000/10的9次方 =0.008s</p>
+<h6 id="发送发接收到ACK的时间："><a href="#发送发接收到ACK的时间：" class="headerlink" title="发送发接收到ACK的时间："></a>发送发接收到ACK的时间：</h6><p>15+0.008+15=30.008s</p>
+<h6 id="发送方的利用率："><a href="#发送方的利用率：" class="headerlink" title="发送方的利用率："></a>发送方的利用率：</h6><p>0.008/30.008 = 0.00027</p>
+<p>利用率非常低 ，主要原因就是因为协议是停等协议</p>
 
       
 
@@ -276,7 +308,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/28/指针与数组/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/13/rdt/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -290,17 +322,17 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/12/07/多级页表/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/07/13/pipelineRdt/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          (no title)
+          pipelineRdt
         
       </div>
     </a>
   
   
-    <a href="/2019/10/11/构造函数/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/07/13/reliable_data_transfer_protocol/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>
