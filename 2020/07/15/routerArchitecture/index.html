@@ -6,19 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>壴加亻夋的博客</title>
+  <title>路由器工作原理 | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="C++lambda函数 语法定义如下 [capture](parameters)-&amp;gt;return_type{body} 定义中比较难理解的就是[]中的内容 123456[] //没有定义任何变量。使用未定义变量会引发错误。[x，&amp;amp;y] //x以传值方式传入（默认），y以引用方式传入[&amp;amp;] //任何被使用到的外部变量都隐式地引用方式加以引用[=] //任何被使用到的外部变量都隐">
+  <meta name="description" content="路由器的体系结构   输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能">
 <meta property="og:type" content="article">
-<meta property="og:title" content="壴加亻夋的博客">
-<meta property="og:url" content="http://yoursite.com/2020/02/14/lambda/index.html">
+<meta property="og:title" content="路由器工作原理">
+<meta property="og:url" content="http://yoursite.com/2020/07/15/routerArchitecture/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
-<meta property="og:description" content="C++lambda函数 语法定义如下 [capture](parameters)-&amp;gt;return_type{body} 定义中比较难理解的就是[]中的内容 123456[] //没有定义任何变量。使用未定义变量会引发错误。[x，&amp;amp;y] //x以传值方式传入（默认），y以引用方式传入[&amp;amp;] //任何被使用到的外部变量都隐式地引用方式加以引用[=] //任何被使用到的外部变量都隐">
+<meta property="og:description" content="路由器的体系结构   输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-02-14T09:18:11.441Z">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/routerArchitecture/architeture.png">
+<meta property="og:image" content="http://yoursite.com/routerArchitecture/architeture.png">
+<meta property="og:updated_time" content="2020-07-15T08:54:50.393Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="壴加亻夋的博客">
-<meta name="twitter:description" content="C++lambda函数 语法定义如下 [capture](parameters)-&amp;gt;return_type{body} 定义中比较难理解的就是[]中的内容 123456[] //没有定义任何变量。使用未定义变量会引发错误。[x，&amp;amp;y] //x以传值方式传入（默认），y以引用方式传入[&amp;amp;] //任何被使用到的外部变量都隐式地引用方式加以引用[=] //任何被使用到的外部变量都隐">
+<meta name="twitter:title" content="路由器工作原理">
+<meta name="twitter:description" content="路由器的体系结构   输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/15/routerArchitecture/architeture.png">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -154,23 +157,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-lambda" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-routerArchitecture" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      路由器工作原理
+    </h1>
+  
+
+        
+        <a href="/2020/07/15/routerArchitecture/" class="archive-article-date">
+  	<time datetime="2020-07-15T08:34:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
+</a>
+        
+      </header>
     
     <!-- 目录内容 -->
          
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>C++lambda函数</strong></p>
-<p>语法定义如下</p>
-<p><code>[capture](parameters)-&gt;return_type{body}</code></p>
-<p>定义中比较难理解的就是[]中的内容</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[] <span class="comment">//没有定义任何变量。使用未定义变量会引发错误。</span></span><br><span class="line">[x，&amp;y] <span class="comment">//x以传值方式传入（默认），y以引用方式传入</span></span><br><span class="line">[&amp;] <span class="comment">//任何被使用到的外部变量都隐式地引用方式加以引用</span></span><br><span class="line">[=] <span class="comment">//任何被使用到的外部变量都隐式地以传值的方式加以引用</span></span><br><span class="line">[&amp;,x] <span class="comment">//x显式地以传值方式加以引用。其余变量以引用方式加以引用。</span></span><br><span class="line">[=,&amp;z] <span class="comment">//z显式地以引用方式加以引用。其余变量以传值方式加以引用</span></span><br></pre></td></tr></table></figure>
+        <img src="/2020/07/15/routerArchitecture/architeture.png">
 
-<p>具体例子</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"> 2 </span>&#123;</span><br><span class="line"> <span class="number">3</span>     <span class="keyword">int</span> a = <span class="number">5</span>, b = <span class="number">7</span>;</span><br><span class="line"> <span class="number">4</span>     <span class="keyword">auto</span> total = [](<span class="keyword">int</span> x, <span class="keyword">int</span> y)-&gt;<span class="keyword">int</span> &#123;<span class="keyword">return</span> x + y; &#125;;    <span class="comment">//接受两个参数</span></span><br><span class="line"> <span class="number">5</span>     <span class="built_in">cout</span> &lt;&lt; total(a, b)&lt;&lt;<span class="built_in">endl</span>;  <span class="comment">//12</span></span><br><span class="line"> <span class="number">6</span>     <span class="keyword">auto</span> fun1 = [=] &#123;<span class="keyword">return</span> a + b; &#125;;   <span class="comment">//值传递捕捉父作用域变量</span></span><br><span class="line"> <span class="number">7</span>     <span class="built_in">cout</span> &lt;&lt; fun1() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//12</span></span><br><span class="line"> <span class="number">8</span>     <span class="keyword">auto</span> fun2 = [&amp;](<span class="keyword">int</span> c) &#123;b = a + c; a = <span class="number">1</span>; &#125;;    <span class="comment">//省略了返回值类型，引用捕获所有</span></span><br><span class="line"> <span class="number">9</span>     fun2(<span class="number">3</span>);    <span class="comment">//1 8</span></span><br><span class="line"><span class="number">10</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt;<span class="string">" "</span>&lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="number">11</span>     a = <span class="number">5</span>; b = <span class="number">7</span>;   <span class="comment">//被修改后，重新赋值</span></span><br><span class="line"><span class="number">12</span>     <span class="keyword">auto</span> fun3 = [=, &amp;b](<span class="keyword">int</span> c) <span class="keyword">mutable</span> &#123;b = a + c; a = <span class="number">1</span>; &#125;;    <span class="comment">//以值传递捕捉的变量，在函数体里如果要修改，要加mutaple,因为默认const修饰</span></span><br><span class="line"><span class="number">13</span>     fun3(<span class="number">3</span>);</span><br><span class="line"><span class="number">14</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">" "</span> &lt;&lt;b&lt;&lt; <span class="built_in">endl</span>;    <span class="comment">//5,8</span></span><br><span class="line"><span class="number">15</span>     a = <span class="number">5</span>; b = <span class="number">7</span>;   <span class="comment">//被修改后，重新赋值</span></span><br><span class="line"><span class="number">16</span>     <span class="keyword">auto</span> fun4 = [=](<span class="keyword">int</span> x, <span class="keyword">int</span> y) <span class="keyword">mutable</span>-&gt;<span class="keyword">int</span> &#123;a += x; b += y; <span class="keyword">return</span> a + b; &#125;;</span><br><span class="line"><span class="number">17</span>     <span class="keyword">int</span> t = fun4(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line"><span class="number">18</span>     <span class="built_in">cout</span> &lt;&lt; t &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//42</span></span><br><span class="line"><span class="number">19</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt;<span class="string">" "</span>&lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;    <span class="comment">//5 7</span></span><br><span class="line"><span class="number">20</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">21</span> &#125;</span><br></pre></td></tr></table></figure>
-
+<p><strong>路由器的体系结构</strong></p>
+<p><img src="/routerArchitecture/architeture.png" alt></p>
+<ul>
+<li>输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能</li>
+</ul>
 
       
 
@@ -250,7 +266,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/02/14/lambda/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/15/routerArchitecture/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -264,18 +280,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/07/13/rdt/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          可靠数据传输原理
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/02/13/this与callee与caller/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title"></div>
+    <a href="/2020/07/14/tcp/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">TCP</div>
       <i class="icon-circle-right"></i>
     </a>
   

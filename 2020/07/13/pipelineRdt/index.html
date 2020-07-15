@@ -6,25 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>pipelineRdt | 壴加亻夋的博客</title>
+  <title>流水线可靠数据传输协议 | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="流水线可靠数据传输协议因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能 采取流水线技术的可靠数据传输协议必须具有以下条件： 1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题 2.协议的发送方和接收方两端必须缓存多个分组 3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。 解决流水线的差错的两">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pipelineRdt">
+<meta property="og:title" content="流水线可靠数据传输协议">
 <meta property="og:url" content="http://yoursite.com/2020/07/13/pipelineRdt/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
 <meta property="og:description" content="流水线可靠数据传输协议因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能 采取流水线技术的可靠数据传输协议必须具有以下条件： 1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题 2.协议的发送方和接收方两端必须缓存多个分组 3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。 解决流水线的差错的两">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2020/07/13/pipelineRdt/GBN.jpg">
 <meta property="og:image" content="http://yoursite.com/pipelineRdt/GBN.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/07/13/pipelineRdt/gbn_example.png">
 <meta property="og:image" content="http://yoursite.com/pipelineRdt/gbn_example.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/13/pipelineRdt/sr.jpg">
 <meta property="og:image" content="http://yoursite.com/pipelineRdt/sr.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/07/13/pipelineRdt/sr_example.png">
 <meta property="og:image" content="http://yoursite.com/pipelineRdt/sr_example.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/13/pipelineRdt/size.jpg">
 <meta property="og:image" content="http://yoursite.com/pipelineRdt/size.jpg">
-<meta property="og:updated_time" content="2020-07-14T03:02:40.828Z">
+<meta property="og:updated_time" content="2020-07-15T08:32:09.765Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="pipelineRdt">
+<meta name="twitter:title" content="流水线可靠数据传输协议">
 <meta name="twitter:description" content="流水线可靠数据传输协议因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能 采取流水线技术的可靠数据传输协议必须具有以下条件： 1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题 2.协议的发送方和接收方两端必须缓存多个分组 3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。 解决流水线的差错的两">
-<meta name="twitter:image" content="http://yoursite.com/pipelineRdt/GBN.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/13/pipelineRdt/GBN.jpg">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -167,7 +172,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      pipelineRdt
+      流水线可靠数据传输协议
     </h1>
   
 
@@ -190,7 +195,9 @@
 <p>3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。</p>
 <p>解决流水线的差错的两种基本方法</p>
 <p>1.回退N步 2.选择重传</p>
-<h4 id="回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）"><a href="#回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）" class="headerlink" title="回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）"></a>回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）</h4><p><img src="/pipelineRdt/GBN.jpg" alt></p>
+<h4 id="回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）"><a href="#回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）" class="headerlink" title="回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）"></a>回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）</h4><img src="/2020/07/13/pipelineRdt/GBN.jpg">
+
+<p><img src="/pipelineRdt/GBN.jpg" alt></p>
 <p>基序号base 定义为最早未被确认分组的序号，即图中4号</p>
 <p>下一个序号nextseqnum定义为最小未使用序号，即图中7号</p>
 <p>窗口长度N为基序号到最大可使用序号直接的距离，以上图为例，即为6</p>
@@ -201,9 +208,13 @@
 <h6 id="接收方"><a href="#接收方" class="headerlink" title="接收方"></a>接收方</h6><p>如果一个序号为n的分组被正确接收到，并且n的按序的，则接收方为分组n发送一个ACK，并将该分组中的数据部分交付到上层。<strong>其他所有情况下，接收方直接丢弃该分组,并且重新发送最近按需接收分组的ACK</strong></p>
 <p><strong>为什么不将乱序的未接收的分组先缓存下来？</strong></p>
 <p>假定现在期望接收分组n，但是n+1分组却到了，接收方把n+1分组缓存下来，等到接收到分组n，将n+1和n一起交付给上层。然而，加入分组n丢失了，触发了重传规则n和n之后的分组都要重传。这样看来，接收方就没有必要缓存n+1分组。不仅如此，GBN下的接收不需要缓存任何失序分组.这种方法的优点是，<strong>接收缓存简单，接收方不需要缓存任何失序分组</strong>，丢弃正确接收分组的缺点，<strong>随后对该分组的重传可能也会丢失或出错，导致更多的重传</strong></p>
+<img src="/2020/07/13/pipelineRdt/gbn_example.png">
+
 <p><img src="/pipelineRdt/gbn_example.png" alt></p>
 <p>GBN协议 在窗口长度和带宽时延积很大时，某一个分组的出错，会导致大量的重传</p>
 <h4 id="选择重传-Selective-Repeat"><a href="#选择重传-Selective-Repeat" class="headerlink" title="选择重传 Selective Repeat"></a>选择重传 Selective Repeat</h4><p>选择重传让发送方仅重传它怀疑在接收方出错的分组 而避免不必要的重传</p>
+<img src="/2020/07/13/pipelineRdt/sr.jpg">
+
 <p><img src="/pipelineRdt/sr.jpg" alt></p>
 <p><strong>发送方的事件：</strong></p>
 <p>​    1.从上层接收数据。从上层接收到数据后，SR发送方检查下一个可用于该分组的序号。如果序号位于可发送窗口内，则将数据打包并发送。否则将数据缓存 或者返回给上层</p>
@@ -215,8 +226,12 @@
 <p>2<strong>.序号在[rcv_base-N,rcv_base-1]内分组被正确收到。产生并返回一个ACK</strong></p>
 <p>3.其他情况，忽略该分组</p>
 <p>上面的第二个事件说明，接收方会重新确认之前以及收到的且不在窗口内的分组。</p>
+<img src="/2020/07/13/pipelineRdt/sr_example.png">
+
 <p><img src="/pipelineRdt/sr_example.png" alt></p>
 <p><strong>窗口大小选择</strong></p>
+<img src="/2020/07/13/pipelineRdt/size.jpg">
+
 <p><img src="/pipelineRdt/size.jpg" alt></p>
 <p>在这个例子中，有四个分组序号 0、1、2、3 且窗口长度为 3。假定发送了分组 0 至 2，并且接收方被正确接收且确认了。此时，接收方窗口落在 4、5、6 个分组上，其序号分别为 3、0、1.现在考虑两种情况。</p>
 <p>在第一种情况下，如上图中的 a 图所示，对前 3 个分组的 ACK 丢失，因此发送方重传这些分组。因此，接收方下一步要接收序号为 0 的分组，即第一个发送分组的副本。</p>
@@ -320,14 +335,14 @@
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          tcp
+          TCP
         
       </div>
     </a>
   
   
     <a href="/2020/07/13/rdt/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">rdt</div>
+      <div class="article-nav-title">可靠数据传输原理</div>
       <i class="icon-circle-right"></i>
     </a>
   
