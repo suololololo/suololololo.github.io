@@ -8,19 +8,24 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>路由器工作原理 | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="路由器的体系结构   输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能">
+  <meta name="description" content="路由器的体系结构     输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能， 执行与位于入链路远端的数据链路层交互的数据链路层功能。在3部分实现查找功能，查询转发表决定路由器的输出端口 交换结构。实现将分组从一个输入端口交换到一个输出端口中 输出端口。存储从交换结构接收的分组，并执行必要的链路层和物理层功能在输入链路上传输这些分组 路由选择处理器。执行路由选择协议免维护路由选择表以及连">
 <meta property="og:type" content="article">
 <meta property="og:title" content="路由器工作原理">
 <meta property="og:url" content="http://yoursite.com/2020/07/15/routerArchitecture/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
-<meta property="og:description" content="路由器的体系结构   输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能">
+<meta property="og:description" content="路由器的体系结构     输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能， 执行与位于入链路远端的数据链路层交互的数据链路层功能。在3部分实现查找功能，查询转发表决定路由器的输出端口 交换结构。实现将分组从一个输入端口交换到一个输出端口中 输出端口。存储从交换结构接收的分组，并执行必要的链路层和物理层功能在输入链路上传输这些分组 路由选择处理器。执行路由选择协议免维护路由选择表以及连">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2020/07/15/routerArchitecture/architeture.png">
-<meta property="og:image" content="http://yoursite.com/routerArchitecture/architeture.png">
-<meta property="og:updated_time" content="2020-07-15T08:54:50.393Z">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/routerArchitecture/architeture.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/routerArchitecture/input.png">
+<meta property="og:image" content="http://yoursite.com/routerArchitecture/input.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/routerArchitecture/exchange1.jpg">
+<meta property="og:image" content="http://yoursite.com/routerArchitecture/exchange1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/07/15/routerArchitecture/ouput.png">
+<meta property="og:updated_time" content="2020-07-15T14:14:16.341Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="路由器工作原理">
-<meta name="twitter:description" content="路由器的体系结构   输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能">
+<meta name="twitter:description" content="路由器的体系结构     输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能， 执行与位于入链路远端的数据链路层交互的数据链路层功能。在3部分实现查找功能，查询转发表决定路由器的输出端口 交换结构。实现将分组从一个输入端口交换到一个输出端口中 输出端口。存储从交换结构接收的分组，并执行必要的链路层和物理层功能在输入链路上传输这些分组 路由选择处理器。执行路由选择协议免维护路由选择表以及连">
 <meta name="twitter:image" content="http://yoursite.com/2020/07/15/routerArchitecture/architeture.png">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
@@ -180,13 +185,35 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <img src="/2020/07/15/routerArchitecture/architeture.png">
+        <p><strong>路由器的体系结构</strong></p>
+<img src="/2020/07/15/routerArchitecture/architeture.png">
 
-<p><strong>路由器的体系结构</strong></p>
-<p><img src="/routerArchitecture/architeture.png" alt></p>
+<p><img src="//yoursite.com/2020/07/15/routerArchitecture/architeture.png" alt></p>
 <ul>
-<li>输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能</li>
+<li>输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能， 执行与位于入链路远端的数据链路层交互的数据链路层功能。在3部分实现查找功能，查询转发表决定路由器的输出端口</li>
+<li>交换结构。实现将分组从一个输入端口交换到一个输出端口中</li>
+<li>输出端口。存储从交换结构接收的分组，并执行必要的链路层和物理层功能在输入链路上传输这些分组</li>
+<li>路由选择处理器。执行路由选择协议免维护路由选择表以及连接的链路状态信息，并为路由器计算转发表。</li>
 </ul>
+<p><strong>输入端口</strong></p>
+<img src="/2020/07/15/routerArchitecture/input.png">
+
+<p><img src="/routerArchitecture/input.png" alt></p>
+<p>输入端口的物理层处理主要是线路端接功能，而数据链路层处理对应数据链路处理（协议，拆封）</p>
+<p>路由选择处理器的转发表的影子副本通常会存放在每个输入端口，因此，每个输入端口通过查询转发表，来查找分组对应的输出端口，使到达的分组将经过交换结构转发到该输出端口</p>
+<p><strong>交换结构</strong></p>
+<img src="/2020/07/15/routerArchitecture/exchange1.jpg">
+
+<p><img src="/routerArchitecture/exchange1.jpg" alt></p>
+<ul>
+<li>经内存交换。每个分组到达输入端口时，向路由选择处理器发送中断请求。路由选择处理响应请求后，将其复制到处理器内存中，从其首部提取目的地址，在转发表中找到适当的输出端口，并将分组复制到输出端口的缓存中。这种方式 <strong>无法同时转发两个分组，即使他们有不同的端口号，因为一次仅能执行一个内存读写</strong></li>
+<li>经总线交换。输入端口经一根共享总线将分组直接传送到输出端口，不需要路由选择处理器的干预。输入端口为分组预先计划一个交换机内部标签，指示本地输出端口，使分组在总线上传送和传输到输出端口，只有与该标签匹配的端口才能保存该分组。然后标签在输出端口被去除。 <strong>一次只能有一个分组能够跨越总线</strong></li>
+<li>经互联网络交换。交叉点通过交换结构控制器能在任何时候开启和闭合。当某分组到达端口A，需要转发到端口Y，交换机控制器闭合总线A和Y交叉部位的交叉点，然后端口A在其总线发送该分组。<strong>该纵横式网络能够并行转发多个来自不同输入端口和目的地为不同输出端口的分组</strong></li>
+</ul>
+<p><strong>输出端口</strong></p>
+<img src="/2020/07/15/routerArchitecture/ouput.png">
+
+<p>输出端口处理取出存放在输出端口内存中的分组 并将其发送到输出链路上。包括选择和取出排队的分组进行传输，执行所需的链路层和物理层传输功能</p>
 
       
 
