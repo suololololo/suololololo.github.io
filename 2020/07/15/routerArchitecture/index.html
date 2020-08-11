@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/15/routerArchitecture/exchange1.jpg">
 <meta property="og:image" content="http://yoursite.com/routerArchitecture/exchange1.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/07/15/routerArchitecture/ouput.png">
-<meta property="og:updated_time" content="2020-07-15T14:14:16.341Z">
+<meta property="og:updated_time" content="2020-07-16T02:48:59.378Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="路由器工作原理">
 <meta name="twitter:description" content="路由器的体系结构     输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能， 执行与位于入链路远端的数据链路层交互的数据链路层功能。在3部分实现查找功能，查询转发表决定路由器的输出端口 交换结构。实现将分组从一个输入端口交换到一个输出端口中 输出端口。存储从交换结构接收的分组，并执行必要的链路层和物理层功能在输入链路上传输这些分组 路由选择处理器。执行路由选择协议免维护路由选择表以及连">
@@ -214,6 +214,11 @@
 <img src="/2020/07/15/routerArchitecture/ouput.png">
 
 <p>输出端口处理取出存放在输出端口内存中的分组 并将其发送到输出链路上。包括选择和取出排队的分组进行传输，执行所需的链路层和物理层传输功能</p>
+<p><strong>路由器排队情况</strong></p>
+<p>假设输入线路速度和输出线路速度是相同的，均为每秒R个分组，有N个输入端口和输出端口，所有分组具有相同的固定长度，分组以同步的方式到达输入端口，也就是说，在任何链路发送分组的时间等于在任何链路接收分组的时间。交换结构传输速率为每秒S个分组，假设S=NR，则交换结构1秒内可以处理NR个分组，最坏情况下，N个输入端口都在接收分组，且转发到相同的输出端口，输入端口也不会出现排队。<strong>但是输出端口就会出现严重排队</strong>，一秒内到达NR个分组，而每秒只能处理R个分组，且分组数量越来越多，最终耗尽输出端口的可用内存。</p>
+<p>路由器缓存长度经验设置为  <strong>缓存数量B 等于平均往返时延RTT乘以链路容量C</strong></p>
+<p>​                                                <strong>B = RTT *C</strong></p>
+<p>当有大量TCP流N流过一条链路时 B=RTT*C/根号N</p>
 
       
 
@@ -306,6 +311,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/07/16/ipv4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          ipv4
+        
+      </div>
+    </a>
   
   
     <a href="/2020/07/14/tcp/" id="article-nav-older" class="article-nav-link-wrap">

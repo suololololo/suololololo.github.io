@@ -152,6 +152,72 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-构造函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="c-构造函数特殊用法"><a href="#c-构造函数特殊用法" class="headerlink" title="c++构造函数特殊用法"></a>c++构造函数特殊用法</h1><p><code>class A {
+public:
+    A(int x ):a(x){}
+    int a;
+};</code></p>
+<p>若此时创建A类的实例 <code>A s(3);</code>,则会调用构造方法，将3赋值给a。以java的角度看来这很奇怪，<code>a（x）</code></p>
+<p>相当于 <code>a=x;</code>的效果。</p>
+<p>但实际上这种用法是有要求的，</p>
+<p>1 函数A必须是构造函数<br>2 a必须是A类中的一个成员变量或者是基类</p>
+<p>其代表的意思为 用参数x来初始化成员变量a，和直接a=x类似，但是不等同，这样的方法更高效。</p>
+<p>这种方法还有一种好处</p>
+<p><code>#include &lt;iostream&gt;;</code><br><code>using namespace std;</code><br><code>class A {</code><br><code>public:</code><br>    <code>A(int x ):a(x){}</code><br>    <code>int a;</code><br><code>};</code></p>
+<p><code>class B {</code><br><code>public:</code><br>    <code>B(int x , int y):aa(x)</code><br>    <code>{</code><br>        <code>b = y;</code><br>    <code>}</code><br>    <code>void out() { cout &lt;&lt; &quot;aa=&quot; &lt;&lt; aa.a &lt;&lt; endl &lt;&lt; &quot;b=&quot; &lt;&lt; b &lt;&lt; endl; }</code></p>
+<p><code>private:</code><br>    <code>int b;</code><br>    <code>A aa;</code><br><code>};</code><br><code>int main() {</code><br>    <code>B objB(3, 5);</code><br>    <code>objB.out();</code><br><code>}</code></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/11/构造函数/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-virtualFunction" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

@@ -152,6 +152,158 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ipv4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/16/ipv4/">ipv4</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/16/ipv4/" class="archive-article-date">
+  	<time datetime="2020-07-16T02:49:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>网络层的组件</p>
+<ul>
+<li>IP协议</li>
+<li>路由选择协议</li>
+<li>ICMP协议</li>
+</ul>
+<p><strong>ipv4数据报格式</strong></p>
+<img src="/2020/07/16/ipv4/format.png">
+
+<ul>
+    <li>版本号。规定了数据报的IP协议版本</li>
+    <li>首部长度。可以用来确定IP数据报中数据部分实际从哪里开始。一般IP数据报具有20字节的首部</li>
+    <li>服务类型。区分不同类型的IP数据报</li>
+    <li>数据报长度。首部加上数据总长度。理论最大长度为65535字节</li>
+    <li>标识，标志，片偏移。用来ip分片</li>
+    <li>寿命。每当数据报由一台路由器处理时，字段值减1。字段为0时，数据报被丢弃</li>
+    <li>首部校验和。将首部每两个字节当作一个数，用反码运算求和，和的反码作为首部校验和。每台路由器上必须重新计算校验和并再次存放到原处，因为TTL字段和可能的选项字段会改变</li>
+    <li>源和目的ip地址。</li>
+    <li>选项。选项字段允许IP首部被扩展</li>
+    <li>数据</li>
+</ul>
+
+
+
+<p><strong>ip数据分片</strong></p>
+<p>IP数据报在互联网上传输时，可能要经过多个物理网络才能从源端传输到目的端。不同的网络由于链路层和介质的物理特性不同，因此在进行数据传输时，对数据帧的最大长度都有一个限制，这个限制值即最大传输单元MTU（Maximum Transmission Unit）.</p>
+<p>同一个网络上的两台主机之间通信时，该网络的MTU值是确定的，不存在分片问题。分片问题一般只存在于具有不同MTU值的互联网中。</p>
+<p>假设一台互联几条链路的路由器，且每条链路运行具有不同MTU的链路层协议，当输入链路与输出链路的MTU不同，且输出链路的MTU更小，就可能面临分片问题。</p>
+<p>当生成数据报时，发送主机会为数据报贴上标识号，且通常将为它发送的每个数据报的标识号加1。</p>
+<p><strong>路由器对数据报形成分片：</strong></p>
+<p>形成的每个片具有初始数据报的源地址，目的地址与标识号。<strong>目的主机通过检查相同的标识号组装片</strong>，且数据报的最后一个片的标志比特设为0，所有其他片设为1。<strong>主机通过偏移量确定组装顺序</strong>。</p>
+<p>例子：一个4000字节数据报，到达一台路由器，被转发到MTU为1500字节的链路，怎么分片？假设初始数据的标识号为777。</p>
+<table>
+<thead>
+<tr>
+<th>片</th>
+<th>字节</th>
+<th>ID标识号</th>
+<th>偏移</th>
+<th>标志</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第1片</td>
+<td>1480字节数据+20字节首部</td>
+<td>777</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>第2片</td>
+<td>1480字节数据+20字节首部</td>
+<td>777</td>
+<td>185</td>
+<td>1</td>
+</tr>
+<tr>
+<td>第2片</td>
+<td>1020字节数据+20字节首部</td>
+<td>777</td>
+<td>370</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p><strong>偏移量是以8字节块为单位</strong>，因此表格中第2片，偏移量1480/8=185</p>
+<p>1480+1480+1020=3980</p>
+<p>IPv4编址</p>
+<p><strong>ip地址技术上是与一个接口相关联的，而不是与包括该接口的主机或路由器相关联的</strong>，也是说一个路由器或主机不一定只有一个ip地址。</p>
+<p>ip地址是用来唯一区分全球上的每个接口，是一个逻辑地址，ipv4地址长度为32比特，用点分十进制表示为0.0.0.0的格式</p>
+<img src="/2020/07/16/ipv4/ipv4.png">
+
+<p>地址分为三部分:类型标识，网络id和主机id。同一个子网下的接口的前两部分id是相同的。</p>
+<p>子网掩码：用来指明一个IP地址的哪些位标识的是主机所在的子网，以及哪些位标识的是主机的位掩码。必须结合ip地址使用。</p>
+<p>子网的数量可以通过，分开主机和路由器的每个接口，产生几个隔离的网络岛，使用接口端接这些隔离的网络的端点，这些隔离的网络中的每一个都叫做一个子网。</p>
+<p><strong>一台新到达的主机如何获得ip的地址呢？</strong></p>
+<p>使用即动态主机配置协议（Dynamic Host Configuration ），可以自动获取一个ip地址。</p>
+<p>工作过程具体如下：</p>
+<img src="/2020/07/16/ipv4/DHCP.jpg">
+
+<ul>
+<li>DHCP服务器发现。客户在UDP分组中相端口67发送发现报文，目的地址为广播地址255.255.255.255，源地址使用0.0.0.0，广播岛所有与该子网连接的子网</li>
+<li>DHCP服务器提供。子网中的DHCP服务器收到DHCP发现报文，用一个DHCP提供报文向客户作出响应，目的地址使用广播地址255.255.255.255，源地址写服务器地址。报文中包含收到的发现报文的事务id，向客户推荐的ip地址，网络掩码和ip地址租用期</li>
+<li>DHCP请求。客户从一个或多个服务器提供中选择一个，并向选中的服务器提供用一个DHCP请求报文进行响应，源地址仍为0.0.0.0，目的地址仍为255.255.255.255，并包含与提供报文相同的参数</li>
+<li>DHCP ACK。服务器用DHCP ACK报文对DHCP请求报文响应</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/16/ipv4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-routerArchitecture" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -204,6 +356,11 @@
 <img src="/2020/07/15/routerArchitecture/ouput.png">
 
 <p>输出端口处理取出存放在输出端口内存中的分组 并将其发送到输出链路上。包括选择和取出排队的分组进行传输，执行所需的链路层和物理层传输功能</p>
+<p><strong>路由器排队情况</strong></p>
+<p>假设输入线路速度和输出线路速度是相同的，均为每秒R个分组，有N个输入端口和输出端口，所有分组具有相同的固定长度，分组以同步的方式到达输入端口，也就是说，在任何链路发送分组的时间等于在任何链路接收分组的时间。交换结构传输速率为每秒S个分组，假设S=NR，则交换结构1秒内可以处理NR个分组，最坏情况下，N个输入端口都在接收分组，且转发到相同的输出端口，输入端口也不会出现排队。<strong>但是输出端口就会出现严重排队</strong>，一秒内到达NR个分组，而每秒只能处理R个分组，且分组数量越来越多，最终耗尽输出端口的可用内存。</p>
+<p>路由器缓存长度经验设置为  <strong>缓存数量B 等于平均往返时延RTT乘以链路容量C</strong></p>
+<p>​                                                <strong>B = RTT *C</strong></p>
+<p>当有大量TCP流N流过一条链路时 B=RTT*C/根号N</p>
 
       
 
@@ -370,7 +527,7 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="流水线可靠数据传输协议"><a href="#流水线可靠数据传输协议" class="headerlink" title="流水线可靠数据传输协议"></a>流水线可靠数据传输协议</h1><p>因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能</p>
+        <p>因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能</p>
 <p>采取流水线技术的可靠数据传输协议必须具有以下条件：</p>
 <p>1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题</p>
 <p>2.协议的发送方和接收方两端必须缓存多个分组</p>
@@ -886,72 +1043,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/10/28/指针与数组/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-构造函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="c-构造函数特殊用法"><a href="#c-构造函数特殊用法" class="headerlink" title="c++构造函数特殊用法"></a>c++构造函数特殊用法</h1><p><code>class A {
-public:
-    A(int x ):a(x){}
-    int a;
-};</code></p>
-<p>若此时创建A类的实例 <code>A s(3);</code>,则会调用构造方法，将3赋值给a。以java的角度看来这很奇怪，<code>a（x）</code></p>
-<p>相当于 <code>a=x;</code>的效果。</p>
-<p>但实际上这种用法是有要求的，</p>
-<p>1 函数A必须是构造函数<br>2 a必须是A类中的一个成员变量或者是基类</p>
-<p>其代表的意思为 用参数x来初始化成员变量a，和直接a=x类似，但是不等同，这样的方法更高效。</p>
-<p>这种方法还有一种好处</p>
-<p><code>#include &lt;iostream&gt;;</code><br><code>using namespace std;</code><br><code>class A {</code><br><code>public:</code><br>    <code>A(int x ):a(x){}</code><br>    <code>int a;</code><br><code>};</code></p>
-<p><code>class B {</code><br><code>public:</code><br>    <code>B(int x , int y):aa(x)</code><br>    <code>{</code><br>        <code>b = y;</code><br>    <code>}</code><br>    <code>void out() { cout &lt;&lt; &quot;aa=&quot; &lt;&lt; aa.a &lt;&lt; endl &lt;&lt; &quot;b=&quot; &lt;&lt; b &lt;&lt; endl; }</code></p>
-<p><code>private:</code><br>    <code>int b;</code><br>    <code>A aa;</code><br><code>};</code><br><code>int main() {</code><br>    <code>B objB(3, 5);</code><br>    <code>objB.out();</code><br><code>}</code></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/11/构造函数/">展开全文 >></a>
         </p>
       
 
