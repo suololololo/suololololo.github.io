@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://yoursite.com/pipelineRdt/sr_example.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/13/pipelineRdt/size.jpg">
 <meta property="og:image" content="http://yoursite.com/pipelineRdt/size.jpg">
-<meta property="og:updated_time" content="2020-07-16T02:27:10.240Z">
+<meta property="og:updated_time" content="2020-08-10T12:55:10.127Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="流水线可靠数据传输协议">
 <meta name="twitter:description" content="因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能 采取流水线技术的可靠数据传输协议必须具有以下条件： 1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题 2.协议的发送方和接收方两端必须缓存多个分组 3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。 解决流水线的差错的两种基本方法 1.回退N">
@@ -218,7 +218,7 @@
 <p><img src="/pipelineRdt/sr.jpg" alt></p>
 <p><strong>发送方的事件：</strong></p>
 <p>​    1.从上层接收数据。从上层接收到数据后，SR发送方检查下一个可用于该分组的序号。如果序号位于可发送窗口内，则将数据打包并发送。否则将数据缓存 或者返回给上层</p>
-<p>​    2.超时。每个分组拥有自己的逻辑定时器。</p>
+<p>​    2.超时。每个分组拥有自己的逻辑定时器，所以当定时器超时时，可以判断是哪个分组出了问题</p>
 <p>​    3.收到ACK。如果收到的ACK在窗口内，则发送方将那个被确认的分组标记为已接收。 如果分组序号等于send_base，则将窗口基序号向前移动到最小序号的未确认分组处。 如果窗口移动了，且有序号落在窗口内未发送分组 ，则发送这些分组</p>
 <p><strong>接收方的事件</strong></p>
 <p>SR接收方会确认一个正确接收的分组而不管是否按顺序。失序的分组会被缓存直到序号更小的分组都被接收为止</p>

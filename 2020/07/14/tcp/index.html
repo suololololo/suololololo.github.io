@@ -17,7 +17,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2020/07/14/tcp/format.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/14/tcp/format.png">
-<meta property="og:updated_time" content="2020-07-15T13:32:36.302Z">
+<meta property="og:updated_time" content="2020-08-10T13:09:50.097Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP">
 <meta name="twitter:description" content="TCP报文格式   序号：该报文端首字节的字节流编号 确认号：主机期望收到的下一字节编号 接收窗口：指示接收方愿意接受的字节数量，用于流量控制 往返时间的估计和超时为什么要估计往返时间？因为我们要利用往返时间来确定超时时间，超时时间过长会导致丢失的分组，无法快速得到重传。超时时间过短会导致分组还没到达接收方就已经超时，导致不必要的重传 报文段的样本RTT表示为SampleRTT是从某报文段被发出到">
@@ -205,7 +205,7 @@
 <h5 id="快速重传"><a href="#快速重传" class="headerlink" title="快速重传"></a>快速重传</h5><p>长超时周期迫使发送方延迟重传丢失分组。当发送方接收到3个冗余ACK时，TCP就会执行快速重传，即在该报文段得定时器过期之前重传丢失的报文段</p>
 <h4 id><a href="#" class="headerlink" title></a></h4><h4 id="TCP连接管理"><a href="#TCP连接管理" class="headerlink" title="TCP连接管理"></a>TCP连接管理</h4><p>TCP的三次握手过程</p>
 <p>第一次：客户端TCP向服务器TCP发送一个特殊TCP报文段。报文段中不包含应用层数据，但是报文段首部的标志位SYN被设置为1</p>
-<p>第二次：服务器收到数据段后，从数据报中提取出TCP SYB报文段，为该TCP连接分配TCP缓存和变量，并向客户端TCP发送允许连接的报文段。报文段中不包含应用层数据，但是报文段首部的标志位SYN被设置为1。该报文段也被称为SYNACK报文段</p>
+<p>第二次：服务器收到数据段后，从数据报中提取出TCP SYN报文段，为该TCP连接分配TCP缓存和变量，并向客户端TCP发送允许连接的报文段。报文段中不包含应用层数据，但是报文段首部的标志位SYN被设置为1。该报文段也被称为SYNACK报文段</p>
 <p>第三次：客户端收到SYNACK报文段后，客户端也给该连接分配缓存和变量。同时向服务器发送另一个报文端，对服务器允许连接进行了确认，报文段首部的标志位SYN被设置为0，此时报文段负载中可以携带客户端到服务器的数据。</p>
 <p>TCP断开连接的过程：</p>
 <p>第一次：客户端TCP向服务器发送一个特殊的TCP报文段，首部标志位FIN被设置为1</p>
