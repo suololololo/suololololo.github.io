@@ -152,6 +152,168 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java多线程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/19/java多线程/">java多线程</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/19/java多线程/" class="archive-article-date">
+  	<time datetime="2020-10-19T11:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-19</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>同步和死锁</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">private</span>  <span class="keyword">int</span> ticket = <span class="number">5</span> ;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i  = <span class="number">0</span> ;  i &lt;<span class="number">100</span> ; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (ticket&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(Thread.currentThread().getName()+<span class="string">"卖票， ticket = "</span> + ticket--);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2020/10/19/java多线程/image-20201019190335553.png">
+
+<p>没有进行资源同步时，两个线程的执行没有达到互斥的效果，且5张票被卖了8次</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span>  <span class="keyword">int</span> ticket = <span class="number">5</span> ;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i  = <span class="number">0</span> ;  i &lt;<span class="number">100</span> ; i++) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (ticket &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">500</span>);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    &#125;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">"卖票， ticket = "</span> + ticket--);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        MyThread myThread = <span class="keyword">new</span> MyThread();</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(myThread,<span class="string">"线程1"</span>);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(myThread,<span class="string">"线程2"</span>);</span><br><span class="line">        t2.start();</span><br><span class="line">        t1.start();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2020/10/19/java多线程/2.png">
+
+<p>同步过后，两个线程的执行就达到了互斥效果，同步类似于给资源上锁的概念</p>
+<p>同步关键字的使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span>(同步对象)｛ </span><br><span class="line">    需要同步的代码 </span><br><span class="line"> ｝</span><br><span class="line">    </span><br><span class="line"> <span class="keyword">synchronized</span> 方法返回值 方法名称（参数列表）｛ </span><br><span class="line"> ｝</span><br></pre></td></tr></table></figure>
+
+<p>死锁</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">implements</span>  <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span>  <span class="keyword">static</span>  zhangsan zs =<span class="keyword">new</span> zhangsan();</span><br><span class="line">    <span class="keyword">private</span>  <span class="keyword">static</span>  lisi ls = <span class="keyword">new</span> lisi();</span><br><span class="line">    <span class="keyword">private</span>  <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (flag)&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (zs)&#123;</span><br><span class="line">            zs.say();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (InterruptedException e)&#123;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">synchronized</span> (ls)&#123;</span><br><span class="line">                zs.get();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (ls)&#123;</span><br><span class="line">            ls.say();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (InterruptedException e)&#123;&#125;</span><br><span class="line">            <span class="keyword">synchronized</span> (zs)&#123;</span><br><span class="line">                ls.get();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        MyThread myThread = <span class="keyword">new</span> MyThread();</span><br><span class="line">        MyThread myThread1 = <span class="keyword">new</span> MyThread();</span><br><span class="line">        myThread.flag = <span class="keyword">true</span>;</span><br><span class="line">        myThread1.flag = <span class="keyword">false</span>;</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(myThread,<span class="string">"线程1"</span>);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(myThread1,<span class="string">"线程2"</span>);</span><br><span class="line">        t2.start();</span><br><span class="line">        t1.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2020/10/19/java多线程/3.png">
+
+<p>张三和李四都在等待对方释放资源</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/19/java多线程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-question" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/14/question/">question</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/14/question/" class="archive-article-date">
+  	<time datetime="2020-10-14T07:47:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-14</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>2020.10.14 今日学习疑惑之处</p>
+<p><strong>pytorch中搭建卷积神经网络</strong>：</p>
+<p>batchsize是什么？ 为什么图片在经过多层卷积和maxpooling后，要经过out = out.view(batchsize,-1) 才能与全连接层连接， 最后还要经过soft_max，才能进行输出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">out = out.view(batchsize,<span class="number">-1</span>)</span><br><span class="line">out =self.fc(out)</span><br><span class="line">out = F.log_softmax(out,dim=<span class="number">1</span>)</span><br><span class="line"><span class="keyword">return</span>  out</span><br></pre></td></tr></table></figure>
+
+<p><strong>解答</strong></p>
+<p>图片在经过多层卷积和maxpooling后，要经过out = out.view(batchsize,-1) 才能与全连接层连接的原因</p>
+<p>out.view()的作用是将 batchsize *  c * h * w 的特征图转化为 batchsize * n  的tensor</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/14/question/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-cnn" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -947,127 +1109,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/02/14/lambda/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-this与callee与caller" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>js</p>
-<p>this引用的是函数据以执行的环境对象，在全局中this的对象引用就是window</p>
-<p>callee是arguments对象的一个属性，指向拥有这个arguments对象的函数</p>
-<p>caller是一个函数对象属性，保存着调用当前函数的 函数 的 引用</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/13/this与callee与caller/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-文件系统多级索引" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="文件系统多级索引"><a href="#文件系统多级索引" class="headerlink" title="文件系统多级索引"></a>文件系统多级索引</h1><p>文件实现的关键问题就是怎样为文件分配磁盘块</p>
-<p>为了解决<strong>在内存中使用链表分配</strong>的缺点（需要将全部文件的整个表放在内存中的问题）采用多级索引方式为文件分配磁盘块。</p>
-<p>具体实现方式如下：</p>
-<p>为每个文件单独定义一个索引块，该索引块存储了文件内容真正的块的地址。</p>
-<p>简单的说就是，在读取文件时，先将该索引块读入内存，再通过该索引块去磁盘中寻找文件内容真正的块</p>
-<p><img src="//yoursite.com/2019/12/08/文件系统多级索引/D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%871.png" alt></p>
-<p>上图是一级索引</p>
-<p>多级索引：</p>
-<p><img src="//yoursite.com/2019/12/08/文件系统多级索引/D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%872.png" alt></p>
-<p><strong>看题：一个UNIX 系统使用1KB磁盘块和4字节磁盘地址。如果每个i节点中有10个直接表项以及一个一次间接块、一个二次间接块和一个三次间接块，那么文件的最大尺寸是多少</strong>？</p>
-<p>1kb磁盘块即为文件的一个小块的大小，也就是索引块的大小。所以<strong>一个索引块里存放地址的数目2^10B/4=256个</strong>。故一个一次间接索引块里存放256个地址，二次索引块里存放256*256个地址</p>
-<p>三次间接块存放256*256  *256个地址。而每个地址对应一个磁盘块。</p>
-<p>因此一共有10+256+256^2+256^3=16843018块。 即16843018*1kb 约为16.06GB大小</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/08/文件系统多级索引/">展开全文 >></a>
         </p>
       
 
