@@ -152,6 +152,126 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-pytorch杂记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/20/pytorch杂记/">pytorch杂记</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/20/pytorch杂记/" class="archive-article-date">
+  	<time datetime="2020-10-20T01:15:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-20</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>一些常用函数</strong></p>
+<p><strong>np.random.shuffle (lst)</strong>  : 对列表中的元素进行打乱，随机排序 ，无返回值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">10</span>)</span><br><span class="line">np.random.shuffle(arr)</span><br><span class="line">print(arr)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;array([<span class="number">3</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<p>在多维矩阵中，只对第一维进行打乱， 即只对行进行打乱 ， </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">9</span>).reshape((<span class="number">3</span>,<span class="number">3</span>))</span><br><span class="line">np.random.shuffle(arr)</span><br><span class="line">print(arr)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;array([[<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>],</span><br><span class="line">       [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">       [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])</span><br></pre></td></tr></table></figure>
+
+<p><strong>torch.tensor.view(*args)</strong> 将tensor进行维度变换， 返回的tensor必须与原tensor具有相同的数目的元素，但可以有不同的大小。且view只能用在在内存上存储的连续的张量，而<strong>reshape函数调用是不依赖于tensor在内存中是不是连续的。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"> </span><br><span class="line">x = torch.Tensor(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">print(x)</span><br><span class="line"> </span><br><span class="line">y = x.view(<span class="number">1</span>,<span class="number">8</span>)</span><br><span class="line">print(y)</span><br><span class="line"> </span><br><span class="line">z = x.view(<span class="number">-1</span>,<span class="number">4</span>)  <span class="comment"># the size -1 is inferred from other dimensions</span></span><br><span class="line">print(z)</span><br><span class="line"> </span><br><span class="line">t = x.view(<span class="number">8</span>)</span><br><span class="line">print(t)</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">tensor([[[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>],</span><br><span class="line">         [<span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>]],</span><br><span class="line"></span><br><span class="line">        [[<span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>],</span><br><span class="line">         [<span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]]])</span><br><span class="line"></span><br><span class="line"><span class="comment">#x.view(1,8)生成的是[1,8]的张量</span></span><br><span class="line">tensor([[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>, <span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>,</span><br><span class="line">         <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment">#x.view(-1,4)其中-1是在4下的另一个维度的大小，也就是8/4=2，所以生成的是[2,4]的张量</span></span><br><span class="line">tensor([[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>],</span><br><span class="line">        [<span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>, <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]])</span><br><span class="line"></span><br><span class="line">x.view(<span class="number">8</span>)生成的是[<span class="number">8</span>,]的张量，是个数组</span><br><span class="line">tensor([<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>, <span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>,</span><br><span class="line">        <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>])</span><br></pre></td></tr></table></figure>
+
+<p><strong>Embedding层</strong></p>
+<p>首先，embedding层的作用，是将词转成词向量，例如把单词表[‘你’，‘好’，‘吗’]，编码成  （为什么需要编码？）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">‘你’ --------------[0.2,0.1]</span><br><span class="line">‘好’ --------------[0.3,0.2]</span><br><span class="line">‘吗’ --------------[0.6,0.5]</span><br></pre></td></tr></table></figure>
+
+<p>还有一个编码，即one-hot 编码 ， 即</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">‘你’ --------------[1,0，0]</span><br><span class="line"> ‘好’ --------------[0,1，0]</span><br><span class="line"> ‘吗’ --------------[0，0,1]</span><br></pre></td></tr></table></figure>
+
+<p>每个词对应一个独特的编码，其中一个位为1 ，其他位全部置为0 ， 这样的编码方式较为简单， 但是在单词表特别大的时候，这个编码向量过于稀疏，非常浪费空间，因此采用embedding层进行编码</p>
+<p>pytorch中对Embedding的定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class torch.nn.Embedding(num_embeddings, embedding_dim , padding_idx = None, max_norm=None,norm_type=2.0,scale_grad_by_freq=False,sparse =False,_weight =None)</span><br></pre></td></tr></table></figure>
+
+<p>重要参数：</p>
+<p><strong>num_embedding</strong> :嵌入层字典的大小， 即单词表的单词数量</p>
+<p><strong>embedding_dim</strong>: 产出向量的大小,即输入单词后，编码后向量的大小，上文中单词表[‘你’，‘好’，‘吗’]，产出向量大小为2</p>
+<p>padding_idx: 词的索引</p>
+<p><strong>那么如何使用Embedding层呢</strong>（输入是什么呢？）</p>
+<p>Embedding层其实就是一个 num_embedding<em>embedding_dim 的矩阵，这个矩阵保存着所有词的词向量，*</em>那么要输出，单词的编码，只需要向这个矩阵输入索引就行了因此字符串是无法直接输入Embedding层的， Embedding层只能接受矩阵的行索引**。</p>
+<p><strong>Embedding层的输出</strong>：如果输入seq_len*batch 的向量，那么会输出一个 seq_len * batch *embedding_dim的张量  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch </span><br><span class="line">embedd = nn.Embedding(<span class="number">10</span>,<span class="number">5</span>)</span><br><span class="line">print(embedd.weight)</span><br><span class="line">a = torch.tensor([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</span><br><span class="line">print(embedd(a))</span><br><span class="line">print(embedd(a).size())</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;tensor([[<span class="number">-0.1110</span>,  <span class="number">0.1039</span>, <span class="number">-0.8623</span>,  <span class="number">1.3023</span>, <span class="number">-0.2853</span>],</span><br><span class="line">        [ <span class="number">0.8177</span>, <span class="number">-0.7129</span>,  <span class="number">0.5699</span>, <span class="number">-1.9345</span>, <span class="number">-1.9087</span>],</span><br><span class="line">        [<span class="number">-1.7639</span>,  <span class="number">0.7472</span>, <span class="number">-0.7998</span>,  <span class="number">0.3699</span>, <span class="number">-0.7719</span>],</span><br><span class="line">        [ <span class="number">0.9960</span>,  <span class="number">0.6691</span>, <span class="number">-0.0406</span>,  <span class="number">1.5207</span>,  <span class="number">0.8209</span>],</span><br><span class="line">        [ <span class="number">0.5315</span>,  <span class="number">0.4898</span>, <span class="number">-0.5119</span>, <span class="number">-0.5987</span>,  <span class="number">0.1138</span>],</span><br><span class="line">        [<span class="number">-0.5873</span>,  <span class="number">1.0023</span>,  <span class="number">0.2978</span>, <span class="number">-0.7169</span>,  <span class="number">0.1397</span>],</span><br><span class="line">        [ <span class="number">0.5624</span>, <span class="number">-0.4427</span>,  <span class="number">0.0663</span>,  <span class="number">0.1766</span>,  <span class="number">0.9211</span>],</span><br><span class="line">        [<span class="number">-0.5469</span>,  <span class="number">0.5420</span>,  <span class="number">0.7472</span>, <span class="number">-1.2498</span>, <span class="number">-0.8117</span>],</span><br><span class="line">        [ <span class="number">0.4718</span>,  <span class="number">0.5735</span>,  <span class="number">0.4608</span>, <span class="number">-1.1067</span>,  <span class="number">1.4143</span>],</span><br><span class="line">        [<span class="number">-0.3151</span>, <span class="number">-0.1713</span>,  <span class="number">0.0443</span>,  <span class="number">1.2054</span>,  <span class="number">0.0614</span>]], requires_grad=<span class="keyword">True</span>)</span><br><span class="line">&gt;&gt;&gt;tensor([[ <span class="number">0.8177</span>, <span class="number">-0.7129</span>,  <span class="number">0.5699</span>, <span class="number">-1.9345</span>, <span class="number">-1.9087</span>],</span><br><span class="line">        [<span class="number">-1.7639</span>,  <span class="number">0.7472</span>, <span class="number">-0.7998</span>,  <span class="number">0.3699</span>, <span class="number">-0.7719</span>],</span><br><span class="line">        [ <span class="number">0.9960</span>,  <span class="number">0.6691</span>, <span class="number">-0.0406</span>,  <span class="number">1.5207</span>,  <span class="number">0.8209</span>],</span><br><span class="line">        [ <span class="number">0.5315</span>,  <span class="number">0.4898</span>, <span class="number">-0.5119</span>, <span class="number">-0.5987</span>,  <span class="number">0.1138</span>]],</span><br><span class="line">       grad_fn=&lt;EmbeddingBackward&gt;)</span><br><span class="line">&gt;&gt;&gt;torch.Size([<span class="number">4</span>, <span class="number">5</span>])</span><br></pre></td></tr></table></figure>
+
+<p><strong>LSTM层（Long Short Term Memory） 长短期记忆网络 ， 解决短时记忆问题</strong></p>
+<p>pytorch 官方文档中对LSTM层的定义</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CLASS torch.nn.LSTM(input_size, hidden_size , num_layers, bias , batch_first , dropout, bidirectional)</span><br></pre></td></tr></table></figure>
+
+<p>重要参数：</p>
+<p><strong>input_size</strong>:输入向量的特征维度，采用上文的例子， input_size与Embedding层中的embedding_dim 对应相等</p>
+<p><strong>hidden_size</strong>:隐藏层的特征维度</p>
+<p><strong>num_layers</strong> :lstm 隐层的层数，默认为1 </p>
+<p><strong>bias：</strong>False则bih=0和bhh=0. 默认为True</p>
+<p><strong>batch_first</strong>：True则输入输出的数据格式为 (batch, seq, feature)</p>
+<p><strong>dropout</strong>：除最后一层，每一层的输出都进行dropout，默认为: 0</p>
+<p><strong>bidirectional</strong>：True则为双向lstm默认为False</p>
+<p>输入：input, (h0, c0)</p>
+<p>输出：output, (hn,cn)</p>
+<p>LSTM层的数据input(seq_len , batch, input_size) 即为一个seq_len*batch * input_size 的张量  ，这里的input_size 与LSTM层定义中input_size是相同的 ，输出output维度为（seq_len, batch, num_directions * hidden_size）</p>
+<p>LSTM单元接受的输入必须是<strong>3维</strong>的张量， 每一维代表的意思都不能弄错。 第一维体现的是序列结构，以文章作为例子，就是每个句子的长度， 因为是喂给网络模型，一般都设定为确定的长度，也就是我们喂给LSTM神经元的每个句子的长度，当然，如果是其他的带有带有序列形式的数据，则表示一个明确分割单位长度。如果是股票数据，这表示特定时间内，有多少条数据。这个参数也就是明确这个层中有多少个确定的单元来处理输入的数据。</p>
+<p>第二维度体现的是batch_size ，即一次性给网络中输入多少条句子，或在股票模型中，一次性给模型多少个单位时间的数据</p>
+<p>第三维度体现的就是输入元素的特征维度， 即每个单词用多少维向量来表示</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/20/pytorch杂记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-java多线程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1048,67 +1168,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/07/13/rdt/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-lambda" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>C++lambda函数</strong></p>
-<p>语法定义如下</p>
-<p><code>[capture](parameters)-&gt;return_type{body}</code></p>
-<p>定义中比较难理解的就是[]中的内容</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[] <span class="comment">//没有定义任何变量。使用未定义变量会引发错误。</span></span><br><span class="line">[x，&amp;y] <span class="comment">//x以传值方式传入（默认），y以引用方式传入</span></span><br><span class="line">[&amp;] <span class="comment">//任何被使用到的外部变量都隐式地引用方式加以引用</span></span><br><span class="line">[=] <span class="comment">//任何被使用到的外部变量都隐式地以传值的方式加以引用</span></span><br><span class="line">[&amp;,x] <span class="comment">//x显式地以传值方式加以引用。其余变量以引用方式加以引用。</span></span><br><span class="line">[=,&amp;z] <span class="comment">//z显式地以引用方式加以引用。其余变量以传值方式加以引用</span></span><br></pre></td></tr></table></figure>
-
-<p>具体例子</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"> 2 </span>&#123;</span><br><span class="line"> <span class="number">3</span>     <span class="keyword">int</span> a = <span class="number">5</span>, b = <span class="number">7</span>;</span><br><span class="line"> <span class="number">4</span>     <span class="keyword">auto</span> total = [](<span class="keyword">int</span> x, <span class="keyword">int</span> y)-&gt;<span class="keyword">int</span> &#123;<span class="keyword">return</span> x + y; &#125;;    <span class="comment">//接受两个参数</span></span><br><span class="line"> <span class="number">5</span>     <span class="built_in">cout</span> &lt;&lt; total(a, b)&lt;&lt;<span class="built_in">endl</span>;  <span class="comment">//12</span></span><br><span class="line"> <span class="number">6</span>     <span class="keyword">auto</span> fun1 = [=] &#123;<span class="keyword">return</span> a + b; &#125;;   <span class="comment">//值传递捕捉父作用域变量</span></span><br><span class="line"> <span class="number">7</span>     <span class="built_in">cout</span> &lt;&lt; fun1() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//12</span></span><br><span class="line"> <span class="number">8</span>     <span class="keyword">auto</span> fun2 = [&amp;](<span class="keyword">int</span> c) &#123;b = a + c; a = <span class="number">1</span>; &#125;;    <span class="comment">//省略了返回值类型，引用捕获所有</span></span><br><span class="line"> <span class="number">9</span>     fun2(<span class="number">3</span>);    <span class="comment">//1 8</span></span><br><span class="line"><span class="number">10</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt;<span class="string">" "</span>&lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="number">11</span>     a = <span class="number">5</span>; b = <span class="number">7</span>;   <span class="comment">//被修改后，重新赋值</span></span><br><span class="line"><span class="number">12</span>     <span class="keyword">auto</span> fun3 = [=, &amp;b](<span class="keyword">int</span> c) <span class="keyword">mutable</span> &#123;b = a + c; a = <span class="number">1</span>; &#125;;    <span class="comment">//以值传递捕捉的变量，在函数体里如果要修改，要加mutaple,因为默认const修饰</span></span><br><span class="line"><span class="number">13</span>     fun3(<span class="number">3</span>);</span><br><span class="line"><span class="number">14</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">" "</span> &lt;&lt;b&lt;&lt; <span class="built_in">endl</span>;    <span class="comment">//5,8</span></span><br><span class="line"><span class="number">15</span>     a = <span class="number">5</span>; b = <span class="number">7</span>;   <span class="comment">//被修改后，重新赋值</span></span><br><span class="line"><span class="number">16</span>     <span class="keyword">auto</span> fun4 = [=](<span class="keyword">int</span> x, <span class="keyword">int</span> y) <span class="keyword">mutable</span>-&gt;<span class="keyword">int</span> &#123;a += x; b += y; <span class="keyword">return</span> a + b; &#125;;</span><br><span class="line"><span class="number">17</span>     <span class="keyword">int</span> t = fun4(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line"><span class="number">18</span>     <span class="built_in">cout</span> &lt;&lt; t &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//42</span></span><br><span class="line"><span class="number">19</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt;<span class="string">" "</span>&lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;    <span class="comment">//5 7</span></span><br><span class="line"><span class="number">20</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">21</span> &#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/14/lambda/">展开全文 >></a>
         </p>
       
 

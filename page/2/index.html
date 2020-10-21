@@ -152,6 +152,67 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-lambda" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>C++lambda函数</strong></p>
+<p>语法定义如下</p>
+<p><code>[capture](parameters)-&gt;return_type{body}</code></p>
+<p>定义中比较难理解的就是[]中的内容</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[] <span class="comment">//没有定义任何变量。使用未定义变量会引发错误。</span></span><br><span class="line">[x，&amp;y] <span class="comment">//x以传值方式传入（默认），y以引用方式传入</span></span><br><span class="line">[&amp;] <span class="comment">//任何被使用到的外部变量都隐式地引用方式加以引用</span></span><br><span class="line">[=] <span class="comment">//任何被使用到的外部变量都隐式地以传值的方式加以引用</span></span><br><span class="line">[&amp;,x] <span class="comment">//x显式地以传值方式加以引用。其余变量以引用方式加以引用。</span></span><br><span class="line">[=,&amp;z] <span class="comment">//z显式地以引用方式加以引用。其余变量以传值方式加以引用</span></span><br></pre></td></tr></table></figure>
+
+<p>具体例子</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"> 2 </span>&#123;</span><br><span class="line"> <span class="number">3</span>     <span class="keyword">int</span> a = <span class="number">5</span>, b = <span class="number">7</span>;</span><br><span class="line"> <span class="number">4</span>     <span class="keyword">auto</span> total = [](<span class="keyword">int</span> x, <span class="keyword">int</span> y)-&gt;<span class="keyword">int</span> &#123;<span class="keyword">return</span> x + y; &#125;;    <span class="comment">//接受两个参数</span></span><br><span class="line"> <span class="number">5</span>     <span class="built_in">cout</span> &lt;&lt; total(a, b)&lt;&lt;<span class="built_in">endl</span>;  <span class="comment">//12</span></span><br><span class="line"> <span class="number">6</span>     <span class="keyword">auto</span> fun1 = [=] &#123;<span class="keyword">return</span> a + b; &#125;;   <span class="comment">//值传递捕捉父作用域变量</span></span><br><span class="line"> <span class="number">7</span>     <span class="built_in">cout</span> &lt;&lt; fun1() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//12</span></span><br><span class="line"> <span class="number">8</span>     <span class="keyword">auto</span> fun2 = [&amp;](<span class="keyword">int</span> c) &#123;b = a + c; a = <span class="number">1</span>; &#125;;    <span class="comment">//省略了返回值类型，引用捕获所有</span></span><br><span class="line"> <span class="number">9</span>     fun2(<span class="number">3</span>);    <span class="comment">//1 8</span></span><br><span class="line"><span class="number">10</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt;<span class="string">" "</span>&lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="number">11</span>     a = <span class="number">5</span>; b = <span class="number">7</span>;   <span class="comment">//被修改后，重新赋值</span></span><br><span class="line"><span class="number">12</span>     <span class="keyword">auto</span> fun3 = [=, &amp;b](<span class="keyword">int</span> c) <span class="keyword">mutable</span> &#123;b = a + c; a = <span class="number">1</span>; &#125;;    <span class="comment">//以值传递捕捉的变量，在函数体里如果要修改，要加mutaple,因为默认const修饰</span></span><br><span class="line"><span class="number">13</span>     fun3(<span class="number">3</span>);</span><br><span class="line"><span class="number">14</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">" "</span> &lt;&lt;b&lt;&lt; <span class="built_in">endl</span>;    <span class="comment">//5,8</span></span><br><span class="line"><span class="number">15</span>     a = <span class="number">5</span>; b = <span class="number">7</span>;   <span class="comment">//被修改后，重新赋值</span></span><br><span class="line"><span class="number">16</span>     <span class="keyword">auto</span> fun4 = [=](<span class="keyword">int</span> x, <span class="keyword">int</span> y) <span class="keyword">mutable</span>-&gt;<span class="keyword">int</span> &#123;a += x; b += y; <span class="keyword">return</span> a + b; &#125;;</span><br><span class="line"><span class="number">17</span>     <span class="keyword">int</span> t = fun4(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line"><span class="number">18</span>     <span class="built_in">cout</span> &lt;&lt; t &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//42</span></span><br><span class="line"><span class="number">19</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt;<span class="string">" "</span>&lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;    <span class="comment">//5 7</span></span><br><span class="line"><span class="number">20</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">21</span> &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/14/lambda/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-this与callee与caller" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -340,14 +401,14 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="指针与数组"><a href="#指针与数组" class="headerlink" title="指针与数组"></a>指针与数组</h1><p>在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> (*p)[<span class="built_in">n</span>];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int (*p)[n];</span><br></pre></td></tr></table></figure>
 
 <p>根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针；</p>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> *p[<span class="built_in">n</span>];</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int *p[n];</span><br></pre></td></tr></table></figure>
 
 <p>根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明数组里的元素是指针，再加上int,知道p数组里的元素是指向int类型的指针;</p>
 <p>数组和指针是两种不同的类型，数组具有确定数量的元素，而指针只是一个标量值，数<strong>组可以在某些情况下转换为指针，当数组名在表达式中使用时，编译器会把数组名转换为一个指针常量，是数组中的第一个元素的地址</strong>，类型就是数组元素的地址类型，如：</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a[<span class="number">5</span>]=&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;; </span><br><span class="line">int * p = a;<span class="comment">// 等价于int * p = &amp;a[0]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a[5]=&#123;0,1,2,3,4&#125;; </span><br><span class="line">int * p = a;// 等价于int * p = &amp;a[0]</span><br></pre></td></tr></table></figure>
 
 <p>指针实际上存储的是目标元素的地址，上式中当试图将一个数组赋值给指针时，编译器就会将数组名转换为一个指针常量，指向数组中的第一个元素。</p>
 <p><strong>指针与数组的区别</strong></p>
@@ -355,19 +416,19 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX = <span class="number">3</span>;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">int</span>  var[MAX] = &#123;<span class="number">10</span>, <span class="number">100</span>, <span class="number">200</span>&#125;;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MAX; i++)</span><br><span class="line">   &#123;</span><br><span class="line">      *var = i;    <span class="comment">// 这是正确的语法</span></span><br><span class="line">      var++;       <span class="comment">// 这是不正确的</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>数组名实际上就是指向数组开头元素的指针常量</strong>，因此不能作为左值，他指向的地址不会变，但该地址存放的值可以改变。把指针运算符*运用到var上是完全可以的，但修改var的值是非法的。</p>
-<h6 id="数组与指针下标引用"><a href="#数组与指针下标引用" class="headerlink" title="数组与指针下标引用"></a>数组与指针下标引用</h6><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int A[] = &#123; <span class="number">5</span>,  <span class="number">3</span>, <span class="number">2</span>, <span class="number">9</span>, <span class="number">44</span>, <span class="number">10</span>, <span class="number">11</span> &#125;;</span><br><span class="line">int* p = A;</span><br><span class="line">cout &lt;&lt; <span class="number">3</span>[p];</span><br><span class="line">cout &lt;&lt; p[<span class="number">3</span>];</span><br><span class="line">cout &lt;&lt; *(p + <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<h6 id="数组与指针下标引用"><a href="#数组与指针下标引用" class="headerlink" title="数组与指针下标引用"></a>数组与指针下标引用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int A[] = &#123; 5,  3, 2, 9, 44, 10, 11 &#125;;</span><br><span class="line">int* p = A;</span><br><span class="line">cout &lt;&lt; 3[p];</span><br><span class="line">cout &lt;&lt; p[3];</span><br><span class="line">cout &lt;&lt; *(p + 3);</span><br></pre></td></tr></table></figure>
 
 <p>三条式子都输出为9，前两条表达式看起来有点奇葩，特别是第一条，但实际上3[p]是等价于*（p+3）的，c++中当指针指向一个数组后，可以通过该指针调用数组，即指针等同于数组名。</p>
 <p>根据这个规则还有更奇葩的用法</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">	int aa[<span class="number">2</span>][<span class="number">5</span>] = &#123; <span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,</span><br><span class="line"></span><br><span class="line">						  <span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span> &#125;;</span><br><span class="line">	cout &lt;&lt; <span class="number">1</span>[aa][<span class="number">2</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">	int aa[2][5] = &#123; 0,1,2,3,4,</span><br><span class="line"></span><br><span class="line">						  5,6,7,8,9 &#125;;</span><br><span class="line">	cout &lt;&lt; 1[aa][2];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>1[aa][2] [2],先看1[aa]就是<em>（1+aa）即指向二维数组的第二行元素，1[aa][2] [2] 就是</em> <em>(</em>(1+aa)+2)，也就是aa[1 ][2] </p>
 <p>这个用法看起来十分别扭，实际中并不会这样使用</p>
 <h6 id="数组与指针的定义和声明"><a href="#数组与指针的定义和声明" class="headerlink" title="数组与指针的定义和声明"></a>数组与指针的定义和声明</h6><p>设test1.cpp中有如下定义：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> s[]=<span class="string">"abcdefg"</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">char s[]=&quot;abcdefg&quot;;</span><br></pre></td></tr></table></figure>
 
 <p>test2.cpp中有如下声明：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">char</span> *s;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extern char *s;</span><br></pre></td></tr></table></figure>
 
 <p>调用s[3],会出现怎样的结果呢</p>
 <p>（1）从s代表的地址单元的取出内容（4个字节），这里实际上是数组s中的前4个元素，这个值是“abcd”，也就是16进制64636261h，到这一步应该就能看出来问题了；</p>
