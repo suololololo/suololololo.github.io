@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | 壴加亻夋的博客</title>
+  <title>LinearRegression | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="壴加亻夋的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2020/page/2/index.html">
+  <meta name="description" content="线性回归 线性回归模型即为 y=wx , 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。那怎样才叫满足呢？我们定义一个损失函数 12&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&amp;quot;&amp;gt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LinearRegression">
+<meta property="og:url" content="http://yoursite.com/2020/10/29/LinearRegression/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
+<meta property="og:description" content="线性回归 线性回归模型即为 y=wx , 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。那怎样才叫满足呢？我们定义一个损失函数 12&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&amp;quot;&amp;gt">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-10-29T07:42:23.329Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="壴加亻夋的博客">
+<meta name="twitter:title" content="LinearRegression">
+<meta name="twitter:description" content="线性回归 线性回归模型即为 y=wx , 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。那怎样才叫满足呢？我们定义一个损失函数 12&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&amp;quot;&amp;gt">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -150,122 +154,169 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-LinearRegression" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/13/pipelineRdt/" class="archive-article-date">
-  	<time datetime="2020-07-13T12:10:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/13/pipelineRdt/">流水线可靠数据传输协议</a>
+    <h1 class="article-title" itemprop="name">
+      LinearRegression
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/13/rdt/" class="archive-article-date">
-  	<time datetime="2020-07-13T07:11:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
+        
+        <a href="/2020/10/29/LinearRegression/" class="archive-article-date">
+  	<time datetime="2020-10-29T07:08:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/13/rdt/">可靠数据传输原理</a>
-    </h1>
-  
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>线性回归</strong></p>
+<p>线性回归模型即为 y=wx , 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。那怎样才叫满足呢？我们定义一个损失函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt;&lt;/script&gt;</span><br><span class="line">$$ loss= \frac&#123; \left\|y-Xw \right\|_2^2&#125;&#123;2N&#125; = \frac&#123;(y-Xw)^&#123;T&#125;(y-Xw)&#125;&#123;2N&#125; $$</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+<p>上式对w求偏导，并令其为0，求loss函数的最小值，这样求得的w就是最满足数据的参数，将这个参数带回模型就可以得到想要的模型， 但是这样的求法存在着 <strong>偏导数为0无法求出解析解，或损失函数不是处处可导，或者解析解太耗时，特征空间维度太高的问题</strong> ， 所以大部分时候是采用梯度下降的方法。</p>
+<p><strong>随机梯度下降</strong></p>
+<p>loss沿负梯度方向下降最快，于是随机选择一个初始点，朝这个点的负梯度方向前进一定的距离，到达一个新的点，重复这个过程，持续超负梯度方向前进，最终达到一个局部最小值，如果loss函数是凸函数，即是最小值。</p>
+<p>表示为w = w-lr*G   ， lr为学习率， G为梯度大小 </p>
+<p>迭代的进行参数更新。</p>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/10/29/LinearRegression/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/14/lambda/" class="archive-article-date">
-  	<time datetime="2020-02-14T08:24:08.263Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-14</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/13/this与callee与caller/" class="archive-article-date">
-  	<time datetime="2020-02-13T08:10:14.121Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-13</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+  
+    <a href="/2020/10/21/pytorch杂记2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">pytorch杂记2</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+        
+    </div>
+</aside>
+
+
+
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2020/">&laquo; Prev</a><a class="page-number" href="/archives/2020/">1</a><span class="page-number current">2</span>
-    </nav>
   
+
+  
+
+  
+
+
 
 
           </div>
@@ -297,8 +348,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

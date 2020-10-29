@@ -152,6 +152,153 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-LinearRegression" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/29/LinearRegression/">LinearRegression</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/29/LinearRegression/" class="archive-article-date">
+  	<time datetime="2020-10-29T07:08:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>线性回归</strong></p>
+<p>线性回归模型即为 y=wx , 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。那怎样才叫满足呢？我们定义一个损失函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt;&lt;/script&gt;</span><br><span class="line">$$ loss= \frac&#123; \left\|y-Xw \right\|_2^2&#125;&#123;2N&#125; = \frac&#123;(y-Xw)^&#123;T&#125;(y-Xw)&#125;&#123;2N&#125; $$</span><br></pre></td></tr></table></figure>
+
+<p>上式对w求偏导，并令其为0，求loss函数的最小值，这样求得的w就是最满足数据的参数，将这个参数带回模型就可以得到想要的模型， 但是这样的求法存在着 <strong>偏导数为0无法求出解析解，或损失函数不是处处可导，或者解析解太耗时，特征空间维度太高的问题</strong> ， 所以大部分时候是采用梯度下降的方法。</p>
+<p><strong>随机梯度下降</strong></p>
+<p>loss沿负梯度方向下降最快，于是随机选择一个初始点，朝这个点的负梯度方向前进一定的距离，到达一个新的点，重复这个过程，持续超负梯度方向前进，最终达到一个局部最小值，如果loss函数是凸函数，即是最小值。</p>
+<p>表示为w = w-lr*G   ， lr为学习率， G为梯度大小 </p>
+<p>迭代的进行参数更新。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/29/LinearRegression/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-pytorch杂记2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/21/pytorch杂记2/">pytorch杂记2</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/21/pytorch杂记2/" class="archive-article-date">
+  	<time datetime="2020-10-21T11:36:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-21</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>一些常用函数</strong></p>
+<p>torch.cat: 将两个张量拼接起来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">a  = torch.randn(2,3)</span><br><span class="line">b = torch.randn(4,3)</span><br><span class="line">c = torch.cat((a,b),dim=0)  #dim = 0 , 代表按行拼接, dim=1 ,代表按照列拼接</span><br><span class="line">print(c)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;tensor([[-2.4133,  0.9273, -1.7999],</span><br><span class="line">        [-0.8778, -0.9217,  1.9684],</span><br><span class="line">        [ 0.7688,  2.3844,  1.5250],</span><br><span class="line">        [ 1.0025,  0.2864, -0.3318],</span><br><span class="line">        [ 0.5948, -0.2036, -0.5568],</span><br><span class="line">        [ 1.9656, -0.0477, -0.7944]])</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/21/pytorch杂记2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-pytorch杂记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -956,252 +1103,9 @@
 
 
   
-    <article id="post-pipelineRdt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/13/pipelineRdt/">流水线可靠数据传输协议</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/13/pipelineRdt/" class="archive-article-date">
-  	<time datetime="2020-07-13T12:10:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能</p>
-<p>采取流水线技术的可靠数据传输协议必须具有以下条件：</p>
-<p>1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题</p>
-<p>2.协议的发送方和接收方两端必须缓存多个分组</p>
-<p>3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。</p>
-<p>解决流水线的差错的两种基本方法</p>
-<p>1.回退N步 2.选择重传</p>
-<h4 id="回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）"><a href="#回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）" class="headerlink" title="回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）"></a>回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）</h4><img src="/2020/07/13/pipelineRdt/GBN.jpg">
-
-<p><img src="/pipelineRdt/GBN.jpg" alt></p>
-<p>基序号base 定义为最早未被确认分组的序号，即图中4号</p>
-<p>下一个序号nextseqnum定义为最小未使用序号，即图中7号</p>
-<p>窗口长度N为基序号到最大可使用序号直接的距离，以上图为例，即为6</p>
-<p>每当基序号得到确认，窗口就会向右移动。在实践中，一个分组的序号承载在分组首部的一个固定长度的字段中。如果分组序号字段的比特数是k，则该序号范围是0到2的k次方  -1.因此序号的运算必须使用模2的k次方运算。 即把序号空间看成一个首位相连长度为2的k次方的环。</p>
-<h6 id="GBN发送方响应的事件"><a href="#GBN发送方响应的事件" class="headerlink" title="GBN发送方响应的事件"></a>GBN发送方响应的事件</h6><p>1.上层调用。当上层调用时，发送方检查发送窗口是否已经满了，即是否有N个已发送但未确认的分组。如果未满则产生一个分组发送，并相应更新变量。如果窗口已满，发送方将数据返回上层，隐式地指示上层该窗口已满</p>
-<p>2.收到一个ACK。在GBN协议中<strong>采用累积确认的方式，即收到序号为n的分组的确认，表明接收方已经正确接收到n以前包括n的所有分组</strong></p>
-<p>3.超时事件。当发生ACK超时确认时，发送方重传所有已经发送但还未被确认的分组，即base到nextseqnum的所有分组</p>
-<h6 id="接收方"><a href="#接收方" class="headerlink" title="接收方"></a>接收方</h6><p>如果一个序号为n的分组被正确接收到，并且n的按序的，则接收方为分组n发送一个ACK，并将该分组中的数据部分交付到上层。<strong>其他所有情况下，接收方直接丢弃该分组,并且重新发送最近按需接收分组的ACK</strong></p>
-<p><strong>为什么不将乱序的未接收的分组先缓存下来？</strong></p>
-<p>假定现在期望接收分组n，但是n+1分组却到了，接收方把n+1分组缓存下来，等到接收到分组n，将n+1和n一起交付给上层。然而，加入分组n丢失了，触发了重传规则n和n之后的分组都要重传。这样看来，接收方就没有必要缓存n+1分组。不仅如此，GBN下的接收不需要缓存任何失序分组.这种方法的优点是，<strong>接收缓存简单，接收方不需要缓存任何失序分组</strong>，丢弃正确接收分组的缺点，<strong>随后对该分组的重传可能也会丢失或出错，导致更多的重传</strong></p>
-<img src="/2020/07/13/pipelineRdt/gbn_example.png">
-
-<p><img src="/pipelineRdt/gbn_example.png" alt></p>
-<p>GBN协议 在窗口长度和带宽时延积很大时，某一个分组的出错，会导致大量的重传</p>
-<h4 id="选择重传-Selective-Repeat"><a href="#选择重传-Selective-Repeat" class="headerlink" title="选择重传 Selective Repeat"></a>选择重传 Selective Repeat</h4><p>选择重传让发送方仅重传它怀疑在接收方出错的分组 而避免不必要的重传</p>
-<img src="/2020/07/13/pipelineRdt/sr.jpg">
-
-<p><img src="/pipelineRdt/sr.jpg" alt></p>
-<p><strong>发送方的事件：</strong></p>
-<p>​    1.从上层接收数据。从上层接收到数据后，SR发送方检查下一个可用于该分组的序号。如果序号位于可发送窗口内，则将数据打包并发送。否则将数据缓存 或者返回给上层</p>
-<p>​    2.超时。每个分组拥有自己的逻辑定时器，所以当定时器超时时，可以判断是哪个分组出了问题</p>
-<p>​    3.收到ACK。如果收到的ACK在窗口内，则发送方将那个被确认的分组标记为已接收。 如果分组序号等于send_base，则将窗口基序号向前移动到最小序号的未确认分组处。 如果窗口移动了，且有序号落在窗口内未发送分组 ，则发送这些分组</p>
-<p><strong>接收方的事件</strong></p>
-<p>SR接收方会确认一个正确接收的分组而不管是否按顺序。失序的分组会被缓存直到序号更小的分组都被接收为止</p>
-<p>1.序号在[rcv_base,rcv_base+N-1]内的分组被正确接收。接收方返回一个ACK。如果该分组之前未收到，则缓存该分组。如果分组序号等于rcv_base，则窗口向前移动到最小序号的期望收到分组处，并将该分组以及之前缓存的序号连续且起始于rcv_base的分组交付给上层。如果分组序号不等于rcv_base，则缓存该分组</p>
-<p>2<strong>.序号在[rcv_base-N,rcv_base-1]内分组被正确收到。产生并返回一个ACK</strong></p>
-<p>3.其他情况，忽略该分组</p>
-<p>上面的第二个事件说明，接收方会重新确认之前以及收到的且不在窗口内的分组。</p>
-<img src="/2020/07/13/pipelineRdt/sr_example.png">
-
-<p><img src="/pipelineRdt/sr_example.png" alt></p>
-<p><strong>窗口大小选择</strong></p>
-<img src="/2020/07/13/pipelineRdt/size.jpg">
-
-<p><img src="/pipelineRdt/size.jpg" alt></p>
-<p>在这个例子中，有四个分组序号 0、1、2、3 且窗口长度为 3。假定发送了分组 0 至 2，并且接收方被正确接收且确认了。此时，接收方窗口落在 4、5、6 个分组上，其序号分别为 3、0、1.现在考虑两种情况。</p>
-<p>在第一种情况下，如上图中的 a 图所示，对前 3 个分组的 ACK 丢失，因此发送方重传这些分组。因此，接收方下一步要接收序号为 0 的分组，即第一个发送分组的副本。</p>
-<p>在第二种情况下，如上图中的 b 图所示，对前 3 个分组的 ACK 都被正确交付。因此发送方向前移动窗口并发送第 4、5、6 个分组，其序号分别为 3、0、1.序号为 3 的分组丢失，但序号为 0 的分组到达（一个包含新数据的分组）。</p>
-<p>显然，接收方并不知道发送方那边出现了什么问题，对于接收方自己来说，上面两种情况是<strong>等价</strong>的。没有办法区分是第一个分组的重传还是第 5 个分组的初次传输。所以，窗口长度比序号空间小 1 时协议无法正常工作。但窗口应该有多小呢？</p>
-<p>答案是：<strong>窗口长度必须小于或等于序号空间大小的一半</strong>。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/13/pipelineRdt/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-rdt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/13/rdt/">可靠数据传输原理</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/13/rdt/" class="archive-article-date">
-  	<time datetime="2020-07-13T07:11:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="1-经完全可靠信道的可靠数据传输-rdt1-0"><a href="#1-经完全可靠信道的可靠数据传输-rdt1-0" class="headerlink" title="1.经完全可靠信道的可靠数据传输 rdt1.0"></a>1.经完全可靠信道的可靠数据传输 rdt1.0</h5><p>在这种情况下，先假设底层信道是完全可靠的，即运输层提供可靠信道，不会产生错误，不会丢弃分组</p>
-<p>即</p>
-<img src="/2020/07/13/rdt/rdt1.jpg" title="rdt1">
-
-<p><img src="/rdt/rdt1.jpg" alt></p>
-<p>状态机如下图</p>
-<img src="/2020/07/13/rdt/FSM1.jpg">
-
-<p><img src="//yoursite.com/2020/07/13/rdt/D:%5CHexo%5Csource_posts%5Crdt%5CFSM1.jpg" alt></p>
-<p>在发送端，通过rdt_send(data)来等待上层的调用，然后产生一个包含该数据的分组，并发送到信道中</p>
-<p>在接收方，通过rdt_rcv(packet)来等待下层的调用，然后从packet中取出数据，并将数据上传给应用层</p>
-<h5 id="2-经具有比特差错信道的可靠传输-rdt2-0"><a href="#2-经具有比特差错信道的可靠传输-rdt2-0" class="headerlink" title="2.经具有比特差错信道的可靠传输 rdt2.0"></a>2.经具有比特差错信道的可靠传输 rdt2.0</h5><p>采用差错检测，接收方反馈和重传来保证数据传输的可靠性</p>
-<img src="/2020/07/13/rdt/FSM2.jpg">
-
-<p><img src="/rdt/FSM2.jpg" alt></p>
-<p>发送方：初始状态，等待上层调用发送数据，调用后，发送方产生并发送一个包含待发送数据的分组，且包含校验和。然后进入状态2，等待ACK确认或NAK确认。</p>
-<p>如果接收到分组且为ACK确认则说明最近发送的分组已经被正确接收， 进入状态1，等待上层调用</p>
-<p>如果接收到分组且为NAK确认则说最近发送的分组没有被正确接收，重传该分组，继续等待</p>
-<p>接收方：当接收到分组且分组受损，则返回一个NAK回答</p>
-<p>​                当接收到分组且分组正常，则返回从中取出数据，上传给应用层，并返回一个ACK回答</p>
-<p>这样的协议是一个<strong>停等</strong>协议，因为只有在发送方收到ACK回答时，才能从上层获得更多数据进行传输，否则只会继续等待。</p>
-<p>这个协议存在一个关键性问题，如果回答的ACK分组和NAK分组受损，则无法知道十分正确收到了数据</p>
-<h5 id="3-经具有比特差错信道的可靠传输-rdt2-1"><a href="#3-经具有比特差错信道的可靠传输-rdt2-1" class="headerlink" title="3.经具有比特差错信道的可靠传输 rdt2.1"></a>3.经具有比特差错信道的可靠传输 rdt2.1</h5><p>解决rdt2.0的方法：1.增加足够的检验和比特 2.当收到受损ACK和NAK时，直接选择重传3.增加控制信令。<br>即发送方请求接收方重复ACK或NAK分组。但新的控制信令也可能受损。</p>
-<p>采用方法2出现的问题是，接收方无法知道发送方发送的分组是重传的分组还是新的分组。  </p>
-<p>解决办法：给分组进行编号</p>
-<img src="/2020/07/13/rdt/FSM31.jpg">
-
-<p><img src="/rdt/FSM31.jpg" alt></p>
-<p>发送方：初始状态 ，等待上层调用rdt_send(data)发送数据， 产生并发送一个带有序号0，数据和校验和的分组。进入下一状态，等待ACK或NAK0,发送方接受到响应报文且报文损坏或者为NAK回答，则重传分组，直到接收到响应报文且报文为正常且为ACK回答，则进入下一状态. 然后继续等待上层调用rdt_send(data)发送数据，产生并发送一个带有序号1，数据和校验和的分组。进入下一状态，等待ACK或NAK1，发送方接受到响应报文且报文损坏或者为NAK回答，则重传分组，直到接收到响应报文且报文为正常且为ACK回答，则回到初始状态。</p>
-<p><strong>这里可能会有个疑问，仅仅只有两个序号0和1就够了吗？</strong>答案是够的，因为对于这种停等协议 ，这里只需区分出发送方是否正在重传前一个分组</p>
-<img src="/2020/07/13/rdt/FSM3.webp">
-
-<p><img src="/rdt/FSM3.webp" alt></p>
-<p>接收方这里需要判断分组是否重复，并且当前所处状态提供了期望收到分组的序列号</p>
-<h5 id="rdt2-2"><a href="#rdt2-2" class="headerlink" title="rdt2.2"></a>rdt2.2</h5><p>我们将rdt2.1中NAK改为对上一次正确接收分组的ACK，也可以实现一样的效果。即发送方只要收到对上一次分组的ACK，说明当前分组没有被正确接收。发送方如果接收到两个一样的ACK，就说明接收方没有正确接收到跟在被确认两次的分组后面的分组。</p>
-<img src="/2020/07/13/rdt/FSM32.jpg">
-
-<p><img src="/rdt/FSM32.jpg" alt></p>
-<img src="/2020/07/13/rdt/FSM33.jpg">
-
-<p><img src="/rdt/FSM33.jpg" alt></p>
-<h5 id="4-经具有比特差错的丢包信道的可靠数据传输-rdt3-0"><a href="#4-经具有比特差错的丢包信道的可靠数据传输-rdt3-0" class="headerlink" title="4.经具有比特差错的丢包信道的可靠数据传输 rdt3.0"></a>4.经具有比特差错的丢包信道的可靠数据传输 rdt3.0</h5><p>只需在rdt2.2的基础上 解决丢包问题即可</p>
-<p>解决办法：确定一个时间值，在这个时间值内接收方没有收到ACK，则重传该分组。</p>
-<p>为了实现基于时间的重传机制，需要一个倒计时定数器，在一个给定的时间过期后，可中断发送方。因此，发送方需要做到：1.每次发送一个分组时，包括第一次分组和重传分组，便启动一个定时器. 2响应定时器中断3.终止定时器</p>
-<p>状态机如下</p>
-<img src="/2020/07/13/rdt/rdt3.jpg">
-
-<p><img src="/rdt/rdt3.jpg" alt></p>
-<img src="/2020/07/13/rdt/FSM41.webp">
-
-<p><img src="/rdt/FSM41.webp" alt></p>
-<img src="/2020/07/13/rdt/FSM41.webp">
-
-<p><img src="/rdt/FSM42.webp" alt></p>
-<h5 id="rdt3-0的效率"><a href="#rdt3-0的效率" class="headerlink" title="rdt3.0的效率"></a>rdt3.0的效率</h5><p>1Gbps的链路，发送一个分组8000比特，15ms端到端传播时延</p>
-<h6 id="一个分组进入1Gps链路的实际时间："><a href="#一个分组进入1Gps链路的实际时间：" class="headerlink" title="一个分组进入1Gps链路的实际时间："></a>一个分组进入1Gps链路的实际时间：</h6><p>8000/10的9次方 =0.008s</p>
-<h6 id="发送发接收到ACK的时间："><a href="#发送发接收到ACK的时间：" class="headerlink" title="发送发接收到ACK的时间："></a>发送发接收到ACK的时间：</h6><p>15+0.008+15=30.008s</p>
-<h6 id="发送方的利用率："><a href="#发送方的利用率：" class="headerlink" title="发送方的利用率："></a>发送方的利用率：</h6><p>0.008/30.008 = 0.00027</p>
-<p>利用率非常低 ，主要原因就是因为协议是停等协议</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/13/rdt/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
