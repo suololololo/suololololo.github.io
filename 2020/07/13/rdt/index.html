@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://yoursite.com/rdt/FSM41.webp">
 <meta property="og:image" content="http://yoursite.com/2020/07/13/rdt/FSM41.webp">
 <meta property="og:image" content="http://yoursite.com/rdt/FSM42.webp">
-<meta property="og:updated_time" content="2020-07-15T08:28:34.209Z">
+<meta property="og:updated_time" content="2020-10-29T07:48:37.178Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="可靠数据传输原理">
 <meta name="twitter:description" content="1.经完全可靠信道的可靠数据传输 rdt1.0在这种情况下，先假设底层信道是完全可靠的，即运输层提供可靠信道，不会产生错误，不会丢弃分组 即    状态机如下图    在发送端，通过rdt_send(data)来等待上层的调用，然后产生一个包含该数据的分组，并发送到信道中 在接收方，通过rdt_rcv(packet)来等待下层的调用，然后从packet中取出数据，并将数据上传给应用层 2.经具有比">
@@ -209,7 +209,9 @@
 <p><img src="//yoursite.com/2020/07/13/rdt/D:%5CHexo%5Csource_posts%5Crdt%5CFSM1.jpg" alt></p>
 <p>在发送端，通过rdt_send(data)来等待上层的调用，然后产生一个包含该数据的分组，并发送到信道中</p>
 <p>在接收方，通过rdt_rcv(packet)来等待下层的调用，然后从packet中取出数据，并将数据上传给应用层</p>
-<h5 id="2-经具有比特差错信道的可靠传输-rdt2-0"><a href="#2-经具有比特差错信道的可靠传输-rdt2-0" class="headerlink" title="2.经具有比特差错信道的可靠传输 rdt2.0"></a>2.经具有比特差错信道的可靠传输 rdt2.0</h5><p>采用差错检测，接收方反馈和重传来保证数据传输的可靠性</p>
+<h5 id="2-经具有比特差错信道的可靠传输-rdt2-0"><a href="#2-经具有比特差错信道的可靠传输-rdt2-0" class="headerlink" title="2.经具有比特差错信道的可靠传输 rdt2.0"></a>2.经具有比特差错信道的可靠传输 rdt2.0</h5><a id="more"></a>
+
+<p>采用差错检测，接收方反馈和重传来保证数据传输的可靠性</p>
 <img src="/2020/07/13/rdt/FSM2.jpg">
 
 <p><img src="/rdt/FSM2.jpg" alt></p>

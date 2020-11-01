@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/15/routerArchitecture/exchange1.jpg">
 <meta property="og:image" content="http://yoursite.com/routerArchitecture/exchange1.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/07/15/routerArchitecture/ouput.png">
-<meta property="og:updated_time" content="2020-07-16T02:48:59.378Z">
+<meta property="og:updated_time" content="2020-10-29T07:48:55.522Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="路由器工作原理">
 <meta name="twitter:description" content="路由器的体系结构     输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能， 执行与位于入链路远端的数据链路层交互的数据链路层功能。在3部分实现查找功能，查询转发表决定路由器的输出端口 交换结构。实现将分组从一个输入端口交换到一个输出端口中 输出端口。存储从交换结构接收的分组，并执行必要的链路层和物理层功能在输入链路上传输这些分组 路由选择处理器。执行路由选择协议免维护路由选择表以及连">
@@ -199,6 +199,8 @@
 <img src="/2020/07/15/routerArchitecture/input.png">
 
 <p><img src="/routerArchitecture/input.png" alt></p>
+<a id="more"></a>
+
 <p>输入端口的物理层处理主要是线路端接功能，而数据链路层处理对应数据链路处理（协议，拆封）</p>
 <p>路由选择处理器的转发表的影子副本通常会存放在每个输入端口，因此，每个输入端口通过查询转发表，来查找分组对应的输出端口，使到达的分组将经过交换结构转发到该输出端口</p>
 <p><strong>交换结构</strong></p>

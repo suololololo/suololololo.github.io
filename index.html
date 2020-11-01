@@ -152,6 +152,144 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-LeetCode题目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/31/LeetCode题目/">LeetCode题目</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/31/LeetCode题目/" class="archive-article-date">
+  	<time datetime="2020-10-31T02:22:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-31</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>深度优先搜索</strong></p>
+<img src="/2020/10/31/LeetCode题目/1.png">
+        
+          <a class="article-more-a" href="/2020/10/31/LeetCode题目/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/31/LeetCode题目/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-AdaBoost" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/30/AdaBoost/">AdaBoost</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/30/AdaBoost/" class="archive-article-date">
+  	<time datetime="2020-10-30T11:39:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-30</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/30/AdaBoost/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-LinearRegression" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -409,21 +547,9 @@
 <img src="/2020/10/19/java多线程/image-20201019190335553.png">
 
 <p>没有进行资源同步时，两个线程的执行没有达到互斥的效果，且5张票被卖了8次</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span>  <span class="keyword">int</span> ticket = <span class="number">5</span> ;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i  = <span class="number">0</span> ;  i &lt;<span class="number">100</span> ; i++) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (ticket &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        Thread.sleep(<span class="number">500</span>);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    &#125;</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">"卖票， ticket = "</span> + ticket--);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        MyThread myThread = <span class="keyword">new</span> MyThread();</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(myThread,<span class="string">"线程1"</span>);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(myThread,<span class="string">"线程2"</span>);</span><br><span class="line">        t2.start();</span><br><span class="line">        t1.start();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/10/19/java多线程/2.png">
-
-<p>同步过后，两个线程的执行就达到了互斥效果，同步类似于给资源上锁的概念</p>
-<p>同步关键字的使用</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span>(同步对象)｛ </span><br><span class="line">    需要同步的代码 </span><br><span class="line"> ｝</span><br><span class="line">    </span><br><span class="line"> <span class="keyword">synchronized</span> 方法返回值 方法名称（参数列表）｛ </span><br><span class="line"> ｝</span><br></pre></td></tr></table></figure>
-
-<p>死锁</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="keyword">implements</span>  <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span>  <span class="keyword">static</span>  zhangsan zs =<span class="keyword">new</span> zhangsan();</span><br><span class="line">    <span class="keyword">private</span>  <span class="keyword">static</span>  lisi ls = <span class="keyword">new</span> lisi();</span><br><span class="line">    <span class="keyword">private</span>  <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (flag)&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (zs)&#123;</span><br><span class="line">            zs.say();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (InterruptedException e)&#123;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">synchronized</span> (ls)&#123;</span><br><span class="line">                zs.get();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (ls)&#123;</span><br><span class="line">            ls.say();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (InterruptedException e)&#123;&#125;</span><br><span class="line">            <span class="keyword">synchronized</span> (zs)&#123;</span><br><span class="line">                ls.get();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        MyThread myThread = <span class="keyword">new</span> MyThread();</span><br><span class="line">        MyThread myThread1 = <span class="keyword">new</span> MyThread();</span><br><span class="line">        myThread.flag = <span class="keyword">true</span>;</span><br><span class="line">        myThread1.flag = <span class="keyword">false</span>;</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(myThread,<span class="string">"线程1"</span>);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(myThread1,<span class="string">"线程2"</span>);</span><br><span class="line">        t2.start();</span><br><span class="line">        t1.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/10/19/java多线程/3.png">
-
-<p>张三和李四都在等待对方释放资源</p>
-
+        
+          <a class="article-more-a" href="/2020/10/19/java多线程/#more">more >></a>
+        
       
 
       
@@ -764,63 +890,9 @@
 <p>同一个网络上的两台主机之间通信时，该网络的MTU值是确定的，不存在分片问题。分片问题一般只存在于具有不同MTU值的互联网中。</p>
 <p>假设一台互联几条链路的路由器，且每条链路运行具有不同MTU的链路层协议，当输入链路与输出链路的MTU不同，且输出链路的MTU更小，就可能面临分片问题。</p>
 <p>当生成数据报时，发送主机会为数据报贴上标识号，且通常将为它发送的每个数据报的标识号加1。</p>
-<p><strong>路由器对数据报形成分片：</strong></p>
-<p>形成的每个片具有初始数据报的源地址，目的地址与标识号。<strong>目的主机通过检查相同的标识号组装片</strong>，且数据报的最后一个片的标志比特设为0，所有其他片设为1。<strong>主机通过偏移量确定组装顺序</strong>。</p>
-<p>例子：一个4000字节数据报，到达一台路由器，被转发到MTU为1500字节的链路，怎么分片？假设初始数据的标识号为777。</p>
-<table>
-<thead>
-<tr>
-<th>片</th>
-<th>字节</th>
-<th>ID标识号</th>
-<th>偏移</th>
-<th>标志</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>第1片</td>
-<td>1480字节数据+20字节首部</td>
-<td>777</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>第2片</td>
-<td>1480字节数据+20字节首部</td>
-<td>777</td>
-<td>185</td>
-<td>1</td>
-</tr>
-<tr>
-<td>第2片</td>
-<td>1020字节数据+20字节首部</td>
-<td>777</td>
-<td>370</td>
-<td>0</td>
-</tr>
-</tbody></table>
-<p><strong>偏移量是以8字节块为单位</strong>，因此表格中第2片，偏移量1480/8=185</p>
-<p>1480+1480+1020=3980</p>
-<p>IPv4编址</p>
-<p><strong>ip地址技术上是与一个接口相关联的，而不是与包括该接口的主机或路由器相关联的</strong>，也是说一个路由器或主机不一定只有一个ip地址。</p>
-<p>ip地址是用来唯一区分全球上的每个接口，是一个逻辑地址，ipv4地址长度为32比特，用点分十进制表示为0.0.0.0的格式</p>
-<img src="/2020/07/16/ipv4/ipv4.png">
-
-<p>地址分为三部分:类型标识，网络id和主机id。同一个子网下的接口的前两部分id是相同的。</p>
-<p>子网掩码：用来指明一个IP地址的哪些位标识的是主机所在的子网，以及哪些位标识的是主机的位掩码。必须结合ip地址使用。</p>
-<p>子网的数量可以通过，分开主机和路由器的每个接口，产生几个隔离的网络岛，使用接口端接这些隔离的网络的端点，这些隔离的网络中的每一个都叫做一个子网。</p>
-<p><strong>一台新到达的主机如何获得ip的地址呢？</strong></p>
-<p>使用即动态主机配置协议（Dynamic Host Configuration ），可以自动获取一个ip地址。</p>
-<p>工作过程具体如下：</p>
-<img src="/2020/07/16/ipv4/DHCP.jpg">
-
-<ul>
-<li>DHCP服务器发现。客户在UDP分组中相端口67发送发现报文，目的地址为广播地址255.255.255.255，源地址使用0.0.0.0，广播岛所有与该子网连接的子网</li>
-<li>DHCP服务器提供。子网中的DHCP服务器收到DHCP发现报文，用一个DHCP提供报文向客户作出响应，目的地址使用广播地址255.255.255.255，源地址写服务器地址。报文中包含收到的发现报文的事务id，向客户推荐的ip地址，网络掩码和ip地址租用期</li>
-<li>DHCP请求。客户从一个或多个服务器提供中选择一个，并向选中的服务器提供用一个DHCP请求报文进行响应，源地址仍为0.0.0.0，目的地址仍为255.255.255.255，并包含与提供报文相同的参数</li>
-<li>DHCP ACK。服务器用DHCP ACK报文对DHCP请求报文响应</li>
-</ul>
-
+        
+          <a class="article-more-a" href="/2020/07/16/ipv4/#more">more >></a>
+        
       
 
       
@@ -833,206 +905,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/07/16/ipv4/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-routerArchitecture" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/15/routerArchitecture/">路由器工作原理</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/15/routerArchitecture/" class="archive-article-date">
-  	<time datetime="2020-07-15T08:34:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>路由器的体系结构</strong></p>
-<img src="/2020/07/15/routerArchitecture/architeture.png">
-
-<p><img src="//yoursite.com/2020/07/15/routerArchitecture/architeture.png" alt></p>
-<ul>
-<li>输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能， 执行与位于入链路远端的数据链路层交互的数据链路层功能。在3部分实现查找功能，查询转发表决定路由器的输出端口</li>
-<li>交换结构。实现将分组从一个输入端口交换到一个输出端口中</li>
-<li>输出端口。存储从交换结构接收的分组，并执行必要的链路层和物理层功能在输入链路上传输这些分组</li>
-<li>路由选择处理器。执行路由选择协议免维护路由选择表以及连接的链路状态信息，并为路由器计算转发表。</li>
-</ul>
-<p><strong>输入端口</strong></p>
-<img src="/2020/07/15/routerArchitecture/input.png">
-
-<p><img src="/routerArchitecture/input.png" alt></p>
-<p>输入端口的物理层处理主要是线路端接功能，而数据链路层处理对应数据链路处理（协议，拆封）</p>
-<p>路由选择处理器的转发表的影子副本通常会存放在每个输入端口，因此，每个输入端口通过查询转发表，来查找分组对应的输出端口，使到达的分组将经过交换结构转发到该输出端口</p>
-<p><strong>交换结构</strong></p>
-<img src="/2020/07/15/routerArchitecture/exchange1.jpg">
-
-<p><img src="/routerArchitecture/exchange1.jpg" alt></p>
-<ul>
-<li>经内存交换。每个分组到达输入端口时，向路由选择处理器发送中断请求。路由选择处理响应请求后，将其复制到处理器内存中，从其首部提取目的地址，在转发表中找到适当的输出端口，并将分组复制到输出端口的缓存中。这种方式 <strong>无法同时转发两个分组，即使他们有不同的端口号，因为一次仅能执行一个内存读写</strong></li>
-<li>经总线交换。输入端口经一根共享总线将分组直接传送到输出端口，不需要路由选择处理器的干预。输入端口为分组预先计划一个交换机内部标签，指示本地输出端口，使分组在总线上传送和传输到输出端口，只有与该标签匹配的端口才能保存该分组。然后标签在输出端口被去除。 <strong>一次只能有一个分组能够跨越总线</strong></li>
-<li>经互联网络交换。交叉点通过交换结构控制器能在任何时候开启和闭合。当某分组到达端口A，需要转发到端口Y，交换机控制器闭合总线A和Y交叉部位的交叉点，然后端口A在其总线发送该分组。<strong>该纵横式网络能够并行转发多个来自不同输入端口和目的地为不同输出端口的分组</strong></li>
-</ul>
-<p><strong>输出端口</strong></p>
-<img src="/2020/07/15/routerArchitecture/ouput.png">
-
-<p>输出端口处理取出存放在输出端口内存中的分组 并将其发送到输出链路上。包括选择和取出排队的分组进行传输，执行所需的链路层和物理层传输功能</p>
-<p><strong>路由器排队情况</strong></p>
-<p>假设输入线路速度和输出线路速度是相同的，均为每秒R个分组，有N个输入端口和输出端口，所有分组具有相同的固定长度，分组以同步的方式到达输入端口，也就是说，在任何链路发送分组的时间等于在任何链路接收分组的时间。交换结构传输速率为每秒S个分组，假设S=NR，则交换结构1秒内可以处理NR个分组，最坏情况下，N个输入端口都在接收分组，且转发到相同的输出端口，输入端口也不会出现排队。<strong>但是输出端口就会出现严重排队</strong>，一秒内到达NR个分组，而每秒只能处理R个分组，且分组数量越来越多，最终耗尽输出端口的可用内存。</p>
-<p>路由器缓存长度经验设置为  <strong>缓存数量B 等于平均往返时延RTT乘以链路容量C</strong></p>
-<p>​                                                <strong>B = RTT *C</strong></p>
-<p>当有大量TCP流N流过一条链路时 B=RTT*C/根号N</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/15/routerArchitecture/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-tcp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/14/tcp/">TCP</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/14/tcp/" class="archive-article-date">
-  	<time datetime="2020-07-14T06:36:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-14</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="TCP报文格式"><a href="#TCP报文格式" class="headerlink" title="TCP报文格式"></a>TCP报文格式</h5><img src="/2020/07/14/tcp/format.png">
-
-<p><img src="//yoursite.com/2020/07/14/tcp/format.png" alt></p>
-<p>序号：该报文端首字节的字节流编号</p>
-<p><strong>确认号：主机期望收到的下一字节编号</strong></p>
-<p>接收窗口：指示接收方愿意接受的字节数量，用于流量控制</p>
-<h5 id="往返时间的估计和超时"><a href="#往返时间的估计和超时" class="headerlink" title="往返时间的估计和超时"></a>往返时间的估计和超时</h5><p>为什么要估计往返时间？因为我们要利用往返时间来确定超时时间，超时时间过长会导致丢失的分组，无法快速得到重传。超时时间过短会导致分组还没到达接收方就已经超时，导致不必要的重传</p>
-<p>报文段的样本RTT表示为SampleRTT是从某报文段被发出到对该报文的确认被收到之间的时间量</p>
-<p>大多数TCP仅在某个时刻做一次SampleRTT测量。TCP所维持的SampleRTT均值称为EstimatedRTT。</p>
-<p>EstimatedRTT=（1-α）EstimatedRTT+α*SampleRTT      α的参考值为0.125</p>
-<p>一旦获得一个新的SampleRTT，TCP就会根据上式来更新EstimatedRTT</p>
-<p>RTT偏差DevRTT</p>
-<p>​                DevRTT = (1-β)DevRTT + β*|SampleRTT-EstimatedRTT|  β推荐值为0.25</p>
-<h5 id="设置和管理重传超时间隔"><a href="#设置和管理重传超时间隔" class="headerlink" title="设置和管理重传超时间隔"></a>设置和管理重传超时间隔</h5><p> 超时间隔TimeoutInterval = EstimatedRTT + 4 *DevRTT</p>
-<h4 id="TCP的可靠数据传输"><a href="#TCP的可靠数据传输" class="headerlink" title="TCP的可靠数据传输"></a>TCP的可靠数据传输</h4><p>目的：确保一个进程从其接收缓存中读出的数据流是无损坏，无间隔，非冗余和按序的数据流，即该字节流与连接的另一方端系统发送出的字节流是完全相同的</p>
-<p>发送方主要事件：</p>
-<p>1.从上层应用程序接收数据。将数据封装在一个报文段中，并将该报文段交给ip。如果定时器没有为某些其他报文段而运行，则当报文段被传给ip时，TCP启动该定时器，定时器的超时间隔是TimeoutInterval</p>
-<p>2.超时。tcp通过重传来相应超时事件，重传具有最小序号的还未被确认的报文段</p>
-<p>3.收到ACK。<strong>TCP采用累计确认的方法</strong>，Tcp将收到的ACK值与最小的已发出但未被确认的序号进行比较。如果ACK值&gt;最小序号，则说明ACK值之前的所有分组已经被收到。因此发送方更新最小的已发出但未被确认的序号。如果当前还有未被确认的报文段，重启定时器</p>
-<p>接收方的主要事件：</p>
-<p>1.接收到报文段。若接收的报文段序号恰好为期望收到的报文段，返回下个期望收到的报文段ACK。若接收的报文段大于的已发出但未被确认的序号，且没有缓存过，则缓存该报文段。且返回期望收到的报文段的序号。</p>
-<h5 id="超时间隔加倍"><a href="#超时间隔加倍" class="headerlink" title="超时间隔加倍"></a>超时间隔加倍</h5><p>每次TCP重传时都会将下一次的超时间隔设为先前值得两倍</p>
-<h5 id="快速重传"><a href="#快速重传" class="headerlink" title="快速重传"></a>快速重传</h5><p>长超时周期迫使发送方延迟重传丢失分组。当发送方接收到3个冗余ACK时，TCP就会执行快速重传，即在该报文段得定时器过期之前重传丢失的报文段</p>
-<h4 id><a href="#" class="headerlink" title></a></h4><h4 id="TCP连接管理"><a href="#TCP连接管理" class="headerlink" title="TCP连接管理"></a>TCP连接管理</h4><p>TCP的三次握手过程</p>
-<p>第一次：客户端TCP向服务器TCP发送一个特殊TCP报文段。报文段中不包含应用层数据，但是报文段首部的标志位SYN被设置为1</p>
-<p>第二次：服务器收到数据段后，从数据报中提取出TCP SYN报文段，为该TCP连接分配TCP缓存和变量，并向客户端TCP发送允许连接的报文段。报文段中不包含应用层数据，但是报文段首部的标志位SYN被设置为1。该报文段也被称为SYNACK报文段</p>
-<p>第三次：客户端收到SYNACK报文段后，客户端也给该连接分配缓存和变量。同时向服务器发送另一个报文端，对服务器允许连接进行了确认，报文段首部的标志位SYN被设置为0，此时报文段负载中可以携带客户端到服务器的数据。</p>
-<p>TCP断开连接的过程：</p>
-<p>第一次：客户端TCP向服务器发送一个特殊的TCP报文段，首部标志位FIN被设置为1</p>
-<p>第二次：服务器接收到该报文段后，返回一个确认报文段</p>
-<p>第三次：服务器发送自己的终止报文段，首部标志位FIN被设置为1</p>
-<p>第四次：客户端收到该报文段后，返回一个确认报文</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/14/tcp/">展开全文 >></a>
         </p>
       
 

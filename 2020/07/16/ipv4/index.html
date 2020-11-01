@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/16/ipv4/format.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/16/ipv4/ipv4.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/16/ipv4/DHCP.jpg">
-<meta property="og:updated_time" content="2020-07-16T08:35:49.572Z">
+<meta property="og:updated_time" content="2020-10-29T07:47:58.626Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ipv4">
 <meta name="twitter:description" content="网络层的组件  IP协议 路由选择协议 ICMP协议  ipv4数据报格式        版本号。规定了数据报的IP协议版本     首部长度。可以用来确定IP数据报中数据部分实际从哪里开始。一般IP数据报具有20字节的首部     服务类型。区分不同类型的IP数据报     数据报长度。首部加上数据总长度。理论最大长度为65535字节     标识，标志，片偏移。用来ip分片     寿命。每当">
@@ -210,6 +210,8 @@
 <p>同一个网络上的两台主机之间通信时，该网络的MTU值是确定的，不存在分片问题。分片问题一般只存在于具有不同MTU值的互联网中。</p>
 <p>假设一台互联几条链路的路由器，且每条链路运行具有不同MTU的链路层协议，当输入链路与输出链路的MTU不同，且输出链路的MTU更小，就可能面临分片问题。</p>
 <p>当生成数据报时，发送主机会为数据报贴上标识号，且通常将为它发送的每个数据报的标识号加1。</p>
+<a id="more"></a>
+
 <p><strong>路由器对数据报形成分片：</strong></p>
 <p>形成的每个片具有初始数据报的源地址，目的地址与标识号。<strong>目的主机通过检查相同的标识号组装片</strong>，且数据报的最后一个片的标志比特设为0，所有其他片设为1。<strong>主机通过偏移量确定组装顺序</strong>。</p>
 <p>例子：一个4000字节数据报，到达一台路由器，被转发到MTU为1500字节的链路，怎么分片？假设初始数据的标识号为777。</p>

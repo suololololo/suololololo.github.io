@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://yoursite.com/pipelineRdt/sr_example.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/13/pipelineRdt/size.jpg">
 <meta property="og:image" content="http://yoursite.com/pipelineRdt/size.jpg">
-<meta property="og:updated_time" content="2020-08-10T12:55:10.127Z">
+<meta property="og:updated_time" content="2020-10-29T07:47:07.120Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="流水线可靠数据传输协议">
 <meta name="twitter:description" content="因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能 采取流水线技术的可靠数据传输协议必须具有以下条件： 1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题 2.协议的发送方和接收方两端必须缓存多个分组 3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。 解决流水线的差错的两种基本方法 1.回退N">
@@ -200,6 +200,8 @@
 <p><img src="/pipelineRdt/GBN.jpg" alt></p>
 <p>基序号base 定义为最早未被确认分组的序号，即图中4号</p>
 <p>下一个序号nextseqnum定义为最小未使用序号，即图中7号</p>
+<a id="more"></a>
+
 <p>窗口长度N为基序号到最大可使用序号直接的距离，以上图为例，即为6</p>
 <p>每当基序号得到确认，窗口就会向右移动。在实践中，一个分组的序号承载在分组首部的一个固定长度的字段中。如果分组序号字段的比特数是k，则该序号范围是0到2的k次方  -1.因此序号的运算必须使用模2的k次方运算。 即把序号空间看成一个首位相连长度为2的k次方的环。</p>
 <h6 id="GBN发送方响应的事件"><a href="#GBN发送方响应的事件" class="headerlink" title="GBN发送方响应的事件"></a>GBN发送方响应的事件</h6><p>1.上层调用。当上层调用时，发送方检查发送窗口是否已经满了，即是否有N个已发送但未确认的分组。如果未满则产生一个分组发送，并相应更新变量。如果窗口已满，发送方将数据返回上层，隐式地指示上层该窗口已满</p>

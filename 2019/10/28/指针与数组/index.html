@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="壴加亻夋的博客">
 <meta property="og:description" content="指针与数组在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码 1int (*p)[n];  根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针； 1int *p[n];  根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-02-15T12:45:39.817Z">
+<meta property="og:updated_time" content="2020-10-29T07:47:34.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="壴加亻夋的博客">
 <meta name="twitter:description" content="指针与数组在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码 1int (*p)[n];  根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针； 1int *p[n];  根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明">
@@ -173,6 +173,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a[5]=&#123;0,1,2,3,4&#125;; </span><br><span class="line">int * p = a;// 等价于int * p = &amp;a[0]</span><br></pre></td></tr></table></figure>
 
 <p>指针实际上存储的是目标元素的地址，上式中当试图将一个数组赋值给指针时，编译器就会将数组名转换为一个指针常量，指向数组中的第一个元素。</p>
+<a id="more"></a>
+
 <p><strong>指针与数组的区别</strong></p>
 <p>看了上述解答，必然会问那么指针与数组的区别在哪？指针与数组大多数情况下是可以互换的，但是有例外</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> MAX = <span class="number">3</span>;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">int</span>  var[MAX] = &#123;<span class="number">10</span>, <span class="number">100</span>, <span class="number">200</span>&#125;;</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; MAX; i++)</span><br><span class="line">   &#123;</span><br><span class="line">      *var = i;    <span class="comment">// 这是正确的语法</span></span><br><span class="line">      var++;       <span class="comment">// 这是不正确的</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
