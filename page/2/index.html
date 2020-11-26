@@ -152,6 +152,349 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-question" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/14/question/">question</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/14/question/" class="archive-article-date">
+  	<time datetime="2020-10-14T07:47:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-14</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>2020.10.14 今日学习疑惑之处</p>
+<p><strong>pytorch中搭建卷积神经网络</strong>：</p>
+<p>batchsize是什么？ 为什么图片在经过多层卷积和maxpooling后，要经过out = out.view(batchsize,-1) 才能与全连接层连接， 最后还要经过soft_max，才能进行输出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">out = out.view(batchsize,<span class="number">-1</span>)</span><br><span class="line">out =self.fc(out)</span><br><span class="line">out = F.log_softmax(out,dim=<span class="number">1</span>)</span><br><span class="line"><span class="keyword">return</span>  out</span><br></pre></td></tr></table></figure>
+
+<p><strong>解答</strong></p>
+<p>图片在经过多层卷积和maxpooling后，要经过out = out.view(batchsize,-1) 才能与全连接层连接的原因</p>
+<p>out.view()的作用是将 batchsize *  c * h * w 的特征图转化为 batchsize * n  的tensor</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/14/question/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-cnn" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/13/cnn/">cnn参数量和计算量计算</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/13/cnn/" class="archive-article-date">
+  	<time datetime="2020-10-13T03:32:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-13</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>参数量</strong></p>
+<p>假设cnn输入是5<em>5 * 4 ，卷积核为2</em>2 ， 输出是2 通道</p>
+<p>参数量的大小则为 （4*2 *2 +1） *2 </p>
+<p>因为输入为4通道， 每个通道得采用1个卷积核进行卷积， 且每个通道对应的卷积核是不同的，  所以参数量为4 * 2 *2 ，同时还得加上一个偏置量 ， 这个一个偏置量是4 个通道所共享的 ， 所以参数量为 4 * 2 *2 +1 ，因为输出是双通道 ， 所以得用两个这样的卷积核 ， 因此总参数量为  （4 * 2 *2 +1） * 2</p>
+<p><strong>计算量</strong></p>
+<p>卷积层浮点数FLOPS计算量 ， 卷积操作本质上是个线性运算 ，通常可表示为：</p>
+<p>y=Wx+b</p>
+<p>乘法运算</p>
+<p>卷积核为k1*k2  ，输入通道为Cin， 输出通道为Cout ， 高Hout ， 宽 Wout</p>
+<p>得到特征图的一个像素，要 k1*k2 * Cin 次乘法 ， 而特征图的总像素有 Cout * Hout * Wout</p>
+<p>总乘法就为 k1*k2 * Cin * Cout * Hout * Wout</p>
+<p>加法运算</p>
+<p>每次乘法都会伴随着一次加法 ，所以总加法为  k1*k2 * Cin * Cout * Hout * Wout</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/13/cnn/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-NAT" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/16/NAT/">网络地址转换</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/16/NAT/" class="archive-article-date">
+  	<time datetime="2020-07-16T08:36:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>网络地址转换协议NAT：是在私有地址和全局地址之间转换的协议</p>
+<p>基于ipv4地址不够用的问题，可以将大量的子网地址封装成一个全局地址。</p>
+<img src="/2020/07/16/NAT/nat.png">
+
+<p>上图中路由器接口地址125.1.2.3就是全局地址，在广域网中，其他主机视角中，子网内的主机是不可见的，只有125.1.2.3接口对外开放。</p>
+<p><strong>那广域网中其他主机如何与局域网中的主机通信呢？</strong></p>
+<p>如图中，假设局域网中主机10.1.0.10向web服务器162.105.129.12端口80发送一个HTTP请求，主机位为其指派了源端口号3345并将该数据报发送到LAN中。NAT路由器接收到该数据报，查询NAT转换表，将该数据报生成新源端口号5001，并将源ip替换为125.1.2.3。当生成一个新的源端口号是，NAT路由器可选择任意一个当前未在NAT转换表中的源端口号，并在NAT转换表中添加一个表项。web服务器向目的ip125.1.2.3返回一个响应报文，目的端口为5001。该报文到达NAT路由器时，路由器查询转换表，并使用响应的目的ip地址和端口号替换，并向LAN发送报文</p>
+<table>
+<thead>
+<tr>
+<th>NAT转换表</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>WAN端</td>
+<td>LAN端</td>
+</tr>
+<tr>
+<td>125.1.2.3 ，5001</td>
+<td>10.1.0.10， 3345</td>
+</tr>
+</tbody></table>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/16/NAT/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-ipv4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/16/ipv4/">ipv4</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/16/ipv4/" class="archive-article-date">
+  	<time datetime="2020-07-16T02:49:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>网络层的组件</p>
+<ul>
+<li>IP协议</li>
+<li>路由选择协议</li>
+<li>ICMP协议</li>
+</ul>
+<p><strong>ipv4数据报格式</strong></p>
+<img src="/2020/07/16/ipv4/format.png">
+
+<ul>
+    <li>版本号。规定了数据报的IP协议版本</li>
+    <li>首部长度。可以用来确定IP数据报中数据部分实际从哪里开始。一般IP数据报具有20字节的首部</li>
+    <li>服务类型。区分不同类型的IP数据报</li>
+    <li>数据报长度。首部加上数据总长度。理论最大长度为65535字节</li>
+    <li>标识，标志，片偏移。用来ip分片</li>
+    <li>寿命。每当数据报由一台路由器处理时，字段值减1。字段为0时，数据报被丢弃</li>
+    <li>首部校验和。将首部每两个字节当作一个数，用反码运算求和，和的反码作为首部校验和。每台路由器上必须重新计算校验和并再次存放到原处，因为TTL字段和可能的选项字段会改变</li>
+    <li>源和目的ip地址。</li>
+    <li>选项。选项字段允许IP首部被扩展</li>
+    <li>数据</li>
+</ul>
+
+
+
+<p><strong>ip数据分片</strong></p>
+<p>IP数据报在互联网上传输时，可能要经过多个物理网络才能从源端传输到目的端。不同的网络由于链路层和介质的物理特性不同，因此在进行数据传输时，对数据帧的最大长度都有一个限制，这个限制值即最大传输单元MTU（Maximum Transmission Unit）.</p>
+<p>同一个网络上的两台主机之间通信时，该网络的MTU值是确定的，不存在分片问题。分片问题一般只存在于具有不同MTU值的互联网中。</p>
+<p>假设一台互联几条链路的路由器，且每条链路运行具有不同MTU的链路层协议，当输入链路与输出链路的MTU不同，且输出链路的MTU更小，就可能面临分片问题。</p>
+<p>当生成数据报时，发送主机会为数据报贴上标识号，且通常将为它发送的每个数据报的标识号加1。</p>
+        
+          <a class="article-more-a" href="/2020/07/16/ipv4/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/16/ipv4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-routerArchitecture" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -555,260 +898,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/02/13/this与callee与caller/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-文件系统多级索引" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="文件系统多级索引"><a href="#文件系统多级索引" class="headerlink" title="文件系统多级索引"></a>文件系统多级索引</h1><p>文件实现的关键问题就是怎样为文件分配磁盘块</p>
-<p>为了解决<strong>在内存中使用链表分配</strong>的缺点（需要将全部文件的整个表放在内存中的问题）采用多级索引方式为文件分配磁盘块。</p>
-<p>具体实现方式如下：</p>
-<p>为每个文件单独定义一个索引块，该索引块存储了文件内容真正的块的地址。</p>
-<p>简单的说就是，在读取文件时，先将该索引块读入内存，再通过该索引块去磁盘中寻找文件内容真正的块</p>
-<p><img src="//yoursite.com/2019/12/08/文件系统多级索引/D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%871.png" alt></p>
-<p>上图是一级索引</p>
-<p>多级索引：</p>
-<p><img src="//yoursite.com/2019/12/08/文件系统多级索引/D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%872.png" alt></p>
-<p><strong>看题：一个UNIX 系统使用1KB磁盘块和4字节磁盘地址。如果每个i节点中有10个直接表项以及一个一次间接块、一个二次间接块和一个三次间接块，那么文件的最大尺寸是多少</strong>？</p>
-<p>1kb磁盘块即为文件的一个小块的大小，也就是索引块的大小。所以<strong>一个索引块里存放地址的数目2^10B/4=256个</strong>。故一个一次间接索引块里存放256个地址，二次索引块里存放256*256个地址</p>
-<p>三次间接块存放256*256  *256个地址。而每个地址对应一个磁盘块。</p>
-<p>因此一共有10+256+256^2+256^3=16843018块。 即16843018*1kb 约为16.06GB大小</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/08/文件系统多级索引/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-多级页表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="多级页表"><a href="#多级页表" class="headerlink" title="多级页表"></a>多级页表</h1><p>基本概念：</p>
-<p><strong>页</strong>:分页存储管理将进程的逻辑地址空间划分为若干页，并对其编号。每个页的大小称为页面大小</p>
-<p><strong>页表</strong>：将比物理地址大的逻辑地址映射到物理地址的一种映射机制，并将对应关系存放在一张表中</p>
-<p><strong>页表项</strong>：在页表中的一行为一个页表项，即一个页号与其对应的物理块号称为一个页表项</p>
-<p>例题：假设一个机器有38位的虚拟地址和32位的物理地址，一个有16KB个页、4字节表项的二级页表，应该对第一级页表域分配多少位，对第二级页表域分配多少位？请解释原因。</p>
-<p>页面数：16kb个，页面大小即为2的38次方-16kb=2的24次方。即偏移量为24位。表项为4字节即说明一个2级页表中有2的平方个页表项，所以pt2=2，即pt1=38-2-24=12</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/07/多级页表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-指针与数组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="指针与数组"><a href="#指针与数组" class="headerlink" title="指针与数组"></a>指针与数组</h1><p>在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int (*p)[n];</span><br></pre></td></tr></table></figure>
-
-<p>根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int *p[n];</span><br></pre></td></tr></table></figure>
-
-<p>根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明数组里的元素是指针，再加上int,知道p数组里的元素是指向int类型的指针;</p>
-<p>数组和指针是两种不同的类型，数组具有确定数量的元素，而指针只是一个标量值，数<strong>组可以在某些情况下转换为指针，当数组名在表达式中使用时，编译器会把数组名转换为一个指针常量，是数组中的第一个元素的地址</strong>，类型就是数组元素的地址类型，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a[5]=&#123;0,1,2,3,4&#125;; </span><br><span class="line">int * p = a;// 等价于int * p = &amp;a[0]</span><br></pre></td></tr></table></figure>
-
-<p>指针实际上存储的是目标元素的地址，上式中当试图将一个数组赋值给指针时，编译器就会将数组名转换为一个指针常量，指向数组中的第一个元素。</p>
-        
-          <a class="article-more-a" href="/2019/10/28/指针与数组/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/28/指针与数组/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-构造函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="c-构造函数特殊用法"><a href="#c-构造函数特殊用法" class="headerlink" title="c++构造函数特殊用法"></a>c++构造函数特殊用法</h1><p><code>class A {
-public:
-    A(int x ):a(x){}
-    int a;
-};</code></p>
-<p>若此时创建A类的实例 <code>A s(3);</code>,则会调用构造方法，将3赋值给a。以java的角度看来这很奇怪，<code>a（x）</code></p>
-<p>相当于 <code>a=x;</code>的效果。</p>
-<p>但实际上这种用法是有要求的，</p>
-<p>1 函数A必须是构造函数<br>2 a必须是A类中的一个成员变量或者是基类</p>
-<p>其代表的意思为 用参数x来初始化成员变量a，和直接a=x类似，但是不等同，这样的方法更高效。</p>
-<p>这种方法还有一种好处</p>
-<p><code>#include &lt;iostream&gt;;</code><br><code>using namespace std;</code><br><code>class A {</code><br><code>public:</code><br>    <code>A(int x ):a(x){}</code><br>    <code>int a;</code><br><code>};</code></p>
-<p><code>class B {</code><br><code>public:</code><br>    <code>B(int x , int y):aa(x)</code><br>    <code>{</code><br>        <code>b = y;</code><br>    <code>}</code><br>    <code>void out() { cout &lt;&lt; &quot;aa=&quot; &lt;&lt; aa.a &lt;&lt; endl &lt;&lt; &quot;b=&quot; &lt;&lt; b &lt;&lt; endl; }</code></p>
-<p><code>private:</code><br>    <code>int b;</code><br>    <code>A aa;</code><br><code>};</code><br><code>int main() {</code><br>    <code>B objB(3, 5);</code><br>    <code>objB.out();</code><br><code>}</code></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/11/构造函数/">展开全文 >></a>
         </p>
       
 

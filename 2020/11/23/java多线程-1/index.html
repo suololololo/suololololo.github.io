@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>壴加亻夋的博客</title>
+  <title>java多线程 | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="壴加亻夋的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="Class类锁，可以对所有对象实例起作用，即Class类锁，锁住了所有类的对象实例。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java多线程">
+<meta property="og:url" content="http://yoursite.com/2020/11/23/java多线程-1/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
+<meta property="og:description" content="Class类锁，可以对所有对象实例起作用，即Class类锁，锁住了所有类的对象实例。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-11-23T09:01:05.420Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="壴加亻夋的博客">
+<meta name="twitter:title" content="java多线程">
+<meta name="twitter:description" content="Class类锁，可以对所有对象实例起作用，即Class类锁，锁住了所有类的对象实例。">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -150,90 +154,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-GC之对象存活判断" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-java多线程-1" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/26/GC之对象存活判断/">GC之对象存活判断</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/26/GC之对象存活判断/" class="archive-article-date">
-  	<time datetime="2020-11-26T02:49:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>垃圾收集器在对堆回收之前，必须先判断哪些对象还活着，哪些已经死去，即是否还有可能被用到</p>
-<p><strong>引用计数算法</strong></p>
-<p>最简单的方法就是，在对象中添加一个引用计数器，每当有一个地方引用它，计数+1，当一个引用失效时，计数-1，任何时刻计数器为0时，说明该对象已经死了。这个算法最大的问题就是无法解决循环引用的问题</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReferenceCountingGC</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> Object instance = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> _1MB = <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">byte</span>[] bigSize = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1MB];</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testGC</span><span class="params">()</span></span>&#123;</span><br><span class="line">		ReferenceCountingGC objA =  <span class="keyword">new</span> ReferenceCoutingGC();</span><br><span class="line">		ReferenceCountingGC objB =  <span class="keyword">new</span> ReferenceCountingGC();</span><br><span class="line">        objA.instance = objB;</span><br><span class="line">        objB.instance = objA;</span><br><span class="line">        objA = <span class="keyword">null</span>;</span><br><span class="line">        objB = <span class="keyword">null</span>;</span><br><span class="line">        System.gc();</span><br><span class="line">        </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/11/26/GC之对象存活判断/1.jpg">
-<p>当执行到第七行时，两个对象的引用计数为2 ， 即 objA的引用和instance的引用。 当objA指向null时，引用-1 ，引用计数为1。但是这两个对象已经无法访问，应该被回收，但引用计数算法无法回收他们。<br><strong>可达性分析算法</strong><br>算法的基本思路是通过一系列称为GC Roots的根对象作为起点集，通过图引用搜索，当某个对象不可达时，说明此对象不可能再被使用</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/26/GC之对象存活判断/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-java多线程-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/23/java多线程-1/">java多线程</a>
+    <h1 class="article-title" itemprop="name">
+      java多线程
     </h1>
   
 
@@ -254,6 +182,27 @@
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -261,16 +210,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/23/java多线程-1/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/11/23/java多线程-1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/11/26/GC之对象存活判断/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          GC之对象存活判断
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/02/java泛型/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">java泛型</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -290,608 +307,17 @@
 
 
 
-
-
-
-  
-    <article id="post-java泛型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/02/java泛型/">java泛型</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/02/java泛型/" class="archive-article-date">
-  	<time datetime="2020-11-02T06:51:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-02</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>泛型类的定义</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Pair</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">	<span class="keyword">private</span> T first;</span><br><span class="line">    <span class="keyword">private</span> T second;</span><br><span class="line">   	<span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(T first , T second)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.first = first;</span><br><span class="line">        <span class="keyword">this</span>.second = second;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面定义中，T表示类型变量， 常见的做法是用E表示集合元素类型，K和V分别表示表的键和值的类型。T表示任意类型。</p>
-<p>泛型方法 ,<strong>类型变量放在修饰符后面，返回值前面。泛型方法可以在普通类中定义，也可以在泛型类中定义</strong>。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Arrayalg</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">getMiddle</span><span class="params">(T a )</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> T;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用方法1</span></span><br><span class="line">String middle =  Arrayalg.&lt;String&gt;getMiddle(<span class="string">"good"</span>);</span><br><span class="line"><span class="comment">//调用方法2</span></span><br><span class="line">String middle = Arrayalg.getMiddle(<span class="string">"good"</span>);</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more--&gt;</span><br><span class="line">有时候我们需要对类型变量进行约束,比如说我只允许类型变量是Comparable类型的, 一个类型变量也允许多个限定，如果有多个限定，最多只有一个限定是类，且它必须是限定列表中的第一个限定</span><br><span class="line">```java</span><br><span class="line">public static &lt;T extends Comparable &gt; T min(T[] a )</span><br><span class="line">public static &lt;T extends Comparable&amp;Seralizable&gt; T min (T [] a )</span><br></pre></td></tr></table></figure>
-
-<p><strong>泛型代码和虚拟机，虚拟机中没有泛型对象，所有对象都属于普通类。因此无论何时定义一个泛型类型，都会自动提供一个相应的原始类型。原始类型就是将类型变量擦除后得到类型</strong> </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Pair&lt;T&gt; 的原始类型 ,因为T是一个无限定的变量，所以直接用Object替换</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pair</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Object first;</span><br><span class="line">	<span class="keyword">private</span> Object second;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(Object first, Object second)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.first = first;</span><br><span class="line">		<span class="keyword">this</span>.second =second;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//如果有多个限定，则采用第一个限定来替换类型变量</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Internal</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Comparable</span> &amp;<span class="title">Serializable</span>&gt; <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> T lower;</span><br><span class="line">	<span class="keyword">private</span> T upper;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//原始类型</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Internal</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Comparable lower;</span><br><span class="line">	<span class="keyword">private</span> Comparable upper;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>编写一个泛型方法调用时，如果擦除了返回类型，编译器会插入强制类型转换。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;Employee&gt; buddies = <span class="keyword">new</span> Pair&lt;Employee&gt;();</span><br><span class="line">Employee buddy = buddies.getFirst();</span><br><span class="line"><span class="comment">//getFirst类型擦除后的返回类型是Object，编译器自动插入转换到Employee的强制类型转换。编译器把这个方法转换为两条虚拟机指令，1.对原始方法Pair.getFirst的调用 2. 将返回的Object类型强制转换为Employee类型。</span></span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/02/java泛型/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-GreedyAlgorithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/GreedyAlgorithm/">GreedyAlgorithm</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/GreedyAlgorithm/" class="archive-article-date">
-  	<time datetime="2020-11-01T12:11:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/GreedyAlgorithm/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-LeetCode题目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/31/LeetCode题目/">LeetCode题目</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/31/LeetCode题目/" class="archive-article-date">
-  	<time datetime="2020-10-31T02:22:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-31</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>深度优先搜索</strong></p>
-<img src="/2020/10/31/LeetCode题目/1.png">
-        
-          <a class="article-more-a" href="/2020/10/31/LeetCode题目/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/31/LeetCode题目/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-AdaBoost" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/30/AdaBoost/">AdaBoost</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/30/AdaBoost/" class="archive-article-date">
-  	<time datetime="2020-10-30T11:39:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-30</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>AdaBoost是以基于集成学习的思想，将多个弱分类器进行结合，得到强分类器。Adaboost采用迭代的思想，每次迭代只训练一个弱分类器，训练好的弱分类器将参与下一次迭代的使用。N次迭代中，一共有N个弱分类器，其中N-1是以前训练好的，参数不再改变。第N次训练第N个分类器，第N个分类器更可能分对前N-1个分类器没分对的数据。最终的分类结果是由N个分类加权的结果。</p>
-<p>Adaboost一般采用单层决策树作为弱分类器。单层决策树只能根据一维特征来做决策。即如果数据具有多个维度，只能根据一个维度的数据来做决策。比如平面坐标上的点(x,y)，只能采取针对横坐标或纵坐标进行决策，比如x&gt;5为正类，其余为负类。那么怎样达到将多个弱分类结合，达到强分类的效果的呢？</p>
-<p><strong>权重</strong> 关键就在于权重，我们可以对不同的分类器赋予不同的权重，分类效果好的，错误率低的分类器，我们可以赋予高的权重。还存在着另外一个权重，就是数据权重，上面说到采用单层决策树作为弱分类器，而该弱分类器关注到的数据非常有限，所以我们得对数据赋予一定的权重，让该分类器关注哪一方面的数据。这也涉及到分类器的多样性问题，即不同分类器，不能对相同的数据具有相同的分类结果，这样在结合时，就完全起不到效果。数据权重可以让第N个分类器，更可能分对前N-1个分类器没分对的数据。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/30/AdaBoost/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-LinearRegression" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/29/LinearRegression/">LinearRegression</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/29/LinearRegression/" class="archive-article-date">
-  	<time datetime="2020-10-29T07:08:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>线性回归</strong></p>
-<p>线性回归模型即为 y=wx , 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。那怎样才叫满足呢？我们定义一个损失函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt;&lt;/script&gt;</span><br><span class="line">$$ loss= \frac&#123; \left\|y-Xw \right\|_2^2&#125;&#123;2N&#125; = \frac&#123;(y-Xw)^&#123;T&#125;(y-Xw)&#125;&#123;2N&#125; $$</span><br></pre></td></tr></table></figure>
-
-<p>上式对w求偏导，并令其为0，求loss函数的最小值，这样求得的w就是最满足数据的参数，将这个参数带回模型就可以得到想要的模型， 但是这样的求法存在着 <strong>偏导数为0无法求出解析解，或损失函数不是处处可导，或者解析解太耗时，特征空间维度太高的问题</strong> ， 所以大部分时候是采用梯度下降的方法。</p>
-<p><strong>随机梯度下降</strong></p>
-<p>loss沿负梯度方向下降最快，于是随机选择一个初始点，朝这个点的负梯度方向前进一定的距离，到达一个新的点，重复这个过程，持续超负梯度方向前进，最终达到一个局部最小值，如果loss函数是凸函数，即是最小值。</p>
-<p>表示为w = w-lr*G   ， lr为学习率， G为梯度大小 </p>
-<p>迭代的进行参数更新。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/29/LinearRegression/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-pytorch杂记2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/21/pytorch杂记2/">pytorch杂记2</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/21/pytorch杂记2/" class="archive-article-date">
-  	<time datetime="2020-10-21T11:36:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-21</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>一些常用函数</strong></p>
-<p>torch.cat: 将两个张量拼接起来</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">a  = torch.randn(2,3)</span><br><span class="line">b = torch.randn(4,3)</span><br><span class="line">c = torch.cat((a,b),dim=0)  #dim = 0 , 代表按行拼接, dim=1 ,代表按照列拼接</span><br><span class="line">print(c)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;tensor([[-2.4133,  0.9273, -1.7999],</span><br><span class="line">        [-0.8778, -0.9217,  1.9684],</span><br><span class="line">        [ 0.7688,  2.3844,  1.5250],</span><br><span class="line">        [ 1.0025,  0.2864, -0.3318],</span><br><span class="line">        [ 0.5948, -0.2036, -0.5568],</span><br><span class="line">        [ 1.9656, -0.0477, -0.7944]])</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/21/pytorch杂记2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-pytorch杂记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/20/pytorch杂记/">pytorch杂记</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/20/pytorch杂记/" class="archive-article-date">
-  	<time datetime="2020-10-20T01:15:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-20</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>一些常用函数</strong></p>
-<p><strong>np.random.shuffle (lst)</strong>  : 对列表中的元素进行打乱，随机排序 ，无返回值</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">10</span>)</span><br><span class="line">np.random.shuffle(arr)</span><br><span class="line">print(arr)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;array([<span class="number">3</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-
-<p>在多维矩阵中，只对第一维进行打乱， 即只对行进行打乱 ， </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">9</span>).reshape((<span class="number">3</span>,<span class="number">3</span>))</span><br><span class="line">np.random.shuffle(arr)</span><br><span class="line">print(arr)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;array([[<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>],</span><br><span class="line">       [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">       [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])</span><br></pre></td></tr></table></figure>
-
-<p><strong>torch.tensor.view(*args)</strong> 将tensor进行维度变换， 返回的tensor必须与原tensor具有相同的数目的元素，但可以有不同的大小。且view只能用在在内存上存储的连续的张量，而<strong>reshape函数调用是不依赖于tensor在内存中是不是连续的。</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"> </span><br><span class="line">x = torch.Tensor(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">print(x)</span><br><span class="line"> </span><br><span class="line">y = x.view(<span class="number">1</span>,<span class="number">8</span>)</span><br><span class="line">print(y)</span><br><span class="line"> </span><br><span class="line">z = x.view(<span class="number">-1</span>,<span class="number">4</span>)  <span class="comment"># the size -1 is inferred from other dimensions</span></span><br><span class="line">print(z)</span><br><span class="line"> </span><br><span class="line">t = x.view(<span class="number">8</span>)</span><br><span class="line">print(t)</span><br></pre></td></tr></table></figure>
-
-<p>输出</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">tensor([[[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>],</span><br><span class="line">         [<span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>]],</span><br><span class="line"></span><br><span class="line">        [[<span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>],</span><br><span class="line">         [<span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]]])</span><br><span class="line"></span><br><span class="line"><span class="comment">#x.view(1,8)生成的是[1,8]的张量</span></span><br><span class="line">tensor([[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>, <span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>,</span><br><span class="line">         <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment">#x.view(-1,4)其中-1是在4下的另一个维度的大小，也就是8/4=2，所以生成的是[2,4]的张量</span></span><br><span class="line">tensor([[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>],</span><br><span class="line">        [<span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>, <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]])</span><br><span class="line"></span><br><span class="line">x.view(<span class="number">8</span>)生成的是[<span class="number">8</span>,]的张量，是个数组</span><br><span class="line">tensor([<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>, <span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>,</span><br><span class="line">        <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>])</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2020/10/20/pytorch杂记/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/20/pytorch杂记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-java多线程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/19/java多线程/">java多线程</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/19/java多线程/" class="archive-article-date">
-  	<time datetime="2020-10-19T11:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-19</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>同步和死锁</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">private</span>  <span class="keyword">int</span> ticket = <span class="number">5</span> ;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i  = <span class="number">0</span> ;  i &lt;<span class="number">100</span> ; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (ticket&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(Thread.currentThread().getName()+<span class="string">"卖票， ticket = "</span> + ticket--);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/10/19/java多线程/image-20201019190335553.png">
-
-<p>没有进行资源同步时，两个线程的执行没有达到互斥的效果，且5张票被卖了8次</p>
-        
-          <a class="article-more-a" href="/2020/10/19/java多线程/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/19/java多线程/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
   
+
+  
+
+  
+
+  
+
+
 
 
           </div>
@@ -922,8 +348,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
