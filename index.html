@@ -152,6 +152,80 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-GC垃圾回收算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/26/GC垃圾回收算法/">GC垃圾回收算法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/26/GC垃圾回收算法/" class="archive-article-date">
+  	<time datetime="2020-11-26T07:25:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在可行性分析算法中判定为不可达对象时，也不是“非死不可”。真正宣判一个对象死亡，要经过两次标记。<strong>第一次标记</strong>是对象在可达性分析中没有与GC roots的引用链相关联，会被标记。加入对象被第一次标记，随后会进行一次筛选，筛选条件是有无必要执行finalize()方法。<br>如果对象没有覆盖finalize()方法，或者finalize()方法已经被虚拟机调用过，那么虚拟机将这两个情况都视为<strong>没有必要执行，直接被第二次标记</strong>。假如对象被判定为有必要执行finalize()方法，对象就会被放置在F-Queue的队列中，稍后由低调度优先级的Finalize线程执行他们finalize()方法，但这个线程只保证会执行他们的finalize方法，但不保证执行完，因为该方法有可能出现死循环等极端情况。<br>若执行该方法，让该对象重新与GC roots的引用链相关联了，则不会被第二次标记，并移出“即将回收”的集合。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalizeEscapeGC</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> FinalizeEscapeGC SAVE_HOOK = <span class="keyword">null</span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">isAlive</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"yes,i am still alive"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.finalize();</span><br><span class="line">		System.out.println(<span class="string">"finalize method executed!"</span>);</span><br><span class="line">		FinalizeEscapeGC.SAVE_HOOK = <span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">		SAVE_HOOK = <span class="keyword">new</span> FinalizeEscapeGC();</span><br><span class="line">		SAVE_HOOK =<span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		Thread.sleep(<span class="number">500</span>);</span><br><span class="line">		<span class="keyword">if</span>(SAVE_HOOK!=<span class="keyword">null</span>)&#123;</span><br><span class="line">			SAVE_HOOK.isAlive();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"i am dead"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		SAVE_HOOK =<span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		Thread.sleep(<span class="number">500</span>);</span><br><span class="line">		<span class="keyword">if</span>(SAVE_HOOK!=<span class="keyword">null</span>)&#123;</span><br><span class="line">			SAVE_HOOK.isAlive();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"i am dead"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2020/11/26/GC垃圾回收算法/1.png">
+<p>第一次执行SVAE_HOOK=null语句时 ， FinalizeEscapeGC 对象被第一次标记，后虚拟机执行了finalize()方法，避免了第二次标记。第二次执行SAVE_HOOK = null 时， FinalizeEscapeGC对象被两次标记，被回收。</p>
+        
+          <a class="article-more-a" href="/2020/11/26/GC垃圾回收算法/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/26/GC垃圾回收算法/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-GC之对象存活判断" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -781,81 +855,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/10/20/pytorch杂记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-java多线程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/19/java多线程/">java多线程</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/19/java多线程/" class="archive-article-date">
-  	<time datetime="2020-10-19T11:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-19</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>同步和死锁</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">private</span>  <span class="keyword">int</span> ticket = <span class="number">5</span> ;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i  = <span class="number">0</span> ;  i &lt;<span class="number">100</span> ; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (ticket&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(Thread.currentThread().getName()+<span class="string">"卖票， ticket = "</span> + ticket--);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/10/19/java多线程/image-20201019190335553.png">
-
-<p>没有进行资源同步时，两个线程的执行没有达到互斥的效果，且5张票被卖了8次</p>
-        
-          <a class="article-more-a" href="/2020/10/19/java多线程/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/19/java多线程/">展开全文 >></a>
         </p>
       
 

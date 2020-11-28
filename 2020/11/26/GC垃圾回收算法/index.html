@@ -6,15 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | 壴加亻夋的博客</title>
+  <title>GC垃圾回收算法 | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="壴加亻夋的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
+  <meta name="description" content="在可行性分析算法中判定为不可达对象时，也不是“非死不可”。真正宣判一个对象死亡，要经过两次标记。第一次标记是对象在可达性分析中没有与GC roots的引用链相关联，会被标记。加入对象被第一次标记，随后会进行一次筛选，筛选条件是有无必要执行finalize()方法。如果对象没有覆盖finalize()方法，或者finalize()方法已经被虚拟机调用过，那么虚拟机将这两个情况都视为没有必要执行，直接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GC垃圾回收算法">
+<meta property="og:url" content="http://yoursite.com/2020/11/26/GC垃圾回收算法/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
+<meta property="og:description" content="在可行性分析算法中判定为不可达对象时，也不是“非死不可”。真正宣判一个对象死亡，要经过两次标记。第一次标记是对象在可达性分析中没有与GC roots的引用链相关联，会被标记。加入对象被第一次标记，随后会进行一次筛选，筛选条件是有无必要执行finalize()方法。如果对象没有覆盖finalize()方法，或者finalize()方法已经被虚拟机调用过，那么虚拟机将这两个情况都视为没有必要执行，直接">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2020/11/26/GC垃圾回收算法/1.png">
+<meta property="og:updated_time" content="2020-11-28T13:10:33.967Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="壴加亻夋的博客">
+<meta name="twitter:title" content="GC垃圾回收算法">
+<meta name="twitter:description" content="在可行性分析算法中判定为不可达对象时，也不是“非死不可”。真正宣判一个对象死亡，要经过两次标记。第一次标记是对象在可达性分析中没有与GC roots的引用链相关联，会被标记。加入对象被第一次标记，随后会进行一次筛选，筛选条件是有无必要执行finalize()方法。如果对象没有覆盖finalize()方法，或者finalize()方法已经被虚拟机调用过，那么虚拟机将这两个情况都视为没有必要执行，直接">
+<meta name="twitter:image" content="http://yoursite.com/2020/11/26/GC垃圾回收算法/1.png">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -150,296 +156,170 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-GC垃圾回收算法" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      GC垃圾回收算法
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/26/GC垃圾回收算法/" class="archive-article-date">
+
+        
+        <a href="/2020/11/26/GC垃圾回收算法/" class="archive-article-date">
   	<time datetime="2020-11-26T07:25:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/26/GC垃圾回收算法/">GC垃圾回收算法</a>
-    </h1>
-  
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在可行性分析算法中判定为不可达对象时，也不是“非死不可”。真正宣判一个对象死亡，要经过两次标记。<strong>第一次标记</strong>是对象在可达性分析中没有与GC roots的引用链相关联，会被标记。加入对象被第一次标记，随后会进行一次筛选，筛选条件是有无必要执行finalize()方法。<br>如果对象没有覆盖finalize()方法，或者finalize()方法已经被虚拟机调用过，那么虚拟机将这两个情况都视为<strong>没有必要执行，直接被第二次标记</strong>。假如对象被判定为有必要执行finalize()方法，对象就会被放置在F-Queue的队列中，稍后由低调度优先级的Finalize线程执行他们finalize()方法，但这个线程只保证会执行他们的finalize方法，但不保证执行完，因为该方法有可能出现死循环等极端情况。<br>若执行该方法，让该对象重新与GC roots的引用链相关联了，则不会被第二次标记，并移出“即将回收”的集合。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalizeEscapeGC</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> FinalizeEscapeGC SAVE_HOOK = <span class="keyword">null</span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">isAlive</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"yes,i am still alive"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.finalize();</span><br><span class="line">		System.out.println(<span class="string">"finalize method executed!"</span>);</span><br><span class="line">		FinalizeEscapeGC.SAVE_HOOK = <span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">		SAVE_HOOK = <span class="keyword">new</span> FinalizeEscapeGC();</span><br><span class="line">		SAVE_HOOK =<span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		Thread.sleep(<span class="number">500</span>);</span><br><span class="line">		<span class="keyword">if</span>(SAVE_HOOK!=<span class="keyword">null</span>)&#123;</span><br><span class="line">			SAVE_HOOK.isAlive();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"i am dead"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		SAVE_HOOK =<span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		Thread.sleep(<span class="number">500</span>);</span><br><span class="line">		<span class="keyword">if</span>(SAVE_HOOK!=<span class="keyword">null</span>)&#123;</span><br><span class="line">			SAVE_HOOK.isAlive();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"i am dead"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+<img src="/2020/11/26/GC垃圾回收算法/1.png">
+<p>第一次执行SVAE_HOOK=null语句时 ， FinalizeEscapeGC 对象被第一次标记，后虚拟机执行了finalize()方法，避免了第二次标记。第二次执行SAVE_HOOK = null 时， FinalizeEscapeGC对象被两次标记，被回收。</p>
+<a id="more"></a>
 
+<p><strong>分代收集理论</strong></p>
+<p>1.弱分代假说，大多数对象都是朝生夕灭的。<br>2.强分代假说，熬过越多次垃圾收集过程的对象越难以消亡。<br>3.跨代引用相对于同代引用来说仅仅占极少数。</p>
+<p>这个理论给垃圾收集器启发了设计原则，收集器将java堆分成不同的区域，对象根据不同的年龄存储到不同的区域。划分为新生代和老年代。<br><strong>标记-清除算法</strong><br>算法分为两个部分，标记和清除。<strong>先标记出所有需要回收的对象，然后统一回收掉所有被标记的对象。或者可以反过来。先标记出所有存活的对象，然后统一回收掉所有未被标记的对象。</strong><br>缺点：1.执行效率不稳定，如果java堆中大部分对象需要回收，则需要标记和清楚大量对象。2.内存空间碎片化问题，标记清除后会产生大量碎片化空间，当需要给大对象分配内存空间时，可能无法找到足够的连续内存进行分配。<br><strong>标记-复制算法</strong><br>基本思想：将内存按照一定的比例分为几块，当其中一块用完时，将已经存活的对象复制到另外一块上，然后一次性清除已使用过的那一块。<strong>这个算法是用来解决对象大部分需要回收的情况</strong><br><strong>标记-整理算法</strong><br>用来解决对象大部分都存活的情况。标记需要需要回收的对象，然后把所有存活的对象向空间的另一端移动，然后直接清理掉边界以外的内存。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/11/26/GC垃圾回收算法/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/26/GC之对象存活判断/" class="archive-article-date">
-  	<time datetime="2020-11-26T02:49:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/11/26/GC之对象存活判断/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">GC之对象存活判断</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/26/GC之对象存活判断/">GC之对象存活判断</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/23/java多线程-1/" class="archive-article-date">
-  	<time datetime="2020-11-23T07:56:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/23/java多线程-1/">java多线程</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/02/java泛型/" class="archive-article-date">
-  	<time datetime="2020-11-02T06:51:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/02/java泛型/">java泛型</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/01/GreedyAlgorithm/" class="archive-article-date">
-  	<time datetime="2020-11-01T12:11:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/01/GreedyAlgorithm/">GreedyAlgorithm</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/31/LeetCode题目/" class="archive-article-date">
-  	<time datetime="2020-10-31T02:22:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/31/LeetCode题目/">LeetCode题目</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/30/AdaBoost/" class="archive-article-date">
-  	<time datetime="2020-10-30T11:39:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/30/AdaBoost/">AdaBoost</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/29/LinearRegression/" class="archive-article-date">
-  	<time datetime="2020-10-29T07:08:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/29/LinearRegression/">LinearRegression</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/21/pytorch杂记2/" class="archive-article-date">
-  	<time datetime="2020-10-21T11:36:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/21/pytorch杂记2/">pytorch杂记2</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/20/pytorch杂记/" class="archive-article-date">
-  	<time datetime="2020-10-20T01:15:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/20/pytorch杂记/">pytorch杂记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2020/page/2/">2</a><a class="page-number" href="/archives/2020/page/3/">3</a><a class="extend next" rel="next" href="/archives/2020/page/2/">Next &raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -471,8 +351,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
