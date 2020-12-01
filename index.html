@@ -152,6 +152,147 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-linearClassification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/01/linearClassification/">linearClassification</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/01/linearClassification/" class="archive-article-date">
+  	<time datetime="2020-12-01T03:49:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/01/linearClassification/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-class类文件结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/30/class类文件结构/">class类文件结构</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/30/class类文件结构/" class="archive-article-date">
+  	<time datetime="2020-11-30T08:28:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>class文件是一组以8个字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑排列在文件之中，中间没有任何分隔符<br>class文件中只有两个数据类型，<strong>无符号数和表</strong>。<br><strong>无符号数</strong>是基本的数据类型，用u1,u2,u4,u8代表1个字节,2个字节,4个字节,8个字节。<br><strong>表</strong>是由多个无符号书或其他表作为数据项构成的复合数据类型，表的命名习惯性以 _info结尾。<br>class文件具体内容</p>
+<img src="/2020/11/30/class类文件结构/1.png">
+<p>开头的四个字节为<strong>魔数</strong>，用来确定这个文件是否是一个能被虚拟机接受的class文件。值为0xCAFEBABE(咖啡宝贝),紧接着的4个字节是class文件版本号，第5和第6是次版本号0x0000,第7和第8字节为主版本号0x0037。<br><strong>常量池</strong><br>往后为<strong>常量池入口</strong>，常量池是class文件的资源仓库，是class文件第一个出现的表类型数据项目。常量池入口为一个u2类型数据，用来表明常量池容量，这个例子中为0x0074,即116，代表常量池中有115项常量，索引范围是1-115，<strong>从1开始计算</strong>。第0项常量是用来代表<strong>不引用任何一个常量池项目</strong>的含义<br>常量池主要存放两大类常量：<strong>字面量</strong>和<strong>符号引用</strong><br>java在编译的时候，并不会有连接步骤，即<strong>class类文件中不会保存各个方法，字段最终在内存中的布局信息，只有在虚拟机运行时期进行转换，才能得到真正的内存入口地址</strong><br>常量池中的每一项常量都是一个表，这些表结构的起始的第一位都是u1类型的标志位，代表当前常量属于哪种常量类型。</p>
+<img src="/2020/11/30/class类文件结构/2.png">
+<p>常量池第一项数据标志位为0x0A，查表得该数据为<strong>CONSTANT_Methodref_info</strong></p>
+        
+          <a class="article-more-a" href="/2020/11/30/class类文件结构/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/30/class类文件结构/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-GC垃圾回收算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -682,10 +823,13 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><strong>线性回归</strong></p>
-<p>线性回归模型即为 y=wx , 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。那怎样才叫满足呢？我们定义一个损失函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt;&lt;/script&gt;</span><br><span class="line">$$ loss= \frac&#123; \left\|y-Xw \right\|_2^2&#125;&#123;2N&#125; = \frac&#123;(y-Xw)^&#123;T&#125;(y-Xw)&#125;&#123;2N&#125; $$</span><br></pre></td></tr></table></figure>
+<p>线性回归模型即为 y=wTx+b ,w属于m维向量空间即m维行向量，m的x的特征数，b属于一维向量空间， 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。</p>
+<img src="/2020/10/29/LinearRegression/1.png">
+<p>那怎样才叫满足呢？我们定义一个损失函数</p>
+<img src="/2020/10/29/LinearRegression/2.png">
+<p>我们将b看成特殊的一个向量，即在x和w中都增加一维，变成n+1维，增加的那一维x值为1，w值为b，相乘后仍然得到原式的结果，模型更改为y = wTb ， w属于m+1维向量空间， x属于m+1维向量空间<br>令X=(x1,x2,x3…xn)T所以损失函数化简为</p>
 
-<p>上式对w求偏导，并令其为0，求loss函数的最小值，这样求得的w就是最满足数据的参数，将这个参数带回模型就可以得到想要的模型， 但是这样的求法存在着 <strong>偏导数为0无法求出解析解，或损失函数不是处处可导，或者解析解太耗时，特征空间维度太高的问题</strong> ， 所以大部分时候是采用梯度下降的方法。</p>
+<p>$$<br>l(w) =1/2(y-Xw)^T * (y-Xw)   先将向量化成自身的内积<br>$$<br>$$<br>求导过程  =1/2 (-X)^T(y-Xw) +1/2 (y-Xw)^T(-X)<br>=(-X)^T<em>(y-Xw)<br>$$<br>上式对w求偏导，并令其为0，求loss函数的最小值，这样求得的w就是最满足数据的参数，将这个参数带回模型就可以得到想要的模型， 但是这样的求法存在着 *</em>偏导数为0无法求出解析解，或损失函数不是处处可导，或者解析解太耗时，特征空间维度太高的问题** ， 且矩阵逆的计算需要大量的内存，O（m**3）所以大部分时候是采用梯度下降的方法。</p>
 <p><strong>随机梯度下降</strong></p>
 <p>loss沿负梯度方向下降最快，于是随机选择一个初始点，朝这个点的负梯度方向前进一定的距离，到达一个新的点，重复这个过程，持续超负梯度方向前进，最终达到一个局部最小值，如果loss函数是凸函数，即是最小值。</p>
 <p>表示为w = w-lr*G   ， lr为学习率， G为梯度大小 </p>
@@ -734,161 +878,9 @@
 
 
   
-    <article id="post-pytorch杂记2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/21/pytorch杂记2/">pytorch杂记2</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/21/pytorch杂记2/" class="archive-article-date">
-  	<time datetime="2020-10-21T11:36:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-21</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>一些常用函数</strong></p>
-<p>torch.cat: 将两个张量拼接起来</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">a  = torch.randn(2,3)</span><br><span class="line">b = torch.randn(4,3)</span><br><span class="line">c = torch.cat((a,b),dim=0)  #dim = 0 , 代表按行拼接, dim=1 ,代表按照列拼接</span><br><span class="line">print(c)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;tensor([[-2.4133,  0.9273, -1.7999],</span><br><span class="line">        [-0.8778, -0.9217,  1.9684],</span><br><span class="line">        [ 0.7688,  2.3844,  1.5250],</span><br><span class="line">        [ 1.0025,  0.2864, -0.3318],</span><br><span class="line">        [ 0.5948, -0.2036, -0.5568],</span><br><span class="line">        [ 1.9656, -0.0477, -0.7944]])</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/21/pytorch杂记2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-pytorch杂记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/20/pytorch杂记/">pytorch杂记</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/20/pytorch杂记/" class="archive-article-date">
-  	<time datetime="2020-10-20T01:15:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-20</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>一些常用函数</strong></p>
-<p><strong>np.random.shuffle (lst)</strong>  : 对列表中的元素进行打乱，随机排序 ，无返回值</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">10</span>)</span><br><span class="line">np.random.shuffle(arr)</span><br><span class="line">print(arr)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;array([<span class="number">3</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-
-<p>在多维矩阵中，只对第一维进行打乱， 即只对行进行打乱 ， </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">9</span>).reshape((<span class="number">3</span>,<span class="number">3</span>))</span><br><span class="line">np.random.shuffle(arr)</span><br><span class="line">print(arr)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;array([[<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>],</span><br><span class="line">       [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">       [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])</span><br></pre></td></tr></table></figure>
-
-<p><strong>torch.tensor.view(*args)</strong> 将tensor进行维度变换， 返回的tensor必须与原tensor具有相同的数目的元素，但可以有不同的大小。且view只能用在在内存上存储的连续的张量，而<strong>reshape函数调用是不依赖于tensor在内存中是不是连续的。</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"> </span><br><span class="line">x = torch.Tensor(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">print(x)</span><br><span class="line"> </span><br><span class="line">y = x.view(<span class="number">1</span>,<span class="number">8</span>)</span><br><span class="line">print(y)</span><br><span class="line"> </span><br><span class="line">z = x.view(<span class="number">-1</span>,<span class="number">4</span>)  <span class="comment"># the size -1 is inferred from other dimensions</span></span><br><span class="line">print(z)</span><br><span class="line"> </span><br><span class="line">t = x.view(<span class="number">8</span>)</span><br><span class="line">print(t)</span><br></pre></td></tr></table></figure>
-
-<p>输出</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">tensor([[[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>],</span><br><span class="line">         [<span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>]],</span><br><span class="line"></span><br><span class="line">        [[<span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>],</span><br><span class="line">         [<span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]]])</span><br><span class="line"></span><br><span class="line"><span class="comment">#x.view(1,8)生成的是[1,8]的张量</span></span><br><span class="line">tensor([[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>, <span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>,</span><br><span class="line">         <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment">#x.view(-1,4)其中-1是在4下的另一个维度的大小，也就是8/4=2，所以生成的是[2,4]的张量</span></span><br><span class="line">tensor([[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>],</span><br><span class="line">        [<span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>, <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]])</span><br><span class="line"></span><br><span class="line">x.view(<span class="number">8</span>)生成的是[<span class="number">8</span>,]的张量，是个数组</span><br><span class="line">tensor([<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>, <span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>,</span><br><span class="line">        <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>])</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2020/10/20/pytorch杂记/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/20/pytorch杂记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 

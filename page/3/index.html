@@ -152,6 +152,148 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-rdt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/13/rdt/">可靠数据传输原理</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/13/rdt/" class="archive-article-date">
+  	<time datetime="2020-07-13T07:11:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h5 id="1-经完全可靠信道的可靠数据传输-rdt1-0"><a href="#1-经完全可靠信道的可靠数据传输-rdt1-0" class="headerlink" title="1.经完全可靠信道的可靠数据传输 rdt1.0"></a>1.经完全可靠信道的可靠数据传输 rdt1.0</h5><p>在这种情况下，先假设底层信道是完全可靠的，即运输层提供可靠信道，不会产生错误，不会丢弃分组</p>
+<p>即</p>
+<img src="/2020/07/13/rdt/rdt1.jpg" title="rdt1">
+
+<p><img src="/rdt/rdt1.jpg" alt></p>
+<p>状态机如下图</p>
+<img src="/2020/07/13/rdt/FSM1.jpg">
+
+<p><img src="//yoursite.com/2020/07/13/rdt/D:%5CHexo%5Csource_posts%5Crdt%5CFSM1.jpg" alt></p>
+<p>在发送端，通过rdt_send(data)来等待上层的调用，然后产生一个包含该数据的分组，并发送到信道中</p>
+<p>在接收方，通过rdt_rcv(packet)来等待下层的调用，然后从packet中取出数据，并将数据上传给应用层</p>
+<h5 id="2-经具有比特差错信道的可靠传输-rdt2-0"><a href="#2-经具有比特差错信道的可靠传输-rdt2-0" class="headerlink" title="2.经具有比特差错信道的可靠传输 rdt2.0"></a>2.经具有比特差错信道的可靠传输 rdt2.0</h5>
+        
+          <a class="article-more-a" href="/2020/07/13/rdt/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/13/rdt/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-lambda" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>C++lambda函数</strong></p>
+<p>语法定义如下</p>
+<p><code>[capture](parameters)-&gt;return_type{body}</code></p>
+<p>定义中比较难理解的就是[]中的内容</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[] <span class="comment">//没有定义任何变量。使用未定义变量会引发错误。</span></span><br><span class="line">[x，&amp;y] <span class="comment">//x以传值方式传入（默认），y以引用方式传入</span></span><br><span class="line">[&amp;] <span class="comment">//任何被使用到的外部变量都隐式地引用方式加以引用</span></span><br><span class="line">[=] <span class="comment">//任何被使用到的外部变量都隐式地以传值的方式加以引用</span></span><br><span class="line">[&amp;,x] <span class="comment">//x显式地以传值方式加以引用。其余变量以引用方式加以引用。</span></span><br><span class="line">[=,&amp;z] <span class="comment">//z显式地以引用方式加以引用。其余变量以传值方式加以引用</span></span><br></pre></td></tr></table></figure>
+
+<p>具体例子</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"> 2 </span>&#123;</span><br><span class="line"> <span class="number">3</span>     <span class="keyword">int</span> a = <span class="number">5</span>, b = <span class="number">7</span>;</span><br><span class="line"> <span class="number">4</span>     <span class="keyword">auto</span> total = [](<span class="keyword">int</span> x, <span class="keyword">int</span> y)-&gt;<span class="keyword">int</span> &#123;<span class="keyword">return</span> x + y; &#125;;    <span class="comment">//接受两个参数</span></span><br><span class="line"> <span class="number">5</span>     <span class="built_in">cout</span> &lt;&lt; total(a, b)&lt;&lt;<span class="built_in">endl</span>;  <span class="comment">//12</span></span><br><span class="line"> <span class="number">6</span>     <span class="keyword">auto</span> fun1 = [=] &#123;<span class="keyword">return</span> a + b; &#125;;   <span class="comment">//值传递捕捉父作用域变量</span></span><br><span class="line"> <span class="number">7</span>     <span class="built_in">cout</span> &lt;&lt; fun1() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//12</span></span><br><span class="line"> <span class="number">8</span>     <span class="keyword">auto</span> fun2 = [&amp;](<span class="keyword">int</span> c) &#123;b = a + c; a = <span class="number">1</span>; &#125;;    <span class="comment">//省略了返回值类型，引用捕获所有</span></span><br><span class="line"> <span class="number">9</span>     fun2(<span class="number">3</span>);    <span class="comment">//1 8</span></span><br><span class="line"><span class="number">10</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt;<span class="string">" "</span>&lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="number">11</span>     a = <span class="number">5</span>; b = <span class="number">7</span>;   <span class="comment">//被修改后，重新赋值</span></span><br><span class="line"><span class="number">12</span>     <span class="keyword">auto</span> fun3 = [=, &amp;b](<span class="keyword">int</span> c) <span class="keyword">mutable</span> &#123;b = a + c; a = <span class="number">1</span>; &#125;;    <span class="comment">//以值传递捕捉的变量，在函数体里如果要修改，要加mutaple,因为默认const修饰</span></span><br><span class="line"><span class="number">13</span>     fun3(<span class="number">3</span>);</span><br><span class="line"><span class="number">14</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">" "</span> &lt;&lt;b&lt;&lt; <span class="built_in">endl</span>;    <span class="comment">//5,8</span></span><br><span class="line"><span class="number">15</span>     a = <span class="number">5</span>; b = <span class="number">7</span>;   <span class="comment">//被修改后，重新赋值</span></span><br><span class="line"><span class="number">16</span>     <span class="keyword">auto</span> fun4 = [=](<span class="keyword">int</span> x, <span class="keyword">int</span> y) <span class="keyword">mutable</span>-&gt;<span class="keyword">int</span> &#123;a += x; b += y; <span class="keyword">return</span> a + b; &#125;;</span><br><span class="line"><span class="number">17</span>     <span class="keyword">int</span> t = fun4(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line"><span class="number">18</span>     <span class="built_in">cout</span> &lt;&lt; t &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//42</span></span><br><span class="line"><span class="number">19</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt;<span class="string">" "</span>&lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;    <span class="comment">//5 7</span></span><br><span class="line"><span class="number">20</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">21</span> &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/02/14/lambda/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-this与callee与caller" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -676,77 +818,9 @@ int main() {
 
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/17/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/17/hello-world/" class="archive-article-date">
-  	<time datetime="2019-02-17T02:29:46.758Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-17</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>欢迎来到壴加亻夋的博客！！<br>第一次搭建自己的博客，似乎很有意思，难道这就是前端的魅力吗？</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/17/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 

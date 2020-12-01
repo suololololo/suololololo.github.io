@@ -8,17 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>LinearRegression | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="线性回归 线性回归模型即为 y=wx , 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。那怎样才叫满足呢？我们定义一个损失函数 12&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&amp;quot;&amp;gt">
+  <meta name="description" content="线性回归 线性回归模型即为 y=wTx+b ,w属于m维向量空间即m维行向量，m的x的特征数，b属于一维向量空间， 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。  那怎样才叫满足呢？我们定义一个损失函数  我们将b看成特殊的一个向量，即在x和w中都增加一维，变成n+1维，增加的那一维x值为1，w值为b，相乘后仍然得到原式的结果，模型更改为y = wTb ， w属于m+1维向量空间">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LinearRegression">
 <meta property="og:url" content="http://yoursite.com/2020/10/29/LinearRegression/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
-<meta property="og:description" content="线性回归 线性回归模型即为 y=wx , 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。那怎样才叫满足呢？我们定义一个损失函数 12&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&amp;quot;&amp;gt">
+<meta property="og:description" content="线性回归 线性回归模型即为 y=wTx+b ,w属于m维向量空间即m维行向量，m的x的特征数，b属于一维向量空间， 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。  那怎样才叫满足呢？我们定义一个损失函数  我们将b看成特殊的一个向量，即在x和w中都增加一维，变成n+1维，增加的那一维x值为1，w值为b，相乘后仍然得到原式的结果，模型更改为y = wTb ， w属于m+1维向量空间">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-10-29T07:42:23.329Z">
+<meta property="og:image" content="http://yoursite.com/2020/10/29/LinearRegression/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/29/LinearRegression/2.png">
+<meta property="og:updated_time" content="2020-12-01T03:52:54.474Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LinearRegression">
-<meta name="twitter:description" content="线性回归 线性回归模型即为 y=wx , 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。那怎样才叫满足呢？我们定义一个损失函数 12&amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&amp;quot;&amp;gt">
+<meta name="twitter:description" content="线性回归 线性回归模型即为 y=wTx+b ,w属于m维向量空间即m维行向量，m的x的特征数，b属于一维向量空间， 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。  那怎样才叫满足呢？我们定义一个损失函数  我们将b看成特殊的一个向量，即在x和w中都增加一维，变成n+1维，增加的那一维x值为1，w值为b，相乘后仍然得到原式的结果，模型更改为y = wTb ， w属于m+1维向量空间">
+<meta name="twitter:image" content="http://yoursite.com/2020/10/29/LinearRegression/1.png">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -178,10 +181,13 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><strong>线性回归</strong></p>
-<p>线性回归模型即为 y=wx , 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。那怎样才叫满足呢？我们定义一个损失函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default&quot;&gt;&lt;/script&gt;</span><br><span class="line">$$ loss= \frac&#123; \left\|y-Xw \right\|_2^2&#125;&#123;2N&#125; = \frac&#123;(y-Xw)^&#123;T&#125;(y-Xw)&#125;&#123;2N&#125; $$</span><br></pre></td></tr></table></figure>
+<p>线性回归模型即为 y=wTx+b ,w属于m维向量空间即m维行向量，m的x的特征数，b属于一维向量空间， 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。</p>
+<img src="/2020/10/29/LinearRegression/1.png">
+<p>那怎样才叫满足呢？我们定义一个损失函数</p>
+<img src="/2020/10/29/LinearRegression/2.png">
+<p>我们将b看成特殊的一个向量，即在x和w中都增加一维，变成n+1维，增加的那一维x值为1，w值为b，相乘后仍然得到原式的结果，模型更改为y = wTb ， w属于m+1维向量空间， x属于m+1维向量空间<br>令X=(x1,x2,x3…xn)T所以损失函数化简为</p>
 
-<p>上式对w求偏导，并令其为0，求loss函数的最小值，这样求得的w就是最满足数据的参数，将这个参数带回模型就可以得到想要的模型， 但是这样的求法存在着 <strong>偏导数为0无法求出解析解，或损失函数不是处处可导，或者解析解太耗时，特征空间维度太高的问题</strong> ， 所以大部分时候是采用梯度下降的方法。</p>
+<p>$$<br>l(w) =1/2(y-Xw)^T * (y-Xw)   先将向量化成自身的内积<br>$$<br>$$<br>求导过程  =1/2 (-X)^T(y-Xw) +1/2 (y-Xw)^T(-X)<br>=(-X)^T<em>(y-Xw)<br>$$<br>上式对w求偏导，并令其为0，求loss函数的最小值，这样求得的w就是最满足数据的参数，将这个参数带回模型就可以得到想要的模型， 但是这样的求法存在着 *</em>偏导数为0无法求出解析解，或损失函数不是处处可导，或者解析解太耗时，特征空间维度太高的问题** ， 且矩阵逆的计算需要大量的内存，O（m**3）所以大部分时候是采用梯度下降的方法。</p>
 <p><strong>随机梯度下降</strong></p>
 <p>loss沿负梯度方向下降最快，于是随机选择一个初始点，朝这个点的负梯度方向前进一定的距离，到达一个新的点，重复这个过程，持续超负梯度方向前进，最终达到一个局部最小值，如果loss函数是凸函数，即是最小值。</p>
 <p>表示为w = w-lr*G   ， lr为学习率， G为梯度大小 </p>
