@@ -8,14 +8,23 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>linearClassification | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="SVM寻找一个线性分类使得，分类超平面与两个类别的距离尽可能的远  选择归一化条件$$w^T 𝐱++𝑏=+1     (1)$$$$w^T 𝐱_−+𝑏=−1        (2)$$边界距离则为$$w/|(|w|)| .(𝐱+−𝐱− )=(w^T (𝐱+−𝐱_−))/(||w||)=((1−𝑏)−(−1−𝑏))/(||w||)=2/(||w||)$$SVM的优化条件则为max/">
+<meta property="og:type" content="article">
 <meta property="og:title" content="linearClassification">
 <meta property="og:url" content="http://yoursite.com/2020/12/01/linearClassification/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
+<meta property="og:description" content="SVM寻找一个线性分类使得，分类超平面与两个类别的距离尽可能的远  选择归一化条件$$w^T 𝐱++𝑏=+1     (1)$$$$w^T 𝐱_−+𝑏=−1        (2)$$边界距离则为$$w/|(|w|)| .(𝐱+−𝐱− )=(w^T (𝐱+−𝐱_−))/(||w||)=((1−𝑏)−(−1−𝑏))/(||w||)=2/(||w||)$$SVM的优化条件则为max/">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-12-01T03:49:38.317Z">
+<meta property="og:image" content="http://yoursite.com/2020/12/01/linearClassification/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/01/linearClassification/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/01/linearClassification/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/01/linearClassification/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/01/linearClassification/5.png">
+<meta property="og:updated_time" content="2020-12-01T07:46:09.721Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linearClassification">
+<meta name="twitter:description" content="SVM寻找一个线性分类使得，分类超平面与两个类别的距离尽可能的远  选择归一化条件$$w^T 𝐱++𝑏=+1     (1)$$$$w^T 𝐱_−+𝑏=−1        (2)$$边界距离则为$$w/|(|w|)| .(𝐱+−𝐱− )=(w^T (𝐱+−𝐱_−))/(||w||)=((1−𝑏)−(−1−𝑏))/(||w||)=2/(||w||)$$SVM的优化条件则为max/">
+<meta name="twitter:image" content="http://yoursite.com/2020/12/01/linearClassification/1.png">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -174,7 +183,15 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><strong>SVM</strong><br>寻找一个线性分类使得，分类超平面与两个类别的距离尽可能的远</p>
+<img src="/2020/12/01/linearClassification/1.png">
+<p>选择归一化条件<br>$$<br>w^T 𝐱<em>++𝑏=+1     (1)<br>$$<br>$$<br>w^T 𝐱_−+𝑏=−1        (2)<br>$$<br>边界距离则为<br>$$<br>w/|(|w|)| .(𝐱</em>+−𝐱<em>− )=(w^T (𝐱</em>+−𝐱_−))/(||w||)=((1−𝑏)−(−1−𝑏))/(||w||)=2/(||w||)<br>$$<br>SVM的优化条件则为max/||w||</p>
+<img src="/2020/12/01/linearClassification/2.png">
+<p>等价为</p>
+<img src="/2020/12/01/linearClassification/3.png">
+<p>引入松弛变量，允许少部分样本不满足1式和2式。</p>
+<img src="/2020/12/01/linearClassification/4.png">
+<img src="/2020/12/01/linearClassification/5.png">
       
 
       
@@ -266,6 +283,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/12/02/虚拟机类加载/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          虚拟机类加载
+        
+      </div>
+    </a>
   
   
     <a href="/2020/11/30/class类文件结构/" id="article-nav-older" class="article-nav-link-wrap">

@@ -152,6 +152,85 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-LinearRegression" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/29/LinearRegression/">LinearRegression</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/29/LinearRegression/" class="archive-article-date">
+  	<time datetime="2020-10-29T07:08:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>线性回归</strong></p>
+<p>线性回归模型即为 y=wTx+b ,w属于m维向量空间即m维行向量，m的x的特征数，b属于一维向量空间， 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。</p>
+<img src="/2020/10/29/LinearRegression/1.png">
+<p>那怎样才叫满足呢？我们定义一个损失函数</p>
+<img src="/2020/10/29/LinearRegression/2.png">
+<p>我们将b看成特殊的一个向量，即在x和w中都增加一维，变成n+1维，增加的那一维x值为1，w值为b，相乘后仍然得到原式的结果，模型更改为y = wTb ， w属于m+1维向量空间， x属于m+1维向量空间<br>令X=(x1,x2,x3…xn)T所以损失函数化简为</p>
+
+<p>$$<br>l(w) =1/2(y-Xw)^T * (y-Xw)   先将向量化成自身的内积<br>$$<br>$$<br>求导过程  =1/2 (-X)^T(y-Xw) +1/2 (y-Xw)^T(-X)<br>=(-X)^T<em>(y-Xw)<br>$$<br>上式对w求偏导，并令其为0，求loss函数的最小值，这样求得的w就是最满足数据的参数，将这个参数带回模型就可以得到想要的模型， 但是这样的求法存在着 *</em>偏导数为0无法求出解析解，或损失函数不是处处可导，或者解析解太耗时，特征空间维度太高的问题** ， 且矩阵逆的计算需要大量的内存，O（m**3）所以大部分时候是采用梯度下降的方法。</p>
+<p><strong>随机梯度下降</strong></p>
+<p>loss沿负梯度方向下降最快，于是随机选择一个初始点，朝这个点的负梯度方向前进一定的距离，到达一个新的点，重复这个过程，持续超负梯度方向前进，最终达到一个局部最小值，如果loss函数是凸函数，即是最小值。</p>
+<p>表示为w = w-lr*G   ， lr为学习率， G为梯度大小 </p>
+<p>迭代的进行参数更新。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/29/LinearRegression/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-pytorch杂记2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -846,87 +925,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/07/14/tcp/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-pipelineRdt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/13/pipelineRdt/">流水线可靠数据传输协议</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/13/pipelineRdt/" class="archive-article-date">
-  	<time datetime="2020-07-13T12:10:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能</p>
-<p>采取流水线技术的可靠数据传输协议必须具有以下条件：</p>
-<p>1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题</p>
-<p>2.协议的发送方和接收方两端必须缓存多个分组</p>
-<p>3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。</p>
-<p>解决流水线的差错的两种基本方法</p>
-<p>1.回退N步 2.选择重传</p>
-<h4 id="回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）"><a href="#回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）" class="headerlink" title="回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）"></a>回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）</h4><img src="/2020/07/13/pipelineRdt/GBN.jpg">
-
-<p><img src="/pipelineRdt/GBN.jpg" alt></p>
-<p>基序号base 定义为最早未被确认分组的序号，即图中4号</p>
-<p>下一个序号nextseqnum定义为最小未使用序号，即图中7号</p>
-        
-          <a class="article-more-a" href="/2020/07/13/pipelineRdt/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/13/pipelineRdt/">展开全文 >></a>
         </p>
       
 

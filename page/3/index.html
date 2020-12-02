@@ -152,6 +152,87 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-pipelineRdt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/13/pipelineRdt/">流水线可靠数据传输协议</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/13/pipelineRdt/" class="archive-article-date">
+  	<time datetime="2020-07-13T12:10:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能</p>
+<p>采取流水线技术的可靠数据传输协议必须具有以下条件：</p>
+<p>1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题</p>
+<p>2.协议的发送方和接收方两端必须缓存多个分组</p>
+<p>3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。</p>
+<p>解决流水线的差错的两种基本方法</p>
+<p>1.回退N步 2.选择重传</p>
+<h4 id="回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）"><a href="#回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）" class="headerlink" title="回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）"></a>回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）</h4><img src="/2020/07/13/pipelineRdt/GBN.jpg">
+
+<p><img src="/pipelineRdt/GBN.jpg" alt></p>
+<p>基序号base 定义为最早未被确认分组的序号，即图中4号</p>
+<p>下一个序号nextseqnum定义为最小未使用序号，即图中7号</p>
+        
+          <a class="article-more-a" href="/2020/07/13/pipelineRdt/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/13/pipelineRdt/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-rdt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -719,74 +800,6 @@ int main() {
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/09/22/shortTalk/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-softwareLearning" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/22/softwareLearning/">生活小琐事</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/22/softwareLearning/" class="archive-article-date">
-  	<time datetime="2019-09-22T14:27:50.109Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-22</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>可以说是正式来软工学习的第一个星期了。刚来就体验到大二生活的艰辛，也从此开启了抄作业的生活，真是满满当当的一周。虽然自己看起来很努力，但愿不是假装努力吧，希望一切有效果吧。在文末来一句话勉励自己吧。喂，要跑啊，少年，要跑。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/22/softwareLearning/">展开全文 >></a>
         </p>
       
 

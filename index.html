@@ -152,6 +152,78 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-虚拟机类加载" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/02/虚拟机类加载/">虚拟机类加载</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/02/虚拟机类加载/" class="archive-article-date">
+  	<time datetime="2020-12-02T08:45:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-02</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>编译器将java文件编译成Class文件后，虚拟机需要在运行时加载Class文件，才能被使用。<br>类加载的过程包括 <strong>加载-&gt;验证-&gt;准备-&gt;解析-&gt;初始化</strong> ,这个过程是说说明各阶段的开始时间的先后顺序，不代表一定要上一个阶段结束了才能开始下一阶段。</p>
+<h6 id="加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）"><a href="#加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）" class="headerlink" title="加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）"></a>加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）</h6><p>加载过程主要完成的任务：<br>    1.通过类的全限定名获取定义此类的二进制字节流,《java虚拟机规范》中并没有明确要求从哪里获取，什么时候获取，用什么方式获取。因此具体实现起来的方式有很多，从zip压缩包中读取，从网络中获取等等<br>    2.将字节流代表的静态存储结构转化为方法区的运行时的数据结构 （具体是什么数据结构？）<br>    3.在内存中生成代表这个类的java.lang.Class对象，作为方法区中这个类的各种数据的入口<br>对于第一个任务，有类加载器来完成，类加载器负责读取 Java 字节代码，并转换成 java.lang.Class 类的一个实例。<br><strong>类加载器</strong><br>    对于任意一个类，都必须由加载他的类加载器和这个类本身一起共同确定它在java虚拟机中的唯一性。换句话说，对于叫ClassLoaderTest的这样一个类，有两个不同的类加载器，加载出来的类就不是同一个类。<br>    类加载器的三层模型：其实从虚拟机的角度看，只存在两种不同的类加载器，即启动类加载器Bootstrap ClassLoader和其他类加载器。但从三层模型看，有3个系统提供的类加载。<br>    1.启动类加载器，负责加载存放在<java_home>\lib目录，或被-Xbootclasspath参数所指定的路径中存放的，且能够被java虚拟机识别的类库，将其加载到虚拟机的内存中。启动类加载器无法被java程序直接引用，用户在编写自定义类加载器的时候，如果需要把加载请求委派给引导类加载器器去处理，那直接用null代替就好<br>    2.扩展类加载器。负责加载<java_home>\lib\ext目录中，或被java.ext.dirs系统变量所指定的路径中所有的类库。可以直接在程序中使用扩展类加载器来加载class文件。<br>    3.应用程序类加载器。负责加载用户类路径上所有的类库。<br><strong>双亲委派模型</strong><br>一个类加载器收到类加载请求，<strong>他会先把请求转发给父类加载器去完成，每一层的类加载都是如此</strong>。所以所有请求最终都会发送到启动类加载器中。只有当父类加载器反馈无法完成夹杂请求时，子加载器才会尝试自己去完成。</java_home></java_home></p>
+<img src="/2020/12/02/虚拟机类加载/1.png">
+        
+          <a class="article-more-a" href="/2020/12/02/虚拟机类加载/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/02/虚拟机类加载/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-linearClassification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -175,7 +247,15 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p><strong>SVM</strong><br>寻找一个线性分类使得，分类超平面与两个类别的距离尽可能的远</p>
+<img src="/2020/12/01/linearClassification/1.png">
+<p>选择归一化条件<br>$$<br>w^T 𝐱<em>++𝑏=+1     (1)<br>$$<br>$$<br>w^T 𝐱_−+𝑏=−1        (2)<br>$$<br>边界距离则为<br>$$<br>w/|(|w|)| .(𝐱</em>+−𝐱<em>− )=(w^T (𝐱</em>+−𝐱_−))/(||w||)=((1−𝑏)−(−1−𝑏))/(||w||)=2/(||w||)<br>$$<br>SVM的优化条件则为max/||w||</p>
+<img src="/2020/12/01/linearClassification/2.png">
+<p>等价为</p>
+<img src="/2020/12/01/linearClassification/3.png">
+<p>引入松弛变量，允许少部分样本不满足1式和2式。</p>
+<img src="/2020/12/01/linearClassification/4.png">
+<img src="/2020/12/01/linearClassification/5.png">
       
 
       
@@ -768,85 +848,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/10/30/AdaBoost/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-LinearRegression" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/29/LinearRegression/">LinearRegression</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/29/LinearRegression/" class="archive-article-date">
-  	<time datetime="2020-10-29T07:08:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>线性回归</strong></p>
-<p>线性回归模型即为 y=wTx+b ,w属于m维向量空间即m维行向量，m的x的特征数，b属于一维向量空间， 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。</p>
-<img src="/2020/10/29/LinearRegression/1.png">
-<p>那怎样才叫满足呢？我们定义一个损失函数</p>
-<img src="/2020/10/29/LinearRegression/2.png">
-<p>我们将b看成特殊的一个向量，即在x和w中都增加一维，变成n+1维，增加的那一维x值为1，w值为b，相乘后仍然得到原式的结果，模型更改为y = wTb ， w属于m+1维向量空间， x属于m+1维向量空间<br>令X=(x1,x2,x3…xn)T所以损失函数化简为</p>
-
-<p>$$<br>l(w) =1/2(y-Xw)^T * (y-Xw)   先将向量化成自身的内积<br>$$<br>$$<br>求导过程  =1/2 (-X)^T(y-Xw) +1/2 (y-Xw)^T(-X)<br>=(-X)^T<em>(y-Xw)<br>$$<br>上式对w求偏导，并令其为0，求loss函数的最小值，这样求得的w就是最满足数据的参数，将这个参数带回模型就可以得到想要的模型， 但是这样的求法存在着 *</em>偏导数为0无法求出解析解，或损失函数不是处处可导，或者解析解太耗时，特征空间维度太高的问题** ， 且矩阵逆的计算需要大量的内存，O（m**3）所以大部分时候是采用梯度下降的方法。</p>
-<p><strong>随机梯度下降</strong></p>
-<p>loss沿负梯度方向下降最快，于是随机选择一个初始点，朝这个点的负梯度方向前进一定的距离，到达一个新的点，重复这个过程，持续超负梯度方向前进，最终达到一个局部最小值，如果loss函数是凸函数，即是最小值。</p>
-<p>表示为w = w-lr*G   ， lr为学习率， G为梯度大小 </p>
-<p>迭代的进行参数更新。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/29/LinearRegression/">展开全文 >></a>
         </p>
       
 

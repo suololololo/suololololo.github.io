@@ -6,15 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>壴加亻夋的博客</title>
+  <title>虚拟机类加载 | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="壴加亻夋的博客">
-<meta property="og:url" content="http://yoursite.com/page/4/index.html">
+  <meta name="description" content="编译器将java文件编译成Class文件后，虚拟机需要在运行时加载Class文件，才能被使用。类加载的过程包括 加载-&amp;gt;验证-&amp;gt;准备-&amp;gt;解析-&amp;gt;初始化 ,这个过程是说说明各阶段的开始时间的先后顺序，不代表一定要上一个阶段结束了才能开始下一阶段。 加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）加载过程主要完成的任务：    1.通过类的全限定名获取定义此类的二进">
+<meta property="og:type" content="article">
+<meta property="og:title" content="虚拟机类加载">
+<meta property="og:url" content="http://yoursite.com/2020/12/02/虚拟机类加载/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
+<meta property="og:description" content="编译器将java文件编译成Class文件后，虚拟机需要在运行时加载Class文件，才能被使用。类加载的过程包括 加载-&amp;gt;验证-&amp;gt;准备-&amp;gt;解析-&amp;gt;初始化 ,这个过程是说说明各阶段的开始时间的先后顺序，不代表一定要上一个阶段结束了才能开始下一阶段。 加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）加载过程主要完成的任务：    1.通过类的全限定名获取定义此类的二进">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2020/12/02/虚拟机类加载/1.png">
+<meta property="og:updated_time" content="2020-12-02T12:16:46.355Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="壴加亻夋的博客">
+<meta name="twitter:title" content="虚拟机类加载">
+<meta name="twitter:description" content="编译器将java文件编译成Class文件后，虚拟机需要在运行时加载Class文件，才能被使用。类加载的过程包括 加载-&amp;gt;验证-&amp;gt;准备-&amp;gt;解析-&amp;gt;初始化 ,这个过程是说说明各阶段的开始时间的先后顺序，不代表一定要上一个阶段结束了才能开始下一阶段。 加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）加载过程主要完成的任务：    1.通过类的全限定名获取定义此类的二进">
+<meta name="twitter:image" content="http://yoursite.com/2020/12/02/虚拟机类加载/1.png">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -150,22 +156,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-softwareLearning" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-虚拟机类加载" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/22/softwareLearning/">生活小琐事</a>
+    <h1 class="article-title" itemprop="name">
+      虚拟机类加载
     </h1>
   
 
         
-        <a href="/2019/09/22/softwareLearning/" class="archive-article-date">
-  	<time datetime="2019-09-22T14:27:50.109Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-22</time>
+        <a href="/2020/12/02/虚拟机类加载/" class="archive-article-date">
+  	<time datetime="2020-12-02T08:45:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-02</time>
 </a>
         
       </header>
@@ -175,10 +179,39 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p>可以说是正式来软工学习的第一个星期了。刚来就体验到大二生活的艰辛，也从此开启了抄作业的生活，真是满满当当的一周。虽然自己看起来很努力，但愿不是假装努力吧，希望一切有效果吧。在文末来一句话勉励自己吧。喂，要跑啊，少年，要跑。</p>
+        <p>编译器将java文件编译成Class文件后，虚拟机需要在运行时加载Class文件，才能被使用。<br>类加载的过程包括 <strong>加载-&gt;验证-&gt;准备-&gt;解析-&gt;初始化</strong> ,这个过程是说说明各阶段的开始时间的先后顺序，不代表一定要上一个阶段结束了才能开始下一阶段。</p>
+<h6 id="加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）"><a href="#加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）" class="headerlink" title="加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）"></a>加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）</h6><p>加载过程主要完成的任务：<br>    1.通过类的全限定名获取定义此类的二进制字节流,《java虚拟机规范》中并没有明确要求从哪里获取，什么时候获取，用什么方式获取。因此具体实现起来的方式有很多，从zip压缩包中读取，从网络中获取等等<br>    2.将字节流代表的静态存储结构转化为方法区的运行时的数据结构 （具体是什么数据结构？）<br>    3.在内存中生成代表这个类的java.lang.Class对象，作为方法区中这个类的各种数据的入口<br>对于第一个任务，有类加载器来完成，类加载器负责读取 Java 字节代码，并转换成 java.lang.Class 类的一个实例。<br><strong>类加载器</strong><br>    对于任意一个类，都必须由加载他的类加载器和这个类本身一起共同确定它在java虚拟机中的唯一性。换句话说，对于叫ClassLoaderTest的这样一个类，有两个不同的类加载器，加载出来的类就不是同一个类。<br>    类加载器的三层模型：其实从虚拟机的角度看，只存在两种不同的类加载器，即启动类加载器Bootstrap ClassLoader和其他类加载器。但从三层模型看，有3个系统提供的类加载。<br>    1.启动类加载器，负责加载存放在<java_home>\lib目录，或被-Xbootclasspath参数所指定的路径中存放的，且能够被java虚拟机识别的类库，将其加载到虚拟机的内存中。启动类加载器无法被java程序直接引用，用户在编写自定义类加载器的时候，如果需要把加载请求委派给引导类加载器器去处理，那直接用null代替就好<br>    2.扩展类加载器。负责加载<java_home>\lib\ext目录中，或被java.ext.dirs系统变量所指定的路径中所有的类库。可以直接在程序中使用扩展类加载器来加载class文件。<br>    3.应用程序类加载器。负责加载用户类路径上所有的类库。<br><strong>双亲委派模型</strong><br>一个类加载器收到类加载请求，<strong>他会先把请求转发给父类加载器去完成，每一层的类加载都是如此</strong>。所以所有请求最终都会发送到启动类加载器中。只有当父类加载器反馈无法完成夹杂请求时，子加载器才会尝试自己去完成。</java_home></java_home></p>
+<img src="/2020/12/02/虚拟机类加载/1.png">
+<a id="more"></a>
+<p>使用双亲委派模型的好处，加载的类随着自己的类加载器有了优先层级的关系。例如类java.lang.Object，无论哪一个类加载器加载这个类，最终都是委派给启动类加载器，保证了object类在哪个类加载器环境中都是同一个类<br>对于数组类而言，是由java虚拟机直接在内存中动态构造出来，不通过类加载器创建，但数组类的元素类型最终还是要靠类加载器来加载</p>
+<h6 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h6><p>目的确保Class文件的字节流包含的信息符合《java虚拟机规范》的全部约束要求。<br>1.<strong>文件格式验证</strong><br>    验证字节流是否符合Class文件规范，能被当前虚拟机版本理解。<br>    包括：1.是否以魔数0xCAFEBABE开头2.主次版本是否在虚拟机接受范围之内3.常量池的常量是否有不支持的类型 …….<br>2.<strong>元数据验证</strong><br>    对字节码进行语义分析。<br>    包括：1.这个类是否有父类（除了java.lang.Object外都应该有） 2.这个类的父类是否继承了不被允许继承的类（final修饰的类）……<br>3.<strong>字节码验证</strong><br>    通过数据流分析和控制流分析，确定程序语义是否合法，符合逻辑，主要对类的方法体进行分析。包括：1.任何跳转指令不会跳转到方法体之外的字节码上……<br>4.<strong>符号引用验证</strong><br>    验证该类是否缺少或被禁止访问它依赖的某些外部类，方法。字段等。<br>    包括：1.符号引用中通过全限定名能否找到对应的类。……</p>
+<h6 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h6><p>为类变量（不包括实例变量）分配内存和设定初始值的阶段（通常设定为初始零值）**类变量会随Class对象存放在java堆中</p>
+<h6 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h6><p>将常量池的符号引用转化为直接引用的过程。符号引用就是：以一组符号来描述引用的目标，不一定内存上已经分配了位置。即逻辑上的概念。直接引用：即在内存中已经分配好的地址，能直接指向目标的指针。<br>1.<strong>类或接口解析</strong><br>    假设当前代码所处的类为D，要把符号引用N解析为一个类或接口C的直接引用<br>    1.若C不是数组，则虚拟机把N的全限定名传给D的类加载器去加载类C。这个过程可能触发其他相关类的加载动作。如果发生异常，解析过程失败<br>    2.若C是数组，且数组元素类型为对象。则按照第一点规则加载数组元素类型，接着虚拟机生成一个代表该数组维度和元素的数组对象<br>    3.完成上两步后，在进行符号引用验证，确认D是否具备对C的访问权限4<br>2.<strong>字段解析</strong><br>    解析一个字段前，先对字段表中class_index项的索引对应的类进行解析。设字段所属的类或接口为C<br>    1.在C中查找该字段，若存在简单名称和字段描述符都与目标匹配的字段，则返回这个字段的直接引用，查找结束<br>    2.在C的接口中从下往上递归查找，若存在简单名称和字段描述符都与目标匹配的字段，则返回这个字段的直接引用，查找结束<br>    3.当C不是java.lang.Object时，从C的父类中从下往上递归查找。<br>    4.前3步都无，失败，抛出java.lang.NoSuchFieldError<br>    查找成功后还要进行字段权限验证。当C类中接口和父类中都存在匹配的字段时，编译报错<br>3.<strong>方法解析</strong><br>    解析一个方法前，先对方法表中class_index项的索引对应的类进行解析。设该方法所属类为C<br>    1.若解析过中class_index索引对应的是接口，抛出异常<br>    2.在类C中查找该方法，返回直接引用<br>    3.在父类中递归查找<br>    4.在接口列表中和他们的父接口中查找，若找到说明C是抽象类，抛出异常<br>    5.都找不到，抛出异常<br>    找到后进行权限验证<br>4.<strong>接口方法解析</strong><br>    解析一个方法前，先对方法表中class_index项的索引对应的类进行解析。设该方法所属接口为C<br>    1.若解析过中class_index索引对应的是类，抛出异常<br>    2.在接口C中查找该方法，返回直接引用<br>    3.在父接口中递归查找<br>    5.都找不到，抛出异常<br>    找到后进行权限验证</p>
+<h6 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h6><p>根据程序员编写的程序初始化类变量和其他资源。抽象的说就是<strong>执行类构造器 <clinit> ()方法的过程 <clinit>方法是编译器自动生成的</clinit></clinit></strong><br>编译器自动收集类中的所有类变量和静态语句块(static{})的语句合并产生的，顺序是按照代码编写顺序。 静态语句块只能访问到定义在静态语句块之前的变量。定义在他们之后的变量，可以赋值，但不能访问<br>java虚拟机会保证子类的<clinit>方法执行之前，父类<clinit>方法已经执行完毕。<br>如果一个类中没有静态语句块，也没有类变量的赋值操作，则无<clinit>方法。<br>接口也会生成<clinit>方法，但执行<clinit>方法不需要先执行父类的<clinit>方法，除非父接口中变量被使用到。接口的实现类在初始化时一样不会执行接口的<clinit>方法</clinit></clinit></clinit></clinit></clinit></clinit></clinit></p>
 
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -187,16 +220,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/22/softwareLearning/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/12/02/虚拟机类加载/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/01/linearClassification/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">linearClassification</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -216,83 +308,17 @@
 
 
 
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/17/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2019/02/17/hello-world/" class="archive-article-date">
-  	<time datetime="2019-02-17T02:29:46.758Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-17</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>欢迎来到壴加亻夋的博客！！<br>第一次搭建自己的博客，似乎很有意思，难道这就是前端的魅力吗？</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/02/17/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
-    </nav>
   
+
+  
+
+  
+
+  
+
+
 
 
           </div>
@@ -323,8 +349,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
