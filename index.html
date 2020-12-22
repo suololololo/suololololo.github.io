@@ -152,6 +152,173 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java前端编译" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/21/java前端编译/">java前端编译</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/21/java前端编译/" class="archive-article-date">
+  	<time datetime="2020-12-21T13:05:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-21</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>java编译过程大致分为1个准备过程和3个处理过程<br>1.准备过程：初始化插入时注解处理器 （没明白）<br>2.解析和填充符号表</p>
+<ul>
+<li>词法和语法分析，构建抽象语法树</li>
+<li>填充符号表</li>
+</ul>
+<p>3.插入式注解处理器注解处理过程<br>4.分析和字节码生成（语义分析）</p>
+<ul>
+<li>标注检查，检查变量使用前是否已被声明，变量与赋值直接的数据类型是否能够匹配。在这个阶段中编译器会进行一个常量折叠<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a  = <span class="number">1</span> + <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>在抽象语法树中能看到 1，2，+结点，但经过常量折叠后就直接变成3了</p>
+<ul>
+<li>数据及控制流分析， 检查局部变量在使用前是否已经被赋值，方法的每条路径是否都有返回值，是否所有的受查异常都得到了正确处理<br>下面有个关于final修饰符得例子<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法一</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> arg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">final</span> <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 方法二</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foos</span><span class="params">(<span class="keyword">int</span> arg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> <span class="keyword">var</span>  = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>编译后经过反编译</p>
+<img src="/2020/12/21/java前端编译/1.png">
+<p>发现里面根本没有final关键字，说明在运行期间根本无法检查这个错误，只能在编译期间来检查，具体由com.sun.tools.javac.comp.Flow里得flow()方法完成</p>
+<ul>
+<li>解语法糖，包括擦除泛型，自动装箱拆箱，变长参数，遍历循环等等</li>
+<li>字节码生成 在这个过程中，编译器把语句块，对于实例构造器是{}块，对于类构造器是static{}块，变量初始化，调用父类的实例构造器 收敛到<init>和<clinit>方法中，最后将符号表交到com.sun.tools.javac.jvm.ClassWriter类手上，由这个类的writeClass()方法输出字节码，生成Class文件，编译结束</clinit></init></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/21/java前端编译/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-PCA主成分分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/08/PCA主成分分析/">PCA主成分分析</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/08/PCA主成分分析/" class="archive-article-date">
+  	<time datetime="2020-12-08T01:57:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>PCA的作用就是拿来降维，那为什么要降维呢？因为数据中有些内容没有价值，这些内容会影响算法的性能和准确率。所以就要将这些数据去除，怎样个去除法呢？</p>
+<img src="/2020/12/08/PCA主成分分析/1.png">
+<p>如上图，数据点大多分布在x2方向上，x1方向上的取值相似，就可以直接把x1的坐标去掉。但有些情况就不能直接这样去除</p>
+<img src="/2020/12/08/PCA主成分分析/2.png">
+<p>如上图，数据分布在x1和x2方向上都比较均匀，去除任何一个都会造成较大的影响，但是假如我把这些数据投影到y1，y2的坐标系上，就又变成第一个图的情况<br>现在问题就转变成了如何将数据映射到y1，y2的坐标系上。且我们希望投影到y1上尽可能的分散</p>
+<p>现在我们需要构建一个函数f(Xn<em>m)  n为特征个数， m为样本个数<br>$$Z_k×_m =  f(X_n×_m)  k&lt;n$$<br>这个问题又转化为寻找一个矩阵W_k</em>m<br>$$Z_k×_m =  W_k×_m * X_n×_m  k&lt;n$$</p>
+<p>假设我们要把矩阵的维数降为1，即降维之后只有X只有一个特征值 即k=1<br>目标是使降维后坐标在那个坐标轴的分布尽可能的分散（上图的y2），用方差来衡量数据的分散程度即</p>
+<img src="/2020/12/08/PCA主成分分析/3.png">
+<p>最后就是求解最大特征值<br>所以降维的具体过程就是<br>1.计算协方差矩阵S = Cov(X)<br>2.选择一系列正交特征向量，对应K个最大特征值，得到投影矩阵W<br>3.降维   Z = WX</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/08/PCA主成分分析/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-虚拟机字节码执行引擎" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -699,6 +866,15 @@
 <p>编写一个泛型方法调用时，如果擦除了返回类型，编译器会插入强制类型转换。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;Employee&gt; buddies = <span class="keyword">new</span> Pair&lt;Employee&gt;();</span><br><span class="line">Employee buddy = buddies.getFirst();</span><br><span class="line"><span class="comment">//getFirst类型擦除后的返回类型是Object，编译器自动插入转换到Employee的强制类型转换。编译器把这个方法转换为两条虚拟机指令，1.对原始方法Pair.getFirst的调用 2. 将返回的Object类型强制转换为Employee类型。</span></span><br></pre></td></tr></table></figure>
 
+<h4 id="java泛型的缺陷"><a href="#java泛型的缺陷" class="headerlink" title="java泛型的缺陷"></a>java泛型的缺陷</h4><p>java选择泛型实现方式是“类型擦除式泛型”，而C#实现的方式是“具现化式泛型”，即C#里面的泛型无论是在程序源码里面，编译后的中间语言表示里面，抑或是运行期的CLR里面都是切实存在的，List<int> 和List<string>就是两个不同的类型。而java泛型只在程序源码中出现，在编译后的字节码文件中，全部泛型都被替换为原来的裸类型，并在相应的地方加入强制转型代码，因此ArrayList<int> 和ArrayList<string>其实是同一个类型，在这种情况下，会造成一些影响</string></int></string></int></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TypeErasureGnerics</span>&lt;<span class="title">E</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(Objece item)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(item <span class="keyword">instanceof</span> E)&#123;  <span class="comment">//不合法，无法对泛型进行实例判断</span></span><br><span class="line">		...</span><br><span class="line">		&#125;</span><br><span class="line">		E newItem  = <span class="keyword">new</span> E(); <span class="comment">//不合法，无法使用泛型创建对象</span></span><br><span class="line">		E[] itemArray = <span class="keyword">new</span> E[<span class="number">10</span>]; <span class="comment">//不合法，无法使用泛型创建数组</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么存在这些缺点，为什么java要选择以这样的方式实现泛型呢？主要原因是实现泛型时，要保证二进制向后兼容性，即在比如JDK1.2编译出的Class文件，也要在JDK12乃至以后的任何版本都能正常运行。那JDK1.2版本没有支持泛型，到java5.0突然要支持泛型，还要让以前编译的程序在新版本虚拟机还能正常运行，意味着以前没有的限制不能突然冒出来。因此，有两条路可以选择<br>1.需要泛型化的类型，以前有的就保持不变，创建一套新的平行的泛型化版本的新类型<br>2.直接泛化已有的类型，即让所有需要泛型化的已有类型都原地泛型化，不添加任何平行于已有类型的泛型版<br>由于java的代码遗留问题，迫使java不得不选择第二条路，但第二条路不是意味着一定只能使用类型擦除来实现<br>java选择第二条路，直接把已有的类型泛型化，要让所有需要泛型化的已有类型，譬如 ArrayList，原地泛型化后变为ArrayList<t>,且还要保证以前直接用ArrayList的代码在泛型新版本里必须还能用这同一个容器，即ArrayList类型是所有这些ArrayList<integer>，ArrayList<string>的父类，这就是裸类型。<br>裸类型的实现有两种选择：一种是在编译的时候直接将ArrayList<integer>类型还原为 ArrayList类型，只在元素访问，修改时自动插入一些强制类型转换和检查指令。 第二种是在运行期由java虚拟机自动真实地构造出ArrayList<integer>类型，并且实现从ArrayList<integer>派生自ArrayList的继承关系，显然java选择了前者</integer></integer></integer></string></integer></t></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericParadigm</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Map&lt;String,String&gt;  map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">"hello"</span>,<span class="string">"你好"</span>);</span><br><span class="line">        map.put(<span class="string">"how are you "</span>,<span class="string">"你好吗"</span>);</span><br><span class="line">        System.out.println(map.get(<span class="string">"hello"</span>));</span><br><span class="line">        System.out.println(map.get(<span class="string">"how are you "</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将编译后的Class文件反编译一下</p>
+<img src="/2020/11/02/java泛型/1.png">
+<p>发现泛型都不见了，在元素访问的时候加上了从Object到Sting的强制转换</p>
 
       
 
@@ -712,144 +888,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/11/02/java泛型/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-GreedyAlgorithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/GreedyAlgorithm/">GreedyAlgorithm</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/GreedyAlgorithm/" class="archive-article-date">
-  	<time datetime="2020-11-01T12:11:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/GreedyAlgorithm/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-LeetCode题目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/31/LeetCode题目/">LeetCode题目</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/31/LeetCode题目/" class="archive-article-date">
-  	<time datetime="2020-10-31T02:22:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-31</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>深度优先搜索</strong></p>
-<img src="/2020/10/31/LeetCode题目/1.png">
-        
-          <a class="article-more-a" href="/2020/10/31/LeetCode题目/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/31/LeetCode题目/">展开全文 >></a>
         </p>
       
 

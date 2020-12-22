@@ -152,6 +152,187 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ipv4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/16/ipv4/">ipv4</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/16/ipv4/" class="archive-article-date">
+  	<time datetime="2020-07-16T02:49:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>网络层的组件</p>
+<ul>
+<li>IP协议</li>
+<li>路由选择协议</li>
+<li>ICMP协议</li>
+</ul>
+<p><strong>ipv4数据报格式</strong></p>
+<img src="/2020/07/16/ipv4/format.png">
+
+<ul>
+    <li>版本号。规定了数据报的IP协议版本</li>
+    <li>首部长度。可以用来确定IP数据报中数据部分实际从哪里开始。一般IP数据报具有20字节的首部</li>
+    <li>服务类型。区分不同类型的IP数据报</li>
+    <li>数据报长度。首部加上数据总长度。理论最大长度为65535字节</li>
+    <li>标识，标志，片偏移。用来ip分片</li>
+    <li>寿命。每当数据报由一台路由器处理时，字段值减1。字段为0时，数据报被丢弃</li>
+    <li>首部校验和。将首部每两个字节当作一个数，用反码运算求和，和的反码作为首部校验和。每台路由器上必须重新计算校验和并再次存放到原处，因为TTL字段和可能的选项字段会改变</li>
+    <li>源和目的ip地址。</li>
+    <li>选项。选项字段允许IP首部被扩展</li>
+    <li>数据</li>
+</ul>
+
+
+
+<p><strong>ip数据分片</strong></p>
+<p>IP数据报在互联网上传输时，可能要经过多个物理网络才能从源端传输到目的端。不同的网络由于链路层和介质的物理特性不同，因此在进行数据传输时，对数据帧的最大长度都有一个限制，这个限制值即最大传输单元MTU（Maximum Transmission Unit）.</p>
+<p>同一个网络上的两台主机之间通信时，该网络的MTU值是确定的，不存在分片问题。分片问题一般只存在于具有不同MTU值的互联网中。</p>
+<p>假设一台互联几条链路的路由器，且每条链路运行具有不同MTU的链路层协议，当输入链路与输出链路的MTU不同，且输出链路的MTU更小，就可能面临分片问题。</p>
+<p>当生成数据报时，发送主机会为数据报贴上标识号，且通常将为它发送的每个数据报的标识号加1。</p>
+        
+          <a class="article-more-a" href="/2020/07/16/ipv4/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/16/ipv4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-routerArchitecture" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/15/routerArchitecture/">路由器工作原理</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/15/routerArchitecture/" class="archive-article-date">
+  	<time datetime="2020-07-15T08:34:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>路由器的体系结构</strong></p>
+<img src="/2020/07/15/routerArchitecture/architeture.png">
+
+<p><img src="//yoursite.com/2020/07/15/routerArchitecture/architeture.png" alt></p>
+<ul>
+<li>输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能， 执行与位于入链路远端的数据链路层交互的数据链路层功能。在3部分实现查找功能，查询转发表决定路由器的输出端口</li>
+<li>交换结构。实现将分组从一个输入端口交换到一个输出端口中</li>
+<li>输出端口。存储从交换结构接收的分组，并执行必要的链路层和物理层功能在输入链路上传输这些分组</li>
+<li>路由选择处理器。执行路由选择协议免维护路由选择表以及连接的链路状态信息，并为路由器计算转发表。</li>
+</ul>
+<p><strong>输入端口</strong></p>
+<img src="/2020/07/15/routerArchitecture/input.png">
+
+<p><img src="/routerArchitecture/input.png" alt></p>
+        
+          <a class="article-more-a" href="/2020/07/15/routerArchitecture/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/15/routerArchitecture/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-tcp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -660,150 +841,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/10/28/指针与数组/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-构造函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="c-构造函数特殊用法"><a href="#c-构造函数特殊用法" class="headerlink" title="c++构造函数特殊用法"></a>c++构造函数特殊用法</h1><p><code>class A {
-public:
-    A(int x ):a(x){}
-    int a;
-};</code></p>
-<p>若此时创建A类的实例 <code>A s(3);</code>,则会调用构造方法，将3赋值给a。以java的角度看来这很奇怪，<code>a（x）</code></p>
-<p>相当于 <code>a=x;</code>的效果。</p>
-<p>但实际上这种用法是有要求的，</p>
-<p>1 函数A必须是构造函数<br>2 a必须是A类中的一个成员变量或者是基类</p>
-<p>其代表的意思为 用参数x来初始化成员变量a，和直接a=x类似，但是不等同，这样的方法更高效。</p>
-<p>这种方法还有一种好处</p>
-<p><code>#include &lt;iostream&gt;;</code><br><code>using namespace std;</code><br><code>class A {</code><br><code>public:</code><br>    <code>A(int x ):a(x){}</code><br>    <code>int a;</code><br><code>};</code></p>
-<p><code>class B {</code><br><code>public:</code><br>    <code>B(int x , int y):aa(x)</code><br>    <code>{</code><br>        <code>b = y;</code><br>    <code>}</code><br>    <code>void out() { cout &lt;&lt; &quot;aa=&quot; &lt;&lt; aa.a &lt;&lt; endl &lt;&lt; &quot;b=&quot; &lt;&lt; b &lt;&lt; endl; }</code></p>
-<p><code>private:</code><br>    <code>int b;</code><br>    <code>A aa;</code><br><code>};</code><br><code>int main() {</code><br>    <code>B objB(3, 5);</code><br>    <code>objB.out();</code><br><code>}</code></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/11/构造函数/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-virtualFunction" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="关于c-虚函数的见解"><a href="#关于c-虚函数的见解" class="headerlink" title="关于c++虚函数的见解"></a>关于c++虚函数的见解</h1><p>c++的虚函数与java的抽象函数有些不同，基本上可以说关系不同。纯虚函数才与抽象函数有些类似。在刚学的时候，不是很明白虚函数的意义。后来仔细研究后发现。</p>
-<pre><code>using namespace std;
-class test {
-public :
-      void ceshi() { cout &lt;&lt; &quot;good&quot;; }
-};
-class testson : public test {
-    void ceshi() { cout &lt;&lt; &quot;sssss&quot;; }
-
-};
-
-
-int main() {
-    test a;
-    test* p;
-    testson b;
-
-    a.ceshi();
-    p = &amp;b;
-    p-&gt;ceshi();
-}</code></pre><p>此时输出结果是goodsssss.</p>
-<p>将基类的成员函数改为</p>
-<p><code>void ceshi() { cout &lt;&lt; &quot;good&quot;; }</code></p>
-<p>此时输出结果为</p>
-<p>goodgood</p>
-<p>从上面的例子就可以看出，虚函数实际上是为了满足多态的特性。与java相比，java也可通过声明引用类型为父类，实际类型为子类的对象，若在子类重写方法，则在调用时，会自动调用子类的方法。或者可以进行显示类型转化。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/10/virtualFunction/">展开全文 >></a>
         </p>
       
 

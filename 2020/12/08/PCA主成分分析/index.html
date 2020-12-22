@@ -6,22 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>虚拟机字节码执行引擎 | 壴加亻夋的博客</title>
+  <title>PCA主成分分析 | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="虚拟机能干啥虚拟机的概念虚拟机是相对于物理机的概念，这两种都有代码执行能力。物理机是依赖于计算机体系结构，建立在处理器，缓存，指令集，操作系统层面上的。虚拟机是由软件自行实现的，所以不受物理条件的限制地指定指令集于执行引擎的结构体系,能执行不被硬件直接支持的指令集格式。《java虚拟机规范》统一了虚拟机的外观模式，即统一的输入，输出。输入为字节码二进制流，输出为执行结果。 运行时栈帧结构虚拟机以方">
+  <meta name="description" content="PCA的作用就是拿来降维，那为什么要降维呢？因为数据中有些内容没有价值，这些内容会影响算法的性能和准确率。所以就要将这些数据去除，怎样个去除法呢？  如上图，数据点大多分布在x2方向上，x1方向上的取值相似，就可以直接把x1的坐标去掉。但有些情况就不能直接这样去除  如上图，数据分布在x1和x2方向上都比较均匀，去除任何一个都会造成较大的影响，但是假如我把这些数据投影到y1，y2的坐标系上，就又变">
 <meta property="og:type" content="article">
-<meta property="og:title" content="虚拟机字节码执行引擎">
-<meta property="og:url" content="http://yoursite.com/2020/12/03/虚拟机字节码执行引擎/index.html">
+<meta property="og:title" content="PCA主成分分析">
+<meta property="og:url" content="http://yoursite.com/2020/12/08/PCA主成分分析/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
-<meta property="og:description" content="虚拟机能干啥虚拟机的概念虚拟机是相对于物理机的概念，这两种都有代码执行能力。物理机是依赖于计算机体系结构，建立在处理器，缓存，指令集，操作系统层面上的。虚拟机是由软件自行实现的，所以不受物理条件的限制地指定指令集于执行引擎的结构体系,能执行不被硬件直接支持的指令集格式。《java虚拟机规范》统一了虚拟机的外观模式，即统一的输入，输出。输入为字节码二进制流，输出为执行结果。 运行时栈帧结构虚拟机以方">
+<meta property="og:description" content="PCA的作用就是拿来降维，那为什么要降维呢？因为数据中有些内容没有价值，这些内容会影响算法的性能和准确率。所以就要将这些数据去除，怎样个去除法呢？  如上图，数据点大多分布在x2方向上，x1方向上的取值相似，就可以直接把x1的坐标去掉。但有些情况就不能直接这样去除  如上图，数据分布在x1和x2方向上都比较均匀，去除任何一个都会造成较大的影响，但是假如我把这些数据投影到y1，y2的坐标系上，就又变">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2020/12/03/虚拟机字节码执行引擎/1.png">
-<meta property="og:image" content="http://yoursite.com/2020/12/03/虚拟机字节码执行引擎/2.png">
-<meta property="og:updated_time" content="2020-12-04T13:13:51.799Z">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/PCA主成分分析/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/PCA主成分分析/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/PCA主成分分析/3.png">
+<meta property="og:updated_time" content="2020-12-13T11:37:55.274Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="虚拟机字节码执行引擎">
-<meta name="twitter:description" content="虚拟机能干啥虚拟机的概念虚拟机是相对于物理机的概念，这两种都有代码执行能力。物理机是依赖于计算机体系结构，建立在处理器，缓存，指令集，操作系统层面上的。虚拟机是由软件自行实现的，所以不受物理条件的限制地指定指令集于执行引擎的结构体系,能执行不被硬件直接支持的指令集格式。《java虚拟机规范》统一了虚拟机的外观模式，即统一的输入，输出。输入为字节码二进制流，输出为执行结果。 运行时栈帧结构虚拟机以方">
-<meta name="twitter:image" content="http://yoursite.com/2020/12/03/虚拟机字节码执行引擎/1.png">
+<meta name="twitter:title" content="PCA主成分分析">
+<meta name="twitter:description" content="PCA的作用就是拿来降维，那为什么要降维呢？因为数据中有些内容没有价值，这些内容会影响算法的性能和准确率。所以就要将这些数据去除，怎样个去除法呢？  如上图，数据点大多分布在x2方向上，x1方向上的取值相似，就可以直接把x1的坐标去掉。但有些情况就不能直接这样去除  如上图，数据分布在x1和x2方向上都比较均匀，去除任何一个都会造成较大的影响，但是假如我把这些数据投影到y1，y2的坐标系上，就又变">
+<meta name="twitter:image" content="http://yoursite.com/2020/12/08/PCA主成分分析/1.png">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -157,20 +158,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-虚拟机字节码执行引擎" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-PCA主成分分析" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      虚拟机字节码执行引擎
+      PCA主成分分析
     </h1>
   
 
         
-        <a href="/2020/12/03/虚拟机字节码执行引擎/" class="archive-article-date">
-  	<time datetime="2020-12-03T13:02:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-03</time>
+        <a href="/2020/12/08/PCA主成分分析/" class="archive-article-date">
+  	<time datetime="2020-12-08T01:57:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
 </a>
         
       </header>
@@ -180,32 +181,15 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="虚拟机能干啥"><a href="#虚拟机能干啥" class="headerlink" title="虚拟机能干啥"></a>虚拟机能干啥</h3><h5 id="虚拟机的概念"><a href="#虚拟机的概念" class="headerlink" title="虚拟机的概念"></a>虚拟机的概念</h5><p>虚拟机是相对于物理机的概念，这两种都有代码执行能力。物理机是依赖于计算机体系结构，建立在处理器，缓存，指令集，操作系统层面上的。虚拟机是由软件自行实现的，所以不受物理条件的限制地指定指令集于执行引擎的结构体系,能执行不被硬件直接支持的指令集格式。<br>《java虚拟机规范》统一了虚拟机的外观模式，即统一的输入，输出。输入为<strong>字节码二进制流</strong>，输出为<strong>执行结果</strong>。</p>
-<h5 id="运行时栈帧结构"><a href="#运行时栈帧结构" class="headerlink" title="运行时栈帧结构"></a>运行时栈帧结构</h5><p>虚拟机以方法为最基本的执行单元。而方法的执行需要<strong>栈帧</strong>数据结构的支持，栈帧是虚拟机栈的栈元素。栈帧存储了方法的<strong>局部变量表，操作栈，动态连接，返回地址等信息</strong>，虚拟机栈既然是栈的结构，那就是后进先出。以java程序的角度看，虚拟机栈中的所有方法都处于执行状态，因此每次调用方法就需要将栈帧入栈。以虚拟机执行引擎的角度看，只有栈顶的方法处于执行状态中，因为执行引擎从栈顶处理（取指令），称为当前栈帧，对应的方法称为当前方法。</p>
-<h5 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h5><p>局部变量表的最大容量在编译时期就已经确定了，与执行时的状态无关，存储在该方法的Code属性的max_locals数据项中。局部变量表主要存储<strong>方法参数和方法体内定义的局部变量</strong>。<br>局部变量表以<strong>变量槽</strong>为基本存储单元，《java虚拟机规范》中没有明确要求一个变量槽的大小，只是要求能存放一个boolean,byte,char,short,int, float,reference或returnAddress类型的数据，这8中数据都可以用32位或者更小的内存来存储。因此用64位的物理空间去实现一个变量槽时，要使用对齐和补白的手段让变量槽在外观上看起来32位虚拟机一致。<br>对于引用在虚拟机中的要求：1.能根据引用直接或间接地查找到对象在java堆中的数据存放的起始地址或索引。2.能根据引用直接或间接地查找到对象所属的数据类型在方法区中的存储的类型信息<br><strong>虚拟机通过索引定位的方式使用局部变量表</strong>，索引范围从0到最大的变量槽数。<br>当一个方法被调用时，虚拟机通过局部变量表来完成参数值到参数列表的传递过程，即<strong>实参到形参的传递</strong>。如果执行的是实例方法，局部变量表中<strong>第0位索引对应的变量槽默认存储的方法所属对象实例的引用</strong>，其余参数按照参数列表顺序存放，然后再根据方法体内局部变量顺序和作用域分配其余变量槽。<br>为了节省栈帧的内存空间，局部变量表中的变量槽可以重用。方法体中定义的变量，作用域不一定会覆盖整个方法体（比如for循环中定义的变量），当当前字节码PC计数器的值超出了某个变量的作用，其对应的变量槽即可以重用。但是会产生少量的副作用，有可能会影响系统的垃圾收集</p>
-<a id="more"></a>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;&#123;</span><br><span class="line">		<span class="keyword">byte</span> [] placeholder = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">64</span>*<span class="number">1024</span>*<span class="number">1024</span>];</span><br><span class="line">	&#125;</span><br><span class="line">		System.gc();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/12/03/虚拟机字节码执行引擎/1.png">
-<p>placeholder已经超出了他的作用域，却没被收集</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;&#123;</span><br><span class="line">		<span class="keyword">byte</span> [] placeholder = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">64</span>*<span class="number">1024</span>*<span class="number">1024</span>];</span><br><span class="line">	&#125;</span><br><span class="line">		<span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/12/03/虚拟机字节码执行引擎/2.png">
-<p>当加入了一条语句时，内存被回收了。是否被回收的关键是，局部变量表中是否还存在对placeholder的引用，第一个例子就还存在，虽然变量已经超出了他的作用域。第二例子就不存在了，因为placeholder的变量槽已经被a覆盖，所以可以回收</p>
-<h5 id="操作数栈"><a href="#操作数栈" class="headerlink" title="操作数栈"></a>操作数栈</h5><p>同局部变量表一样，操作数栈的最大深度在编译时就已经被确定了，被写入Code属性的max_stacks数据项中。操作数栈顾名思义，是存放各种操作数的。比如整数加法的字节码指令iadd，执行这条指令时，会把栈顶中的两个int值出栈并相加，然后将相加结果重新入栈。操作数栈中的元素数据类型必须与字节码指令的序列严格匹配，比如刚刚iadd的例子，当执行到这个指令时，栈顶存放的两个元素必须时int类型</p>
-<h5 id="动态连接"><a href="#动态连接" class="headerlink" title="动态连接"></a>动态连接</h5><p>每个栈帧都会包含一个指向运行时常量池中该栈帧所属方法的引用，目的就是支持方法调用过程的动态连接。常量池中存有大量的符号引用，<strong>字节码中的方法调用指令就以常量池里指向方法的符号引用作为参数</strong>，这些符号引用一部分会在类加载阶段或这第一次使用的时候就被转化位直接引用，即静态解析。<strong>那什么是动态连接呢</strong></p>
-<h5 id="方法返回地址"><a href="#方法返回地址" class="headerlink" title="方法返回地址"></a>方法返回地址</h5><p>方法只有两种返回方式，即正常返回和异常返回。<br>正常返回就是执行引擎遇到一个方法返回的字节码指令，这时候可能有方法返回值传递给上层调用者<br>异常返回就是方法执行过程中遇到了异常，且这个异常没有在方法体内得到妥善处理，只要在本方法的异常表中没有搜索到匹配的异常处理器，就会导致方法退出。不给上层调用者提供返回值</p>
-<h4 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h4><p>方法调用不等同于方法中的代码被执行。方法调用阶段唯一的任务就是<strong>确定被调用方法的版本，即确定调用哪一个方法</strong>，Class文件的编译过程中不包含传统程序语言编译的连接步骤，一切方法调用在Class文件里面的存储都只是符号引用，而不是直接引用，即在内存中没有方法的入口地址。</p>
-<h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><p>在类加载的解析过程中，有一部分符号引用会转化为直接引用。这就是说明，在解析过程中，在程序真正运行之前，这些方法的调用版本已经确定了，不可更改了。符号上述要求的方法，有<strong>静态方法和私有方法</strong>两大类，前者与类型直接关联，后者在外部不可被访问。这些特点决定了他们不可通过继承或别的方式重写出其他版本，<strong>即方法是唯一的</strong>，所以在编译器就可知，运行期不能改变</p>
-<p>调用不同类型的方法具有不同的虚拟机字节码指令<br>1.invokestatic ，用于调用静态方法<br>2.invokespecial ,用于调用实例构造器init方法，私有方法和父类中的方法<br>3.invokevirtual 用于调用所有虚方法 （什么是虚方法？）<br>4.invokeinterface 用于调用接口方法<br>5.invokedynamic  现在运行时动态解析出调用点限定符所引用的方法，然后再执行该方法<br>只要能被invokestatic和invokespecial指令调用的方法，都可以在编译时确定。包括静态方法，私有方法，实例构造器，父类方法和final修饰的方法。这5种方法统称为非虚方法，其他方法就是虚方法。</p>
-<h5 id="方法重载的虚拟机支持（静态分派）"><a href="#方法重载的虚拟机支持（静态分派）" class="headerlink" title="方法重载的虚拟机支持（静态分派）"></a>方法重载的虚拟机支持（静态分派）</h5><p>方法重载的本质是虚拟机的静态分派。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticDispatch</span></span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Human</span></span>&#123;&#125;</span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Man</span> <span class="keyword">extends</span> <span class="title">Human</span></span>&#123;&#125;</span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Woman</span> <span class="keyword">extends</span> <span class="title">Human</span></span>&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(Human guy)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Human say hello"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(Man guy)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Man say hello"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(Woman guy)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Woman say hello"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		Human man = <span class="keyword">new</span> Man();</span><br><span class="line">		Human woman = <span class="keyword">new</span> Woman();</span><br><span class="line">		StaticDispatch sr= <span class="keyword">new</span> StaticDispatch();</span><br><span class="line">		sr.sayHello(man);</span><br><span class="line">		sr.sayHello(woman);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//运行结果是</span></span><br><span class="line"><span class="comment">//Human say hello</span></span><br><span class="line"><span class="comment">//Human say hello</span></span><br></pre></td></tr></table></figure>
-
-<p>上述运行结果产生的原因就是<strong>编译器在重载时是通过参数的静态类型而不是实际类型作为判断依据，因为参数的静态类型在编译时就可以确定，而实际类型无法确定</strong>。根据静态类型来决定方法执行版本的分派动作称为静态分派，发生在编译阶段</p>
-<h5 id="方法重写的虚拟机支持-（动态分派）"><a href="#方法重写的虚拟机支持-（动态分派）" class="headerlink" title="方法重写的虚拟机支持 （动态分派）"></a>方法重写的虚拟机支持 （动态分派）</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicDispatch</span></span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Human</span></span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Man</span> <span class="keyword">extends</span> <span class="title">Human</span></span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"man say hello"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Woman</span> <span class="keyword">extends</span> <span class="title">Human</span></span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"woman say hello"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span> <span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		Human man = <span class="keyword">new</span> Man();</span><br><span class="line">		Human woman = <span class="keyword">new</span> Woman();</span><br><span class="line">		man.sayHello();</span><br><span class="line">		woman.sayHello();</span><br><span class="line">		man = <span class="keyword">new</span> Woman();</span><br><span class="line">		man.sayHello();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//运行结果</span></span><br><span class="line"><span class="comment">//man say hello</span></span><br><span class="line"><span class="comment">//woman say helloW</span></span><br><span class="line"><span class="comment">//woman say hello</span></span><br></pre></td></tr></table></figure>
-
-<p>这次方法的版本不是根据静态类型来确定的，而是根据实际类型来决定的。本质上是因为invokevirtual指令的原因（上述方法调用的是invokevirtural指令），invokevirtual指令的解析过程的定义：1.找到操作数栈顶的第一个元素所指向对象的<strong>实际类型</strong>，记为C<br>2.如果在C中找到相符的方法，进行访问权限校验，若通过则返回方法的直接引用，不通过则返回异常<br>3.否则，按照继承关系从下往上对C的父类进行第二步的查找<br>4.如果始终没有找到，则返回异常<br>这种根据实际类型确定方法执行版本的分派过程为动态分派</p>
-<h5 id="虚拟机动态分派的实现"><a href="#虚拟机动态分派的实现" class="headerlink" title="虚拟机动态分派的实现"></a>虚拟机动态分派的实现</h5><p>为类型在方法区建立一个虚方法表，虚方法表中存放着各个方法的实际入口地址，如果某个方法在子类中没有被重写，则子类的虚方法表中的地址入口和父类相同方法的地址入口相同，都指向父类的实现入口</p>
+        <p>PCA的作用就是拿来降维，那为什么要降维呢？因为数据中有些内容没有价值，这些内容会影响算法的性能和准确率。所以就要将这些数据去除，怎样个去除法呢？</p>
+<img src="/2020/12/08/PCA主成分分析/1.png">
+<p>如上图，数据点大多分布在x2方向上，x1方向上的取值相似，就可以直接把x1的坐标去掉。但有些情况就不能直接这样去除</p>
+<img src="/2020/12/08/PCA主成分分析/2.png">
+<p>如上图，数据分布在x1和x2方向上都比较均匀，去除任何一个都会造成较大的影响，但是假如我把这些数据投影到y1，y2的坐标系上，就又变成第一个图的情况<br>现在问题就转变成了如何将数据映射到y1，y2的坐标系上。且我们希望投影到y1上尽可能的分散</p>
+<p>现在我们需要构建一个函数f(Xn<em>m)  n为特征个数， m为样本个数<br>$$Z_k×_m =  f(X_n×_m)  k&lt;n$$<br>这个问题又转化为寻找一个矩阵W_k</em>m<br>$$Z_k×_m =  W_k×_m * X_n×_m  k&lt;n$$</p>
+<p>假设我们要把矩阵的维数降为1，即降维之后只有X只有一个特征值 即k=1<br>目标是使降维后坐标在那个坐标轴的分布尽可能的分散（上图的y2），用方差来衡量数据的分散程度即</p>
+<img src="/2020/12/08/PCA主成分分析/3.png">
+<p>最后就是求解最大特征值<br>所以降维的具体过程就是<br>1.计算协方差矩阵S = Cov(X)<br>2.选择一系列正交特征向量，对应K个最大特征值，得到投影矩阵W<br>3.降维   Z = WX</p>
 
       
 
@@ -285,7 +269,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/12/03/虚拟机字节码执行引擎/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/12/08/PCA主成分分析/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -299,18 +283,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/12/08/PCA主成分分析/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/12/21/java前端编译/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          PCA主成分分析
+          java前端编译
         
       </div>
     </a>
   
   
-    <a href="/2020/12/02/虚拟机类加载/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">虚拟机类加载</div>
+    <a href="/2020/12/03/虚拟机字节码执行引擎/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">虚拟机字节码执行引擎</div>
       <i class="icon-circle-right"></i>
     </a>
   
