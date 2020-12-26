@@ -152,6 +152,165 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java多线程-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/23/java多线程-1/">java多线程</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/23/java多线程-1/" class="archive-article-date">
+  	<time datetime="2020-11-23T07:56:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-23</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Class类锁，可以对所有对象实例起作用，即Class类锁，锁住了所有类的对象实例。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/23/java多线程-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-java泛型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/02/java泛型/">java泛型</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/02/java泛型/" class="archive-article-date">
+  	<time datetime="2020-11-02T06:51:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-02</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>泛型类的定义</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Pair</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">	<span class="keyword">private</span> T first;</span><br><span class="line">    <span class="keyword">private</span> T second;</span><br><span class="line">   	<span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(T first , T second)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.first = first;</span><br><span class="line">        <span class="keyword">this</span>.second = second;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面定义中，T表示类型变量， 常见的做法是用E表示集合元素类型，K和V分别表示表的键和值的类型。T表示任意类型。</p>
+<p>泛型方法 ,<strong>类型变量放在修饰符后面，返回值前面。泛型方法可以在普通类中定义，也可以在泛型类中定义</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Arrayalg</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">getMiddle</span><span class="params">(T a )</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> T;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用方法1</span></span><br><span class="line">String middle =  Arrayalg.&lt;String&gt;getMiddle(<span class="string">"good"</span>);</span><br><span class="line"><span class="comment">//调用方法2</span></span><br><span class="line">String middle = Arrayalg.getMiddle(<span class="string">"good"</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more--&gt;</span><br><span class="line">有时候我们需要对类型变量进行约束,比如说我只允许类型变量是Comparable类型的, 一个类型变量也允许多个限定，如果有多个限定，最多只有一个限定是类，且它必须是限定列表中的第一个限定</span><br><span class="line">```java</span><br><span class="line">public static &lt;T extends Comparable &gt; T min(T[] a )</span><br><span class="line">public static &lt;T extends Comparable&amp;Seralizable&gt; T min (T [] a )</span><br></pre></td></tr></table></figure>
+
+<p><strong>泛型代码和虚拟机，虚拟机中没有泛型对象，所有对象都属于普通类。因此无论何时定义一个泛型类型，都会自动提供一个相应的原始类型。原始类型就是将类型变量擦除后得到类型</strong> </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Pair&lt;T&gt; 的原始类型 ,因为T是一个无限定的变量，所以直接用Object替换</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pair</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Object first;</span><br><span class="line">	<span class="keyword">private</span> Object second;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(Object first, Object second)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.first = first;</span><br><span class="line">		<span class="keyword">this</span>.second =second;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//如果有多个限定，则采用第一个限定来替换类型变量</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Internal</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Comparable</span> &amp;<span class="title">Serializable</span>&gt; <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> T lower;</span><br><span class="line">	<span class="keyword">private</span> T upper;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//原始类型</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Internal</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Comparable lower;</span><br><span class="line">	<span class="keyword">private</span> Comparable upper;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编写一个泛型方法调用时，如果擦除了返回类型，编译器会插入强制类型转换。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;Employee&gt; buddies = <span class="keyword">new</span> Pair&lt;Employee&gt;();</span><br><span class="line">Employee buddy = buddies.getFirst();</span><br><span class="line"><span class="comment">//getFirst类型擦除后的返回类型是Object，编译器自动插入转换到Employee的强制类型转换。编译器把这个方法转换为两条虚拟机指令，1.对原始方法Pair.getFirst的调用 2. 将返回的Object类型强制转换为Employee类型。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="java泛型的缺陷"><a href="#java泛型的缺陷" class="headerlink" title="java泛型的缺陷"></a>java泛型的缺陷</h4><p>java选择泛型实现方式是“类型擦除式泛型”，而C#实现的方式是“具现化式泛型”，即C#里面的泛型无论是在程序源码里面，编译后的中间语言表示里面，抑或是运行期的CLR里面都是切实存在的，List<int> 和List<string>就是两个不同的类型。而java泛型只在程序源码中出现，在编译后的字节码文件中，全部泛型都被替换为原来的裸类型，并在相应的地方加入强制转型代码，因此ArrayList<int> 和ArrayList<string>其实是同一个类型，在这种情况下，会造成一些影响</string></int></string></int></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TypeErasureGnerics</span>&lt;<span class="title">E</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(Objece item)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(item <span class="keyword">instanceof</span> E)&#123;  <span class="comment">//不合法，无法对泛型进行实例判断</span></span><br><span class="line">		...</span><br><span class="line">		&#125;</span><br><span class="line">		E newItem  = <span class="keyword">new</span> E(); <span class="comment">//不合法，无法使用泛型创建对象</span></span><br><span class="line">		E[] itemArray = <span class="keyword">new</span> E[<span class="number">10</span>]; <span class="comment">//不合法，无法使用泛型创建数组</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么存在这些缺点，为什么java要选择以这样的方式实现泛型呢？主要原因是实现泛型时，要保证二进制向后兼容性，即在比如JDK1.2编译出的Class文件，也要在JDK12乃至以后的任何版本都能正常运行。那JDK1.2版本没有支持泛型，到java5.0突然要支持泛型，还要让以前编译的程序在新版本虚拟机还能正常运行，意味着以前没有的限制不能突然冒出来。因此，有两条路可以选择<br>1.需要泛型化的类型，以前有的就保持不变，创建一套新的平行的泛型化版本的新类型<br>2.直接泛化已有的类型，即让所有需要泛型化的已有类型都原地泛型化，不添加任何平行于已有类型的泛型版<br>由于java的代码遗留问题，迫使java不得不选择第二条路，但第二条路不是意味着一定只能使用类型擦除来实现<br>java选择第二条路，直接把已有的类型泛型化，要让所有需要泛型化的已有类型，譬如 ArrayList，原地泛型化后变为ArrayList<t>,且还要保证以前直接用ArrayList的代码在泛型新版本里必须还能用这同一个容器，即ArrayList类型是所有这些ArrayList<integer>，ArrayList<string>的父类，这就是裸类型。<br>裸类型的实现有两种选择：一种是在编译的时候直接将ArrayList<integer>类型还原为 ArrayList类型，只在元素访问，修改时自动插入一些强制类型转换和检查指令。 第二种是在运行期由java虚拟机自动真实地构造出ArrayList<integer>类型，并且实现从ArrayList<integer>派生自ArrayList的继承关系，显然java选择了前者</integer></integer></integer></string></integer></t></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericParadigm</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Map&lt;String,String&gt;  map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">"hello"</span>,<span class="string">"你好"</span>);</span><br><span class="line">        map.put(<span class="string">"how are you "</span>,<span class="string">"你好吗"</span>);</span><br><span class="line">        System.out.println(map.get(<span class="string">"hello"</span>));</span><br><span class="line">        System.out.println(map.get(<span class="string">"how are you "</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将编译后的Class文件反编译一下</p>
+<img src="/2020/11/02/java泛型/1.png">
+<p>发现泛型都不见了，在元素访问的时候加上了从Object到Sting的强制转换</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/02/java泛型/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-GreedyAlgorithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -710,176 +869,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/10/14/question/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-cnn" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/13/cnn/">cnn参数量和计算量计算</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/13/cnn/" class="archive-article-date">
-  	<time datetime="2020-10-13T03:32:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-13</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>参数量</strong></p>
-<p>假设cnn输入是5<em>5 * 4 ，卷积核为2</em>2 ， 输出是2 通道</p>
-<p>参数量的大小则为 （4*2 *2 +1） *2 </p>
-<p>因为输入为4通道， 每个通道得采用1个卷积核进行卷积， 且每个通道对应的卷积核是不同的，  所以参数量为4 * 2 *2 ，同时还得加上一个偏置量 ， 这个一个偏置量是4 个通道所共享的 ， 所以参数量为 4 * 2 *2 +1 ，因为输出是双通道 ， 所以得用两个这样的卷积核 ， 因此总参数量为  （4 * 2 *2 +1） * 2</p>
-<p><strong>计算量</strong></p>
-<p>卷积层浮点数FLOPS计算量 ， 卷积操作本质上是个线性运算 ，通常可表示为：</p>
-<p>y=Wx+b</p>
-<p>乘法运算</p>
-<p>卷积核为k1*k2  ，输入通道为Cin， 输出通道为Cout ， 高Hout ， 宽 Wout</p>
-<p>得到特征图的一个像素，要 k1*k2 * Cin 次乘法 ， 而特征图的总像素有 Cout * Hout * Wout</p>
-<p>总乘法就为 k1*k2 * Cin * Cout * Hout * Wout</p>
-<p>加法运算</p>
-<p>每次乘法都会伴随着一次加法 ，所以总加法为  k1*k2 * Cin * Cout * Hout * Wout</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/13/cnn/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-NAT" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/16/NAT/">网络地址转换</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/16/NAT/" class="archive-article-date">
-  	<time datetime="2020-07-16T08:36:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>网络地址转换协议NAT：是在私有地址和全局地址之间转换的协议</p>
-<p>基于ipv4地址不够用的问题，可以将大量的子网地址封装成一个全局地址。</p>
-<img src="/2020/07/16/NAT/nat.png">
-
-<p>上图中路由器接口地址125.1.2.3就是全局地址，在广域网中，其他主机视角中，子网内的主机是不可见的，只有125.1.2.3接口对外开放。</p>
-<p><strong>那广域网中其他主机如何与局域网中的主机通信呢？</strong></p>
-<p>如图中，假设局域网中主机10.1.0.10向web服务器162.105.129.12端口80发送一个HTTP请求，主机位为其指派了源端口号3345并将该数据报发送到LAN中。NAT路由器接收到该数据报，查询NAT转换表，将该数据报生成新源端口号5001，并将源ip替换为125.1.2.3。当生成一个新的源端口号是，NAT路由器可选择任意一个当前未在NAT转换表中的源端口号，并在NAT转换表中添加一个表项。web服务器向目的ip125.1.2.3返回一个响应报文，目的端口为5001。该报文到达NAT路由器时，路由器查询转换表，并使用响应的目的ip地址和端口号替换，并向LAN发送报文</p>
-<table>
-<thead>
-<tr>
-<th>NAT转换表</th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>WAN端</td>
-<td>LAN端</td>
-</tr>
-<tr>
-<td>125.1.2.3 ，5001</td>
-<td>10.1.0.10， 3345</td>
-</tr>
-</tbody></table>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/16/NAT/">展开全文 >></a>
         </p>
       
 

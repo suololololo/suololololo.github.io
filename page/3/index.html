@@ -152,6 +152,176 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-cnn" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/13/cnn/">cnn参数量和计算量计算</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/13/cnn/" class="archive-article-date">
+  	<time datetime="2020-10-13T03:32:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-13</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>参数量</strong></p>
+<p>假设cnn输入是5<em>5 * 4 ，卷积核为2</em>2 ， 输出是2 通道</p>
+<p>参数量的大小则为 （4*2 *2 +1） *2 </p>
+<p>因为输入为4通道， 每个通道得采用1个卷积核进行卷积， 且每个通道对应的卷积核是不同的，  所以参数量为4 * 2 *2 ，同时还得加上一个偏置量 ， 这个一个偏置量是4 个通道所共享的 ， 所以参数量为 4 * 2 *2 +1 ，因为输出是双通道 ， 所以得用两个这样的卷积核 ， 因此总参数量为  （4 * 2 *2 +1） * 2</p>
+<p><strong>计算量</strong></p>
+<p>卷积层浮点数FLOPS计算量 ， 卷积操作本质上是个线性运算 ，通常可表示为：</p>
+<p>y=Wx+b</p>
+<p>乘法运算</p>
+<p>卷积核为k1*k2  ，输入通道为Cin， 输出通道为Cout ， 高Hout ， 宽 Wout</p>
+<p>得到特征图的一个像素，要 k1*k2 * Cin 次乘法 ， 而特征图的总像素有 Cout * Hout * Wout</p>
+<p>总乘法就为 k1*k2 * Cin * Cout * Hout * Wout</p>
+<p>加法运算</p>
+<p>每次乘法都会伴随着一次加法 ，所以总加法为  k1*k2 * Cin * Cout * Hout * Wout</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/13/cnn/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-NAT" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/16/NAT/">网络地址转换</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/16/NAT/" class="archive-article-date">
+  	<time datetime="2020-07-16T08:36:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>网络地址转换协议NAT：是在私有地址和全局地址之间转换的协议</p>
+<p>基于ipv4地址不够用的问题，可以将大量的子网地址封装成一个全局地址。</p>
+<img src="/2020/07/16/NAT/nat.png">
+
+<p>上图中路由器接口地址125.1.2.3就是全局地址，在广域网中，其他主机视角中，子网内的主机是不可见的，只有125.1.2.3接口对外开放。</p>
+<p><strong>那广域网中其他主机如何与局域网中的主机通信呢？</strong></p>
+<p>如图中，假设局域网中主机10.1.0.10向web服务器162.105.129.12端口80发送一个HTTP请求，主机位为其指派了源端口号3345并将该数据报发送到LAN中。NAT路由器接收到该数据报，查询NAT转换表，将该数据报生成新源端口号5001，并将源ip替换为125.1.2.3。当生成一个新的源端口号是，NAT路由器可选择任意一个当前未在NAT转换表中的源端口号，并在NAT转换表中添加一个表项。web服务器向目的ip125.1.2.3返回一个响应报文，目的端口为5001。该报文到达NAT路由器时，路由器查询转换表，并使用响应的目的ip地址和端口号替换，并向LAN发送报文</p>
+<table>
+<thead>
+<tr>
+<th>NAT转换表</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>WAN端</td>
+<td>LAN端</td>
+</tr>
+<tr>
+<td>125.1.2.3 ，5001</td>
+<td>10.1.0.10， 3345</td>
+</tr>
+</tbody></table>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/16/NAT/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-ipv4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -718,129 +888,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/12/08/文件系统多级索引/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-多级页表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="多级页表"><a href="#多级页表" class="headerlink" title="多级页表"></a>多级页表</h1><p>基本概念：</p>
-<p><strong>页</strong>:分页存储管理将进程的逻辑地址空间划分为若干页，并对其编号。每个页的大小称为页面大小</p>
-<p><strong>页表</strong>：将比物理地址大的逻辑地址映射到物理地址的一种映射机制，并将对应关系存放在一张表中</p>
-<p><strong>页表项</strong>：在页表中的一行为一个页表项，即一个页号与其对应的物理块号称为一个页表项</p>
-<p>例题：假设一个机器有38位的虚拟地址和32位的物理地址，一个有16KB个页、4字节表项的二级页表，应该对第一级页表域分配多少位，对第二级页表域分配多少位？请解释原因。</p>
-<p>页面数：16kb个，页面大小即为2的38次方-16kb=2的24次方。即偏移量为24位。表项为4字节即说明一个2级页表中有2的平方个页表项，所以pt2=2，即pt1=38-2-24=12</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/07/多级页表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-指针与数组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="指针与数组"><a href="#指针与数组" class="headerlink" title="指针与数组"></a>指针与数组</h1><p>在聊指针与数组之前，我们先来聊聊数组指针和指针数组的区别。顾名思义，数组指针就是一个指向数组的指针，指针数组就是存放指针的数组。上代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int (*p)[n];</span><br></pre></td></tr></table></figure>
-
-<p>根据优先级，先看（）内，得知p是一个指针，后面的[]说明了p是指向数组的指针，再看前面的int，知道p是一个指向int类型数组的指针；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int *p[n];</span><br></pre></td></tr></table></figure>
-
-<p>根据优先级，p先与[]结合，所以p是一个数组，再看前面*，表明数组里的元素是指针，再加上int,知道p数组里的元素是指向int类型的指针;</p>
-<p>数组和指针是两种不同的类型，数组具有确定数量的元素，而指针只是一个标量值，数<strong>组可以在某些情况下转换为指针，当数组名在表达式中使用时，编译器会把数组名转换为一个指针常量，是数组中的第一个元素的地址</strong>，类型就是数组元素的地址类型，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a[5]=&#123;0,1,2,3,4&#125;; </span><br><span class="line">int * p = a;// 等价于int * p = &amp;a[0]</span><br></pre></td></tr></table></figure>
-
-<p>指针实际上存储的是目标元素的地址，上式中当试图将一个数组赋值给指针时，编译器就会将数组名转换为一个指针常量，指向数组中的第一个元素。</p>
-        
-          <a class="article-more-a" href="/2019/10/28/指针与数组/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/28/指针与数组/">展开全文 >></a>
         </p>
       
 
