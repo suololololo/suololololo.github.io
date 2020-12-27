@@ -6,15 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020 | 壴加亻夋的博客</title>
+  <title>java内存模型 | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="壴加亻夋的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2020/index.html">
+  <meta name="description" content="java内存模型的主要目的是定义程序中各种变量的访问规则，关注虚拟机把变量从内存中取到工作内存和把变量存储到内存中的底层细节。这里的变量只包括实例字段，静态字段和构成数组对象的元素等公有变量，不包括线程私有的变量。因为私有变量是线程私有的，不存在从主内存读写的问题 内存中的交互问题 简单的说就是，java线程从工作内存读写变量的主内存副本，并写回主内存。相对应的原子操作1.lock：作用于主内存变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java内存模型">
+<meta property="og:url" content="http://yoursite.com/2020/12/27/java内存模型/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
+<meta property="og:description" content="java内存模型的主要目的是定义程序中各种变量的访问规则，关注虚拟机把变量从内存中取到工作内存和把变量存储到内存中的底层细节。这里的变量只包括实例字段，静态字段和构成数组对象的元素等公有变量，不包括线程私有的变量。因为私有变量是线程私有的，不存在从主内存读写的问题 内存中的交互问题 简单的说就是，java线程从工作内存读写变量的主内存副本，并写回主内存。相对应的原子操作1.lock：作用于主内存变">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2020/12/27/java内存模型/1.png">
+<meta property="og:updated_time" content="2020-12-27T10:46:20.341Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="壴加亻夋的博客">
+<meta name="twitter:title" content="java内存模型">
+<meta name="twitter:description" content="java内存模型的主要目的是定义程序中各种变量的访问规则，关注虚拟机把变量从内存中取到工作内存和把变量存储到内存中的底层细节。这里的变量只包括实例字段，静态字段和构成数组对象的元素等公有变量，不包括线程私有的变量。因为私有变量是线程私有的，不存在从主内存读写的问题 内存中的交互问题 简单的说就是，java线程从工作内存读写变量的主内存副本，并写回主内存。相对应的原子操作1.lock：作用于主内存变">
+<meta name="twitter:image" content="http://yoursite.com/2020/12/27/java内存模型/1.png">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -150,296 +156,174 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-java内存模型" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/27/java先行发生原则/" class="archive-article-date">
-  	<time datetime="2020-12-27T11:36:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-27</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/27/java先行发生原则/">java先行发生原则</a>
+    <h1 class="article-title" itemprop="name">
+      java内存模型
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/27/volatile的实现/" class="archive-article-date">
-  	<time datetime="2020-12-27T10:46:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/27/volatile的实现/">volatile的实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/27/java内存模型/" class="archive-article-date">
+        
+        <a href="/2020/12/27/java内存模型/" class="archive-article-date">
   	<time datetime="2020-12-27T09:13:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-27</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/27/java内存模型/">java内存模型</a>
-    </h1>
-  
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>java内存模型的主要目的是定义程序中各种变量的访问规则，关注虚拟机把变量从内存中取到工作内存和把变量存储到内存中的底层细节。<br>这里的变量只包括实例字段，静态字段和构成数组对象的元素等公有变量，不包括线程私有的变量。因为私有变量是线程私有的，不存在从主内存读写的问题</p>
+<h4 id="内存中的交互问题"><a href="#内存中的交互问题" class="headerlink" title="内存中的交互问题"></a>内存中的交互问题</h4><img src="/2020/12/27/java内存模型/1.png">
+<p>简单的说就是，java线程从工作内存读写变量的主内存副本，并写回主内存。<br>相对应的原子操作<br>1.lock：作用于主内存变量，把一个变量标识为一条线程独占<br>2.unlock:作用于主内存变量，把一个处于锁定状态的变量释放出来，释放后的变量才可以被其他线程锁定<br>3.read：作用于主内存变量，把一个变量的值从主内存传输到线程的工作内存中，以便load使用<br>4.load：作用于工作内存变量，把read操作从主内存中得到的变量值放入工作内存的变量副本中<br>5.use：作用于工作内存变量，把工作内存中的一个变量值传递给执行引擎<br>6.assign：作用于工作内存变量，将一个从执行引擎接收的值赋给工作内存变量<br>7.store：作用于工作内存变量，把工作内存中一个变量的值传输到主内存中<br>8.write：作用于主内存的变量，把store操作中从工作内存中得到的变量的值放入主内存的变量中</p>
+<a id="more"></a>
+<p>上述的基本操作必须满足一定的规则<br>1.不允许read和load，store，write操作之一单独出现。read和load，store和write必须按顺序执行，但不要去连续执行<br>2.变量在工作内存中改变了之后必须写回主内存，即不允许assign出现后没有store 和write<br>3.不能没有assign就把数据写回主内存<br>4.一个变量use前必须先必须先assign或load,<br>5.一个变量只能同时被一个线程lock，同一个线程可以对同一变量lock多次，但也必须unlock同样的次数，变量才会解锁<br>6.一个变量事先没有被lock则无法被unlock<br>7.对一个变量unlock之前，必须把变量同步到主内存中</p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/12/27/java内存模型/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/26/AOT/" class="archive-article-date">
-  	<time datetime="2020-12-26T11:03:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-26</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2020/12/27/volatile的实现/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          volatile的实现
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/12/26/AOT/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">AOT</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/26/AOT/">AOT</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/26/jvm后端编译和优化/" class="archive-article-date">
-  	<time datetime="2020-12-26T08:37:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/26/jvm后端编译和优化/">jvm后端编译和优化</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/21/java前端编译/" class="archive-article-date">
-  	<time datetime="2020-12-21T13:05:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/21/java前端编译/">java前端编译</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/08/PCA主成分分析/" class="archive-article-date">
-  	<time datetime="2020-12-08T01:57:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/08/PCA主成分分析/">PCA主成分分析</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/03/虚拟机字节码执行引擎/" class="archive-article-date">
-  	<time datetime="2020-12-03T13:02:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/03/虚拟机字节码执行引擎/">虚拟机字节码执行引擎</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/02/虚拟机类加载/" class="archive-article-date">
-  	<time datetime="2020-12-02T08:45:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/02/虚拟机类加载/">虚拟机类加载</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/01/linearClassification/" class="archive-article-date">
-  	<time datetime="2020-12-01T03:49:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/01/linearClassification/">linearClassification</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2020/page/2/">2</a><a class="page-number" href="/archives/2020/page/3/">3</a><a class="page-number" href="/archives/2020/page/4/">4</a><a class="extend next" rel="next" href="/archives/2020/page/2/">Next &raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -471,8 +355,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

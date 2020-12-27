@@ -152,6 +152,218 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java先行发生原则" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/27/java先行发生原则/">java先行发生原则</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/27/java先行发生原则/" class="archive-article-date">
+  	<time datetime="2020-12-27T11:36:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-27</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先行发生是指java内存模型中定义的两项操作之间的偏序关系，假如A动作先于B,则B能观察到A带来的影响。影响包括修改了内存中共享变量的值，发送了消息，调用了方法</p>
+<h4 id="java内存模型中的自带的先行发生关系"><a href="#java内存模型中的自带的先行发生关系" class="headerlink" title="java内存模型中的自带的先行发生关系"></a>java内存模型中的自带的先行发生关系</h4><p>假如不满足下列规则，就没有顺序性保障，虚拟机可以对他们进行任意重排序<br>1.程序次序规则：在一个线程内，按照程序控制流顺序，书写在前面的操作先行发生于书写在后面的操作。控制流是指分支，循环等结构<br>2.管程锁定规则：一个unlock操作先行于后面对同一个锁的unlock操作 。 后面是时间概念<br>3.volatile变量规则：对于一个volatile变量的写操作先行于后面的读操作<br>4.线程启动规则：一个线程start操作先行于此线程的每一个动作<br>5.线程终止规则：线程中所有操作都先行于此线程的终止检测<br>6.线程中断规则：对线程interrupt的方法调用先行发生于被中断线程的代码检测到中断事件的发生<br>7.对象终结规则：一个对象的初始化完成先行于它的finalize（）方法的开始<br>8.传递性：如果操作A先行发生于操作B，操作B先行发生于操作C，那么A先行于C</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/27/java先行发生原则/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-volatile的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/27/volatile的实现/">volatile的实现</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/27/volatile的实现/" class="archive-article-date">
+  	<time datetime="2020-12-27T10:46:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-27</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>volatile关键字保证了两项特性：<br>1.<strong>保证此变量对所有线程的可见性</strong>，当一个线程修改了这个变量的值，新值对于其他线程是立即得知的。<br>2.禁止指令重排序优化</p>
+<h4 id="可见性的实现"><a href="#可见性的实现" class="headerlink" title="可见性的实现"></a>可见性的实现</h4><p>假设T表示一个线程，V和W表示两个volatile变量<br>java内存模型规定，只有当线程T对变量V执行的前一个动作是load时，才能对变量V执行use动作。只有当线程T对变量的后一个动作是use时，才能对变量V执行load动作。即load和use是相关联的，必选同时连续出现。<strong>这条规则意味着每次使用变量V时，必须先从主存中刷新最新的值，用于保证能看见其他线程对V的修改</strong><br>只有当线程T对变量V执行的前一个动作是assign时，才能对变量执行store动作。只有当线程T对变量V的后一个动作是store时，才能对变量V执行assign动作。即assign和store是相关联的，必须同时连续出现。<strong>这条规则意味着每次修改变量V时，必须立刻同步会主存中，用于保证其他线程能看见自己对V的修改</strong></p>
+<h4 id="禁止指令重排序优化的实现"><a href="#禁止指令重排序优化的实现" class="headerlink" title="禁止指令重排序优化的实现"></a>禁止指令重排序优化的实现</h4><p>volatile关键字会在本地代码中插入内存屏障，禁止指令重排序。形如lock addl $0x0,(%esp)的指令。这个指令是将本地缓存写入内存的作用，这意味着在执行这个指令之前，所有之前的操作都已经执行完成。若没执行完成，会改变程序结果，导致程序出错。所以指令重排序无法越过内存屏障。因为如果越过，且重排序，就无法保证lock addl $0x0,(%esp)指令前所有操作都已完成。</p>
+<p>假定动作A是线程T对变量V实施的use或assigh操作，动作F是和动作A相关联的load或store操作，动作P是和动作F相关联的read或write操作。 假定动作B是线程T对变量V实施的use或assigh操作，动作G是和动作B相关的load或store操作，动作Q是和动作G相关联的read或write操作。<br>如果动作A先于B，则F先于G，P先于Q<br><strong>这条规则意味着volatile修饰的变量不会被指令重排序优化，从而保证代码的执行顺序比程序顺序相同</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/27/volatile的实现/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-java内存模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/27/java内存模型/">java内存模型</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/27/java内存模型/" class="archive-article-date">
+  	<time datetime="2020-12-27T09:13:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-27</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>java内存模型的主要目的是定义程序中各种变量的访问规则，关注虚拟机把变量从内存中取到工作内存和把变量存储到内存中的底层细节。<br>这里的变量只包括实例字段，静态字段和构成数组对象的元素等公有变量，不包括线程私有的变量。因为私有变量是线程私有的，不存在从主内存读写的问题</p>
+<h4 id="内存中的交互问题"><a href="#内存中的交互问题" class="headerlink" title="内存中的交互问题"></a>内存中的交互问题</h4><img src="/2020/12/27/java内存模型/1.png">
+<p>简单的说就是，java线程从工作内存读写变量的主内存副本，并写回主内存。<br>相对应的原子操作<br>1.lock：作用于主内存变量，把一个变量标识为一条线程独占<br>2.unlock:作用于主内存变量，把一个处于锁定状态的变量释放出来，释放后的变量才可以被其他线程锁定<br>3.read：作用于主内存变量，把一个变量的值从主内存传输到线程的工作内存中，以便load使用<br>4.load：作用于工作内存变量，把read操作从主内存中得到的变量值放入工作内存的变量副本中<br>5.use：作用于工作内存变量，把工作内存中的一个变量值传递给执行引擎<br>6.assign：作用于工作内存变量，将一个从执行引擎接收的值赋给工作内存变量<br>7.store：作用于工作内存变量，把工作内存中一个变量的值传输到主内存中<br>8.write：作用于主内存的变量，把store操作中从工作内存中得到的变量的值放入主内存的变量中</p>
+        
+          <a class="article-more-a" href="/2020/12/27/java内存模型/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/27/java内存模型/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-AOT" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -649,228 +861,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/12/01/linearClassification/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-class类文件结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/30/class类文件结构/">class类文件结构</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/30/class类文件结构/" class="archive-article-date">
-  	<time datetime="2020-11-30T08:28:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>class文件是一组以8个字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑排列在文件之中，中间没有任何分隔符<br>class文件中只有两个数据类型，<strong>无符号数和表</strong>。<br><strong>无符号数</strong>是基本的数据类型，用u1,u2,u4,u8代表1个字节,2个字节,4个字节,8个字节。<br><strong>表</strong>是由多个无符号书或其他表作为数据项构成的复合数据类型，表的命名习惯性以 _info结尾。<br>class文件具体内容</p>
-<img src="/2020/11/30/class类文件结构/1.png">
-<p>开头的四个字节为<strong>魔数</strong>，用来确定这个文件是否是一个能被虚拟机接受的class文件。值为0xCAFEBABE(咖啡宝贝),紧接着的4个字节是class文件版本号，第5和第6是次版本号0x0000,第7和第8字节为主版本号0x0037。<br><strong>常量池</strong><br>往后为<strong>常量池入口</strong>，常量池是class文件的资源仓库，是class文件第一个出现的表类型数据项目。常量池入口为一个u2类型数据，用来表明常量池容量，这个例子中为0x0074,即116，代表常量池中有115项常量，索引范围是1-115，<strong>从1开始计算</strong>。第0项常量是用来代表<strong>不引用任何一个常量池项目</strong>的含义<br>常量池主要存放两大类常量：<strong>字面量</strong>和<strong>符号引用</strong><br>java在编译的时候，并不会有连接步骤，即<strong>class类文件中不会保存各个方法，字段最终在内存中的布局信息，只有在虚拟机运行时期进行转换，才能得到真正的内存入口地址</strong><br>常量池中的每一项常量都是一个表，这些表结构的起始的第一位都是u1类型的标志位，代表当前常量属于哪种常量类型。</p>
-<img src="/2020/11/30/class类文件结构/2.png">
-<p>常量池第一项数据标志位为0x0A，查表得该数据为<strong>CONSTANT_Methodref_info</strong></p>
-        
-          <a class="article-more-a" href="/2020/11/30/class类文件结构/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/30/class类文件结构/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-GC垃圾回收算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/26/GC垃圾回收算法/">GC垃圾回收算法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/26/GC垃圾回收算法/" class="archive-article-date">
-  	<time datetime="2020-11-26T07:25:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在可行性分析算法中判定为不可达对象时，也不是“非死不可”。真正宣判一个对象死亡，要经过两次标记。<strong>第一次标记</strong>是对象在可达性分析中没有与GC roots的引用链相关联，会被标记。加入对象被第一次标记，随后会进行一次筛选，筛选条件是有无必要执行finalize()方法。<br>如果对象没有覆盖finalize()方法，或者finalize()方法已经被虚拟机调用过，那么虚拟机将这两个情况都视为<strong>没有必要执行，直接被第二次标记</strong>。假如对象被判定为有必要执行finalize()方法，对象就会被放置在F-Queue的队列中，稍后由低调度优先级的Finalize线程执行他们finalize()方法，但这个线程只保证会执行他们的finalize方法，但不保证执行完，因为该方法有可能出现死循环等极端情况。<br>若执行该方法，让该对象重新与GC roots的引用链相关联了，则不会被第二次标记，并移出“即将回收”的集合。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalizeEscapeGC</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> FinalizeEscapeGC SAVE_HOOK = <span class="keyword">null</span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">isAlive</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"yes,i am still alive"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.finalize();</span><br><span class="line">		System.out.println(<span class="string">"finalize method executed!"</span>);</span><br><span class="line">		FinalizeEscapeGC.SAVE_HOOK = <span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">		SAVE_HOOK = <span class="keyword">new</span> FinalizeEscapeGC();</span><br><span class="line">		SAVE_HOOK =<span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		Thread.sleep(<span class="number">500</span>);</span><br><span class="line">		<span class="keyword">if</span>(SAVE_HOOK!=<span class="keyword">null</span>)&#123;</span><br><span class="line">			SAVE_HOOK.isAlive();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"i am dead"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		SAVE_HOOK =<span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		Thread.sleep(<span class="number">500</span>);</span><br><span class="line">		<span class="keyword">if</span>(SAVE_HOOK!=<span class="keyword">null</span>)&#123;</span><br><span class="line">			SAVE_HOOK.isAlive();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"i am dead"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/11/26/GC垃圾回收算法/1.png">
-<p>第一次执行SVAE_HOOK=null语句时 ， FinalizeEscapeGC 对象被第一次标记，后虚拟机执行了finalize()方法，避免了第二次标记。第二次执行SAVE_HOOK = null 时， FinalizeEscapeGC对象被两次标记，被回收。</p>
-        
-          <a class="article-more-a" href="/2020/11/26/GC垃圾回收算法/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/26/GC垃圾回收算法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-GC之对象存活判断" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/26/GC之对象存活判断/">GC之对象存活判断</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/26/GC之对象存活判断/" class="archive-article-date">
-  	<time datetime="2020-11-26T02:49:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>垃圾收集器在对堆回收之前，必须先判断哪些对象还活着，哪些已经死去，即是否还有可能被用到</p>
-<p><strong>引用计数算法</strong></p>
-<p>最简单的方法就是，在对象中添加一个引用计数器，每当有一个地方引用它，计数+1，当一个引用失效时，计数-1，任何时刻计数器为0时，说明该对象已经死了。这个算法最大的问题就是无法解决循环引用的问题</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReferenceCountingGC</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> Object instance = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> _1MB = <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">byte</span>[] bigSize = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1MB];</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testGC</span><span class="params">()</span></span>&#123;</span><br><span class="line">		ReferenceCountingGC objA =  <span class="keyword">new</span> ReferenceCoutingGC();</span><br><span class="line">		ReferenceCountingGC objB =  <span class="keyword">new</span> ReferenceCountingGC();</span><br><span class="line">        objA.instance = objB;</span><br><span class="line">        objB.instance = objA;</span><br><span class="line">        objA = <span class="keyword">null</span>;</span><br><span class="line">        objB = <span class="keyword">null</span>;</span><br><span class="line">        System.gc();</span><br><span class="line">        </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/11/26/GC之对象存活判断/1.jpg">
-<p>当执行到第七行时，两个对象的引用计数为2 ， 即 objA的引用和instance的引用。 当objA指向null时，引用-1 ，引用计数为1。但是这两个对象已经无法访问，应该被回收，但引用计数算法无法回收他们。<br><strong>可达性分析算法</strong><br>算法的基本思路是通过一系列称为GC Roots的根对象作为起点集，通过图引用搜索，当某个对象不可达时，说明此对象不可能再被使用</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/26/GC之对象存活判断/">展开全文 >></a>
         </p>
       
 

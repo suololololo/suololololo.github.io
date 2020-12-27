@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="壴加亻夋的博客">
 <meta property="og:description" content="AOT优点1.AOT提前编译针对了JIT的弱点，即时编译器在编译时要占用程序运行时间和内存。在编译过程种最耗时的优化措施之一是通过“过程间分析”来获得某个程序点上某个变量的值是否一定为常量，某段代码块是否永远不可能被使用，在某个点的调用某个虚方法是否只能有单一版本等分析结论，这个过程会占用大量程序运行时间和内存。如果将这个分析提前到程序运行之前的静态编译，那就可以放心大胆地进行了。2.AOT给即时">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-12-26T12:11:05.449Z">
+<meta property="og:updated_time" content="2020-12-27T07:28:32.209Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AOT">
 <meta name="twitter:description" content="AOT优点1.AOT提前编译针对了JIT的弱点，即时编译器在编译时要占用程序运行时间和内存。在编译过程种最耗时的优化措施之一是通过“过程间分析”来获得某个程序点上某个变量的值是否一定为常量，某段代码块是否永远不可能被使用，在某个点的调用某个虚方法是否只能有单一版本等分析结论，这个过程会占用大量程序运行时间和内存。如果将这个分析提前到程序运行之前的静态编译，那就可以放心大胆地进行了。2.AOT给即时">
@@ -181,6 +181,12 @@
 <h4 id="JIT优点"><a href="#JIT优点" class="headerlink" title="JIT优点"></a>JIT优点</h4><p>1.<strong>性能分析制导优化</strong>。即时编译器运行过程中，会不断收集性能监控信息，比如某个程序点抽象类通常会是什么实际类型，循环通常会执行多少次，等等。这些在静态编译过程中是无法知道的<br>2.<strong>激进预测性优化</strong>。提前编译静态优化必须保证优化后所有的程序外部可见性影响与优化前是等效的，不然优化后会导致程序报错或者结果不对。但是即时编译就可采用激进优化，采取正确的可能性很大但无法保证绝对正确的预测判断，可以大胆地按照高概率假设进行优化。万一出问题，退回低级编译器或解释器上执行<br>3.<strong>链接时优化</strong>，动态链接。</p>
 <a id="more"></a>
 <h4 id="编译器优化技术"><a href="#编译器优化技术" class="headerlink" title="编译器优化技术"></a>编译器优化技术</h4><h5 id="方法内联"><a href="#方法内联" class="headerlink" title="方法内联"></a>方法内联</h5><p>简单理解就是，将目标方法的代码原封不动地复制到发起调用的方法之中，避免发生真实的方法调用而已。消除了方法调用的成本。由于虚方法在运行时期才能确定调用的是哪个方法版本，编译器很难确定内联的是哪个方法。<br>为了解决虚方法内联的问题，引入类型继承关系分析技术。如果方法是非方法，直接内联就可以了。如果是虚方法，向CHA查询此方法在当前程序状态是否有多个目标版本选择。如果只有一个版本，直接内联。如果有多个版本的目标方法选择，即时编译器使用内敛缓存来缩减方法调用的开销。内联缓存相当于一张表，在未发生方法调用之前，为空，发生一次调用后，缓存记录下方法接收者的信息，如果以后进来的每次调用的方法接收者版本都是一样的，就通过该缓存调用。如果不一致，记在缓存中，再去查虚方法表</p>
+<h5 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a>逃逸分析</h5><p>分析对象动态作用域，当一个对象在方法里面被定义后，它可能被外部方法所引用，例如作为调用参数传递到其他方法中，称为方法逃逸。当被外部线程访问，譬如赋值给可以在其他线程中访问到的实例变量，称为线程逃逸<br>当可以证明一个对象不会逃逸到方法或线程之外时，就能对对象实例采取不同程度的优化<br><strong>栈上分配</strong>：java分配创建对象是在java堆之上的，但是在java堆上对象回收，会耗费大量资源。如果可以证明对象不会逃逸到线程之外，那么就可以在栈上分配内存，这样对象就会随着栈帧的出栈销毁。<br><strong>标量替换</strong>：当可以证明对象不会发生方法逃逸时，可以将对象替换为标量，标量就是不可再分割的一些基本量。即不创建对象，创建替换后的标量<br><strong>同步消除</strong>：如果一个变量不会发生线程逃逸，那么这个变量肯定不会有读写竞争，就可以将这个变量的同步措施去掉</p>
+<h5 id="公共子表达式消除"><a href="#公共子表达式消除" class="headerlink" title="公共子表达式消除"></a>公共子表达式消除</h5><p>如果一个表达式E之前已经被计算过了，并且从先前的计算到现在E中所有的变量的值都没有发生变化，那么E的这次出现就称为公共子表达式。对于这种表达式，没有必要花时间对他重新计算</p>
+<h5 id="数组边界检查消除"><a href="#数组边界检查消除" class="headerlink" title="数组边界检查消除"></a>数组边界检查消除</h5><p>数组边界检查优化把运行期检查提前到编译器完成或者隐式异常处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(foo != <span class="keyword">null</span>)&#123;</span><br><span class="line">	<span class="keyword">return</span> foo.value;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> NullPointException();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//隐式优化处理后</span></span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> foo.value;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (segment_fault)&#123;</span><br><span class="line">	uncommon_trap();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>虚拟机注册一个segment_fault信号的异常处理器，当foo不为空的时候，没有额外的判空开销，代价就是当foo真为空时，必须转到异常处理器中恢复中断并抛出NullPointException异常</p>
 
       
 
@@ -273,6 +279,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/12/27/java内存模型/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          java内存模型
+        
+      </div>
+    </a>
   
   
     <a href="/2020/12/26/jvm后端编译和优化/" id="article-nav-older" class="article-nav-link-wrap">
