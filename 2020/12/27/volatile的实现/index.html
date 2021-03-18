@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="壴加亻夋的博客">
 <meta property="og:description" content="volatile关键字保证了两项特性：1.保证此变量对所有线程的可见性，当一个线程修改了这个变量的值，新值对于其他线程是立即得知的。2.禁止指令重排序优化 可见性的实现假设T表示一个线程，V和W表示两个volatile变量java内存模型规定，只有当线程T对变量V执行的前一个动作是load时，才能对变量V执行use动作。只有当线程T对变量的后一个动作是use时，才能对变量V执行load动作。即lo">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-12-27T11:35:30.222Z">
+<meta property="og:updated_time" content="2020-12-31T03:47:15.995Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="volatile的实现">
 <meta name="twitter:description" content="volatile关键字保证了两项特性：1.保证此变量对所有线程的可见性，当一个线程修改了这个变量的值，新值对于其他线程是立即得知的。2.禁止指令重排序优化 可见性的实现假设T表示一个线程，V和W表示两个volatile变量java内存模型规定，只有当线程T对变量V执行的前一个动作是load时，才能对变量V执行use动作。只有当线程T对变量的后一个动作是use时，才能对变量V执行load动作。即lo">
@@ -179,8 +179,13 @@
       
         <p>volatile关键字保证了两项特性：<br>1.<strong>保证此变量对所有线程的可见性</strong>，当一个线程修改了这个变量的值，新值对于其他线程是立即得知的。<br>2.禁止指令重排序优化</p>
 <h4 id="可见性的实现"><a href="#可见性的实现" class="headerlink" title="可见性的实现"></a>可见性的实现</h4><p>假设T表示一个线程，V和W表示两个volatile变量<br>java内存模型规定，只有当线程T对变量V执行的前一个动作是load时，才能对变量V执行use动作。只有当线程T对变量的后一个动作是use时，才能对变量V执行load动作。即load和use是相关联的，必选同时连续出现。<strong>这条规则意味着每次使用变量V时，必须先从主存中刷新最新的值，用于保证能看见其他线程对V的修改</strong><br>只有当线程T对变量V执行的前一个动作是assign时，才能对变量执行store动作。只有当线程T对变量V的后一个动作是store时，才能对变量V执行assign动作。即assign和store是相关联的，必须同时连续出现。<strong>这条规则意味着每次修改变量V时，必须立刻同步会主存中，用于保证其他线程能看见自己对V的修改</strong></p>
+<p>有volatile修饰的变量，在编译时会多出一条指令  lock addl $0×0，(%esp);</p>
+<p>这条lock指令会导致</p>
+<p>1.将当前缓存行数据写回内存。具体实现：锁定这块内存区域的缓存，并写回内存，并使用一致性机制来确保修改的原子性。缓存一致性机制会阻止同时修改由两个以上处理器缓存的内存区域数据。</p>
+<p>2.使其他cpu缓存了该内存地址的数据无效。具体实现：处理器使用嗅探技术，保证内部缓存，系统内存和其他处理器的缓存的数据在总线上保持一致。如果通过嗅探知道一个处理器正在修改内存区域，而该区域的数据处于共享状态。那么正在嗅探的处理器会使它的缓存无效，并在下次使用到缓存数据时，强行用内存的数据填充</p>
 <h4 id="禁止指令重排序优化的实现"><a href="#禁止指令重排序优化的实现" class="headerlink" title="禁止指令重排序优化的实现"></a>禁止指令重排序优化的实现</h4><p>volatile关键字会在本地代码中插入内存屏障，禁止指令重排序。形如lock addl $0x0,(%esp)的指令。这个指令是将本地缓存写入内存的作用，这意味着在执行这个指令之前，所有之前的操作都已经执行完成。若没执行完成，会改变程序结果，导致程序出错。所以指令重排序无法越过内存屏障。因为如果越过，且重排序，就无法保证lock addl $0x0,(%esp)指令前所有操作都已完成。</p>
 <p>假定动作A是线程T对变量V实施的use或assigh操作，动作F是和动作A相关联的load或store操作，动作P是和动作F相关联的read或write操作。 假定动作B是线程T对变量V实施的use或assigh操作，动作G是和动作B相关的load或store操作，动作Q是和动作G相关联的read或write操作。<br>如果动作A先于B，则F先于G，P先于Q<br><strong>这条规则意味着volatile修饰的变量不会被指令重排序优化，从而保证代码的执行顺序比程序顺序相同</strong></p>
+<h4 id="原子操作的实现"><a href="#原子操作的实现" class="headerlink" title="原子操作的实现"></a>原子操作的实现</h4><p>1.使用总线锁定的方法。当一个处理器需要将缓存中的数据写回内存时，先锁定总线，阻止了其他处理器的请求。该处理器就可以独占内存<br>2.使用缓存锁定的方法。当一个处理器需要将缓存中的数据写回内存时，锁定与缓存数据对应的内存地址，然后写回。缓存一致性会阻止两个以上的处理器同时修改处理缓存的内存区域数据</p>
 
       
 
@@ -330,7 +335,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 壴加亻夋
+    		&copy; 2021 壴加亻夋
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten

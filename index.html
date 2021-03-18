@@ -152,20 +152,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-java先行发生原则" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-sychronized底层实现原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/27/java先行发生原则/">java先行发生原则</a>
+      <a class="article-title" href="/2021/03/18/sychronized底层实现原理/">sychronized底层实现原理</a>
     </h1>
   
 
         
-        <a href="/2020/12/27/java先行发生原则/" class="archive-article-date">
-  	<time datetime="2020-12-27T11:36:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-27</time>
+        <a href="/2021/03/18/sychronized底层实现原理/" class="archive-article-date">
+  	<time datetime="2021-03-18T03:24:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-18</time>
 </a>
         
       </header>
@@ -175,8 +175,8 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p>先行发生是指java内存模型中定义的两项操作之间的偏序关系，假如A动作先于B,则B能观察到A带来的影响。影响包括修改了内存中共享变量的值，发送了消息，调用了方法</p>
-<h4 id="java内存模型中的自带的先行发生关系"><a href="#java内存模型中的自带的先行发生关系" class="headerlink" title="java内存模型中的自带的先行发生关系"></a>java内存模型中的自带的先行发生关系</h4><p>假如不满足下列规则，就没有顺序性保障，虚拟机可以对他们进行任意重排序<br>1.程序次序规则：在一个线程内，按照程序控制流顺序，书写在前面的操作先行发生于书写在后面的操作。控制流是指分支，循环等结构<br>2.管程锁定规则：一个unlock操作先行于后面对同一个锁的unlock操作 。 后面是时间概念<br>3.volatile变量规则：对于一个volatile变量的写操作先行于后面的读操作<br>4.线程启动规则：一个线程start操作先行于此线程的每一个动作<br>5.线程终止规则：线程中所有操作都先行于此线程的终止检测<br>6.线程中断规则：对线程interrupt的方法调用先行发生于被中断线程的代码检测到中断事件的发生<br>7.对象终结规则：一个对象的初始化完成先行于它的finalize（）方法的开始<br>8.传递性：如果操作A先行发生于操作B，操作B先行发生于操作C，那么A先行于C</p>
+        <p>sychronized底层是JVM基于进入和退出monitor对象来实现的。每个对象都有一个monitor和他相关联。当一个monitor对象被持有时，他就进入锁定状态。当一个线程执行到monitorenter指令时，他会尝试去获取monitor对象。<br>根据JVM规范得获取过程：<br>1.如果monitor进入数为0，则该线程进入monitor，然后将进入数设置为1，该线程即为monitor的拥有者。<br>2.如果该线程拥有monitor，再次进入只是将monitor对象数+1。<br>3.如果其他线程已经占用了monitor对象，则该线程进入阻塞状态，直到monitor为0，再尝试获取。</p>
+<p>退出过程：<br>monitor对象数-1，如果monitor对象数为0，则该线程退出monitor，不再是monitor的拥有者，其他被阻塞的线程可以尝试去获取monitor的所有权。</p>
 
       
 
@@ -189,7 +189,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/27/java先行发生原则/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/18/sychronized底层实现原理/">展开全文 >></a>
         </p>
       
 
@@ -221,20 +221,20 @@
 
 
   
-    <article id="post-volatile的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-线程池的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/27/volatile的实现/">volatile的实现</a>
+      <a class="article-title" href="/2021/03/18/线程池的实现/">线程池的实现</a>
     </h1>
   
 
         
-        <a href="/2020/12/27/volatile的实现/" class="archive-article-date">
-  	<time datetime="2020-12-27T10:46:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-27</time>
+        <a href="/2021/03/18/线程池的实现/" class="archive-article-date">
+  	<time datetime="2021-03-18T02:39:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-18</time>
 </a>
         
       </header>
@@ -244,10 +244,7 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p>volatile关键字保证了两项特性：<br>1.<strong>保证此变量对所有线程的可见性</strong>，当一个线程修改了这个变量的值，新值对于其他线程是立即得知的。<br>2.禁止指令重排序优化</p>
-<h4 id="可见性的实现"><a href="#可见性的实现" class="headerlink" title="可见性的实现"></a>可见性的实现</h4><p>假设T表示一个线程，V和W表示两个volatile变量<br>java内存模型规定，只有当线程T对变量V执行的前一个动作是load时，才能对变量V执行use动作。只有当线程T对变量的后一个动作是use时，才能对变量V执行load动作。即load和use是相关联的，必选同时连续出现。<strong>这条规则意味着每次使用变量V时，必须先从主存中刷新最新的值，用于保证能看见其他线程对V的修改</strong><br>只有当线程T对变量V执行的前一个动作是assign时，才能对变量执行store动作。只有当线程T对变量V的后一个动作是store时，才能对变量V执行assign动作。即assign和store是相关联的，必须同时连续出现。<strong>这条规则意味着每次修改变量V时，必须立刻同步会主存中，用于保证其他线程能看见自己对V的修改</strong></p>
-<h4 id="禁止指令重排序优化的实现"><a href="#禁止指令重排序优化的实现" class="headerlink" title="禁止指令重排序优化的实现"></a>禁止指令重排序优化的实现</h4><p>volatile关键字会在本地代码中插入内存屏障，禁止指令重排序。形如lock addl $0x0,(%esp)的指令。这个指令是将本地缓存写入内存的作用，这意味着在执行这个指令之前，所有之前的操作都已经执行完成。若没执行完成，会改变程序结果，导致程序出错。所以指令重排序无法越过内存屏障。因为如果越过，且重排序，就无法保证lock addl $0x0,(%esp)指令前所有操作都已完成。</p>
-<p>假定动作A是线程T对变量V实施的use或assigh操作，动作F是和动作A相关联的load或store操作，动作P是和动作F相关联的read或write操作。 假定动作B是线程T对变量V实施的use或assigh操作，动作G是和动作B相关的load或store操作，动作Q是和动作G相关联的read或write操作。<br>如果动作A先于B，则F先于G，P先于Q<br><strong>这条规则意味着volatile修饰的变量不会被指令重排序优化，从而保证代码的执行顺序比程序顺序相同</strong></p>
+        <p>线程池的工作流程<br>1.一个任务提交到线程池时，首先判断核心线程池是否已经满了。如果不是，创建一个工作线程来执行任务。如果是的话进入下一个流程。<br>2.判断任务队列是否已经满了。如果不是，则将任务加入队列。如果是，进入下一个流程<br>3.判断线程池是否已经满了，如果不是，创建线程执行任务。如果是的话，将任务交给饱和策略来处理这个任务。<br>拒绝策略包括：1.直接丢弃这个任务2.直接抛出异常 3. 用调用者线程来执行该任务4.丢弃队列里最近的一个任务，并执行当前任务</p>
 
       
 
@@ -260,7 +257,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/27/volatile的实现/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/18/线程池的实现/">展开全文 >></a>
         </p>
       
 
@@ -292,20 +289,20 @@
 
 
   
-    <article id="post-java内存模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-秒杀系统数据库层面的思考" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/27/java内存模型/">java内存模型</a>
+      <a class="article-title" href="/2021/03/18/秒杀系统数据库层面的思考/">秒杀系统数据库层面的思考</a>
     </h1>
   
 
         
-        <a href="/2020/12/27/java内存模型/" class="archive-article-date">
-  	<time datetime="2020-12-27T09:13:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-27</time>
+        <a href="/2021/03/18/秒杀系统数据库层面的思考/" class="archive-article-date">
+  	<time datetime="2021-03-18T01:52:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-18</time>
 </a>
         
       </header>
@@ -315,12 +312,10 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p>java内存模型的主要目的是定义程序中各种变量的访问规则，关注虚拟机把变量从内存中取到工作内存和把变量存储到内存中的底层细节。<br>这里的变量只包括实例字段，静态字段和构成数组对象的元素等公有变量，不包括线程私有的变量。因为私有变量是线程私有的，不存在从主内存读写的问题</p>
-<h4 id="内存中的交互问题"><a href="#内存中的交互问题" class="headerlink" title="内存中的交互问题"></a>内存中的交互问题</h4><img src="/2020/12/27/java内存模型/1.png">
-<p>简单的说就是，java线程从工作内存读写变量的主内存副本，并写回主内存。<br>相对应的原子操作<br>1.lock：作用于主内存变量，把一个变量标识为一条线程独占<br>2.unlock:作用于主内存变量，把一个处于锁定状态的变量释放出来，释放后的变量才可以被其他线程锁定<br>3.read：作用于主内存变量，把一个变量的值从主内存传输到线程的工作内存中，以便load使用<br>4.load：作用于工作内存变量，把read操作从主内存中得到的变量值放入工作内存的变量副本中<br>5.use：作用于工作内存变量，把工作内存中的一个变量值传递给执行引擎<br>6.assign：作用于工作内存变量，将一个从执行引擎接收的值赋给工作内存变量<br>7.store：作用于工作内存变量，把工作内存中一个变量的值传输到主内存中<br>8.write：作用于主内存的变量，把store操作中从工作内存中得到的变量的值放入主内存的变量中</p>
-        
-          <a class="article-more-a" href="/2020/12/27/java内存模型/#more">more >></a>
-        
+        <p>秒杀系统如何解决超卖的问题？<br>1.在每个用户只能秒杀同一件商品一次的时候，给秒杀商品表的的用户id和商品id加上唯一索引<br>2.执行sql语句减库存的时候，判断库存大于0。<br>为什么这样做就可以防止超卖呢？<br>既然我这两个操作都在数据库层面进行的改进。那么我们就应该从数据库层面思考。<br>首先我使用的是Innodb存储引擎。<strong>为什么要用innodb存储引擎？</strong><br>1.innodb引擎支持事务操作，支持ACID特性。而MyISAM不支持。<br>2.innodb引擎支持行级别锁定，而MyISAM不支持<br>3.支持外键<br>4.支持崩溃后的安全恢复</p>
+<p><strong>我们再来思考innodb行级锁定是怎么实现的？</strong><br>innodb行级锁定是通过给索引的索引项加锁实现的。也就是说只有通过索引项查询数据才能能行级锁，其余时间会使用表级锁<br>1.这个锁是加在索引上的，不是加在记录上的，不是加在行上的，即使记录有多行，他们的索引相同就会被锁定。<br>这时我们可以来思考上面的问题了。<br>秒杀的基本操作包括：1.减库存2.下订单 且这两个操作是事务操作。  举个例子:当同一个用户同时来了两个请求，库存为1，同时减了库存（能否同时减库存有待考究，这里好像会有写排他锁），但是无法创建新订单，必然会导致一个事务失败，导致事务回滚，就不会超卖了。</p>
+<p><strong>另外一种解决超卖的方式</strong><br>利用redis单线程预减库存，库存为0是拒绝所有请求，最后再他写入数据库。</p>
+
       
 
       
@@ -332,7 +327,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/27/java内存模型/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/18/秒杀系统数据库层面的思考/">展开全文 >></a>
         </p>
       
 
@@ -364,20 +359,20 @@
 
 
   
-    <article id="post-AOT" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-HashMap源码分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/26/AOT/">AOT</a>
+      <a class="article-title" href="/2021/03/17/HashMap源码分析/">HashMap源码分析</a>
     </h1>
   
 
         
-        <a href="/2020/12/26/AOT/" class="archive-article-date">
-  	<time datetime="2020-12-26T11:03:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-26</time>
+        <a href="/2021/03/17/HashMap源码分析/" class="archive-article-date">
+  	<time datetime="2021-03-17T07:07:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-17</time>
 </a>
         
       </header>
@@ -387,10 +382,6 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="AOT优点"><a href="#AOT优点" class="headerlink" title="AOT优点"></a>AOT优点</h4><p>1.AOT提前编译针对了JIT的弱点，即时编译器在编译时要占用程序运行时间和内存。在编译过程种最耗时的优化措施之一是通过“过程间分析”来获得某个程序点上某个变量的值是否一定为常量，某段代码块是否永远不可能被使用，在某个点的调用某个虚方法是否只能有单一版本等分析结论，这个过程会占用大量程序运行时间和内存。如果将这个分析提前到程序运行之前的静态编译，那就可以放心大胆地进行了。<br>2.AOT给即时编译器做缓存加速，改善java程序地启动时间，以及需要一段时间预热才能到达最高性能的问题。针对目标机器，为应用程序进行提前编译，运行时，直接加载这些编译的结果，实现加快程序启动速度，减少程序达到全速运行状态所需的时间。<br><strong>提前编译的代码输出质量，不一定比即时编译高</strong></p>
-<h4 id="JIT优点"><a href="#JIT优点" class="headerlink" title="JIT优点"></a>JIT优点</h4><p>1.<strong>性能分析制导优化</strong>。即时编译器运行过程中，会不断收集性能监控信息，比如某个程序点抽象类通常会是什么实际类型，循环通常会执行多少次，等等。这些在静态编译过程中是无法知道的<br>2.<strong>激进预测性优化</strong>。提前编译静态优化必须保证优化后所有的程序外部可见性影响与优化前是等效的，不然优化后会导致程序报错或者结果不对。但是即时编译就可采用激进优化，采取正确的可能性很大但无法保证绝对正确的预测判断，可以大胆地按照高概率假设进行优化。万一出问题，退回低级编译器或解释器上执行<br>3.<strong>链接时优化</strong>，动态链接。</p>
-        
-          <a class="article-more-a" href="/2020/12/26/AOT/#more">more >></a>
         
       
 
@@ -403,7 +394,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/26/AOT/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/17/HashMap源码分析/">展开全文 >></a>
         </p>
       
 
@@ -435,20 +426,20 @@
 
 
   
-    <article id="post-jvm后端编译和优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-fail-fast机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/26/jvm后端编译和优化/">jvm后端编译和优化</a>
+      <a class="article-title" href="/2021/03/17/fail-fast机制/">fail-fast机制</a>
     </h1>
   
 
         
-        <a href="/2020/12/26/jvm后端编译和优化/" class="archive-article-date">
-  	<time datetime="2020-12-26T08:37:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-26</time>
+        <a href="/2021/03/17/fail-fast机制/" class="archive-article-date">
+  	<time datetime="2021-03-17T02:44:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-17</time>
 </a>
         
       </header>
@@ -458,11 +449,20 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="为什么HotSpot虚拟机要使用解释器与编译器并存的架构？"><a href="#为什么HotSpot虚拟机要使用解释器与编译器并存的架构？" class="headerlink" title="为什么HotSpot虚拟机要使用解释器与编译器并存的架构？"></a>为什么HotSpot虚拟机要使用解释器与编译器并存的架构？</h4><p>先来看看解释器与编译器各自的优势<br>当程序需要迅速启动和执行时，解释器可以首先发挥作用，不用编译，直接执行程序。但是解释器的执行效率较低，当遇到热点代码时，编译器将他们编译成本地代码，可以减少解释器的中间损耗。当程序运行环境中内存资源限制较大，可以使用解释执行节约内存，反之可以使用编译器来提高效率，（体现了时空转换的思想）。同时，解释器可以作为编译器激进优化的逃生门，即让编译器选择一些不能保证任何时候都正确的做法，但大多时候能提升运行速度的优化手段。当激进优化的假设不成立时，使用<strong>逆优化</strong>退回到解释器执行。<br>HotSpot虚拟机中内置了两个即使编译器，客户端编译器和服务端编译器。即时编译器编译本地代码时需要占用程序运行时间，通常编译出优化程度越高的代码，所占用的时间越多。而且当需要编译出优化程度更高的代码，可能需要解释器帮忙收起性能监控信息，这时候解释器的执行速度也会有所影响。<br>为了平衡程序启动速度和运行效率，采用了分层编译的策略<br>1.第0层，程序纯解释执行，并且解释器不开启性能监控功能<br>2.第1层，使用客户端编译器将字节码编译成本地代码来执行，进行简单可靠的优化。不开启性能监控功能<br>3.第2层，仍然使用客户端编译执行，仅开启方法及回边次数统计等有限性能监控功能<br>4.第3层，仍然使用客户端编译执行，开启全部性能监控<br>5.第4层，使用服务端编译器将字节码编译为本地代码执行。相比客户端编译器，服务端编译器会启用更多编译好事更长的优化，还会根据性能监控信息进行一些不可靠的激进优化<br>使用分层编译时，解释器，客户端编译器，服务端编译器会同时执行</p>
-<h4 id="热点代码"><a href="#热点代码" class="headerlink" title="热点代码"></a>热点代码</h4><p>即时编译器的编译目标是热点代码，热点代码包括：<strong>被多次调用的方法</strong>，<strong>被多次执行的循环体</strong>。这两种情况下，被编译的对象都是整个方法体，而不是单独的循环体。<br>那这个多次怎么定义呢？就是怎么判断一段代码是不是热点代码？即<strong>热点探测</strong><br>热点探测的实现方式：1.<strong>基于采样的热点探测</strong> ：虚拟机周期性检查各个线程的调用栈顶，如果发现某个方法经常出现在栈顶，那这个方法就是热点方法2.<strong>基于计数器的热点探测</strong>：虚拟机为每个方法建立计数器，统计方法执行次数，如果次数超过一定的阈值，就是热点热点代码<br>HotSpot采用的是第二种方法，为每个方法建立的<strong>方法调用计数器和回边计数器</strong>。当一个方法被调用时，先检查代码是否被编译过，如果被编译过，直接加载。否则，方法调用计数器+1，判断两个计数器的之和是否超过阈值，若超过，向编译器提交编译请求，然后异步的用解释器执行，直到编译完成。若没有超过，直接解释器执行。<br>方法计数器统计的不是方法被调用的绝对次数，而是一个相对的执行频率，即一段时间内方法被调用的次数。当超过一定时间限度，若方法的调用次数不足以让编译器编译，那该方法的调用计数器就会减半<br>回边计数器： 回边就是遇到控制流向后跳转的指令。 当解释器遇到回边指令时，先检查方法是否被编译过，如果编译过，直接加载执行。否则，回边计数器+1，判断两个计数器之和是否超过阈值，若超过，向编译器提交栈上替换编译请求，然后把回边计数器的值稍微降低，异步用解释器执行，等待编译器输出编译结果。如果没超过，直接用解释器执行</p>
-        
-          <a class="article-more-a" href="/2020/12/26/jvm后端编译和优化/#more">more >></a>
-        
+        <p>fail-fast机制是java容器提供的一种 在遍历容器时发现容器结构被修改时快速抛出异常的机制。因此面对并发时，迭代器会干净利落的失败。抛出ConcurrentModificationException<br>容器结构被修改无非就两种情况<br>单线程环境下<br>迭代器遍历，集合结构被修改 ，<br>多线程环境下<br>一个线程遍历，一个线程修改<br>但是listIterator.remove()方法修改集合结构时不会抛出这个异常(可以看源码为什么不会这样)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		IteratorTest();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">IteratorTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	Vector&lt;String&gt; vector = <span class="keyword">new</span> Vector&lt;&gt;();</span><br><span class="line">		vector.add(<span class="string">"1"</span>);</span><br><span class="line">        vector.add(<span class="string">"2"</span>);</span><br><span class="line">        vector.add(<span class="string">"3"</span>);</span><br><span class="line">        ListIterator  iterator = vector.listIterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">            System.out.println(iterator.next());</span><br><span class="line">            vector.remove(<span class="string">"3"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个例子直接用容器修改会抛异常</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		IteratorTest();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">IteratorTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	Vector&lt;String&gt; vector = <span class="keyword">new</span> Vector&lt;&gt;();</span><br><span class="line">		vector.add(<span class="string">"1"</span>);</span><br><span class="line">        vector.add(<span class="string">"2"</span>);</span><br><span class="line">        vector.add(<span class="string">"3"</span>);</span><br><span class="line">        ListIterator  iterator = vector.listIterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">            System.out.println(iterator.next());</span><br><span class="line">            iterator.remove(<span class="string">"3"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个例子并不会抛异常，多线程环境下也是同样的情况<br>我们来看看迭代器的部分源码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * An optimized version of AbstractList.Itr</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> expectedModCount = modCount;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//省略的部分代码</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (lastRet == -<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException();</span><br><span class="line">        <span class="keyword">synchronized</span> (Vector.<span class="keyword">this</span>) &#123;</span><br><span class="line">            checkForComodification();</span><br><span class="line">            Vector.<span class="keyword">this</span>.remove(lastRet);</span><br><span class="line">            expectedModCount = modCount;</span><br><span class="line">        &#125;</span><br><span class="line">        cursor = lastRet;</span><br><span class="line">        lastRet = -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">forEachRemaining</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> E&gt; action)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//省略的部分代码</span></span><br><span class="line">            checkForComodification();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (modCount != expectedModCount)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>可以看到每次初始化一个迭代器的时候都会执行 int expectedModCount = modCount ，modeCount就是期待修改的次数，每次容器进行修改时都会modCount++，每次迭代初始化都会执行checkForComodification()检查expectedModCount 和modCount是否相等，如果不相等说明容器结构被改变了，抛出异常。 **<br>**我们可以看下用迭代器修改集合结构为什么不会抛异常，因为每次迭代修改完结构后就会执行expectedModCount = modCount语句，所以expectedModCount和modCount必定是相等的，就不会抛出异常了</strong></p>
+<p>怎样避免fail-fast机制<br>使用java.util.concurrent包下的类去取代java.util包下的类。所以，本例中只需要将Vector替换成java.util.concurrent包下对应的类即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.ListIterator;</span><br><span class="line"><span class="keyword">import</span> java.util.Vector;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.CopyOnWriteArrayList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123; </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * CopyOnWriteArrayList的fail-fast测试</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@org</span>.junit.Test</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            List list = <span class="keyword">new</span> CopyOnWriteArrayList&lt;&gt;();</span><br><span class="line">            list.add(<span class="string">"1"</span>);</span><br><span class="line">            list.add(<span class="string">"2"</span>);</span><br><span class="line">            list.add(<span class="string">"3"</span>);</span><br><span class="line">            ListIterator itr = list.listIterator();</span><br><span class="line">            <span class="keyword">while</span> (itr.hasNext()) &#123;</span><br><span class="line">                System.out.println(itr.next());</span><br><span class="line">                list.add(<span class="string">"5"</span>);</span><br><span class="line">                list.remove(<span class="string">"2"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(list.toString());</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
 
       
@@ -474,7 +474,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/26/jvm后端编译和优化/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/17/fail-fast机制/">展开全文 >></a>
         </p>
       
 
@@ -506,20 +506,20 @@
 
 
   
-    <article id="post-java前端编译" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-锁的内存语义" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/21/java前端编译/">java前端编译</a>
+      <a class="article-title" href="/2021/03/16/锁的内存语义/">锁的内存语义</a>
     </h1>
   
 
         
-        <a href="/2020/12/21/java前端编译/" class="archive-article-date">
-  	<time datetime="2020-12-21T13:05:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-21</time>
+        <a href="/2021/03/16/锁的内存语义/" class="archive-article-date">
+  	<time datetime="2021-03-16T06:19:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-16</time>
 </a>
         
       </header>
@@ -529,30 +529,19 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p>java编译过程大致分为1个准备过程和3个处理过程<br>1.准备过程：初始化插入时注解处理器 （没明白）<br>2.解析和填充符号表</p>
-<ul>
-<li>词法和语法分析，构建抽象语法树</li>
-<li>填充符号表</li>
-</ul>
-<p>3.插入式注解处理器注解处理过程<br>4.分析和字节码生成（语义分析）</p>
-<ul>
-<li>标注检查，检查变量使用前是否已被声明，变量与赋值直接的数据类型是否能够匹配。在这个阶段中编译器会进行一个常量折叠<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a  = <span class="number">1</span> + <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+        <p>1.线程A释放一个锁，相当于给接下来要获取这个锁的线程发送了消息  因为释放锁后，需要将共享变量写回主内存。<br>2.线程B获取一个锁，相当于接受了之前某个线程的信息 。获取锁，需要重新从主内存中获取共享变量<br>3.线程A释放锁，线程B获取锁，相当于A向B发送了信息</p>
+<p>ReentrantLock重入锁<br>重入锁又实现为公平锁和非公平锁<br>公平锁在获取时会先读取一个volatile变量state，后面CAS写入volatile变量state<br>非公平锁获取时会用CAS更新volatile变量，这个操作具有volatile读和volatile写的内存语义。<br>公平锁和非公平锁在释放的时候最后都会写一个volatile变量state<br><strong>双重检查锁定误区与延迟初始化</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User user = <span class="keyword">new</span> User();</span><br></pre></td></tr></table></figure>
+
+<p>执行这样一条语句需要三个指令</p>
+<ol>
+<li>memory =  allocate(); 分配对象的内存空间</li>
+<li>ctorInstance(memory); 对象初始化</li>
+<li>instance = memory ; 设置instance 指向刚分配的内存地址<br>指令重排序的时候有可能时  1-》3-》2的结果 在这样的情形下 执行以下代码就有可能出现问题<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">public</span> Instance <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(instance==<span class="keyword">null</span>)&#123;</span><br><span class="line">		<span class="keyword">synchronized</span>(User.class)&#123;</span><br><span class="line">			<span class="keyword">if</span>(instance==<span class="keyword">null</span>)</span><br><span class="line">				instance = <span class="keyword">new</span> Instance();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 </li>
-</ul>
-<p>在抽象语法树中能看到 1，2，+结点，但经过常量折叠后就直接变成3了</p>
-<ul>
-<li>数据及控制流分析， 检查局部变量在使用前是否已经被赋值，方法的每条路径是否都有返回值，是否所有的受查异常都得到了正确处理<br>下面有个关于final修饰符得例子<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法一</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> arg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">final</span> <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 方法二</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foos</span><span class="params">(<span class="keyword">int</span> arg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> <span class="keyword">var</span>  = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>编译后经过反编译</p>
-<img src="/2020/12/21/java前端编译/1.png">
-<p>发现里面根本没有final关键字，说明在运行期间根本无法检查这个错误，只能在编译期间来检查，具体由com.sun.tools.javac.comp.Flow里得flow()方法完成</p>
-<ul>
-<li>解语法糖，包括擦除泛型，自动装箱拆箱，变长参数，遍历循环等等</li>
-<li>字节码生成 在这个过程中，编译器把语句块，对于实例构造器是{}块，对于类构造器是static{}块，变量初始化，调用父类的实例构造器 收敛到<init>和<clinit>方法中，最后将符号表交到com.sun.tools.javac.jvm.ClassWriter类手上，由这个类的writeClass()方法输出字节码，生成Class文件，编译结束</clinit></init></li>
-</ul>
+</ol>
+<p>在线程A执行1，3指令后。线程B进行检查发现不为null，这时候直接去使用该对象就会出现问题。<br>解决方法 只要将instance变量声明为volatile，就会禁止2，3指令的重排序</p>
 
       
 
@@ -565,7 +554,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/21/java前端编译/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/16/锁的内存语义/">展开全文 >></a>
         </p>
       
 
@@ -597,20 +586,20 @@
 
 
   
-    <article id="post-PCA主成分分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-volatile的内存语义" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/08/PCA主成分分析/">PCA主成分分析</a>
+      <a class="article-title" href="/2021/03/16/volatile的内存语义/">volatile的内存语义</a>
     </h1>
   
 
         
-        <a href="/2020/12/08/PCA主成分分析/" class="archive-article-date">
-  	<time datetime="2020-12-08T01:57:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
+        <a href="/2021/03/16/volatile的内存语义/" class="archive-article-date">
+  	<time datetime="2021-03-16T02:48:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-16</time>
 </a>
         
       </header>
@@ -620,15 +609,9 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p>PCA的作用就是拿来降维，那为什么要降维呢？因为数据中有些内容没有价值，这些内容会影响算法的性能和准确率。所以就要将这些数据去除，怎样个去除法呢？</p>
-<img src="/2020/12/08/PCA主成分分析/1.png">
-<p>如上图，数据点大多分布在x2方向上，x1方向上的取值相似，就可以直接把x1的坐标去掉。但有些情况就不能直接这样去除</p>
-<img src="/2020/12/08/PCA主成分分析/2.png">
-<p>如上图，数据分布在x1和x2方向上都比较均匀，去除任何一个都会造成较大的影响，但是假如我把这些数据投影到y1，y2的坐标系上，就又变成第一个图的情况<br>现在问题就转变成了如何将数据映射到y1，y2的坐标系上。且我们希望投影到y1上尽可能的分散</p>
-<p>现在我们需要构建一个函数f(Xn<em>m)  n为特征个数， m为样本个数<br>$$Z_k×_m =  f(X_n×_m)  k&lt;n$$<br>这个问题又转化为寻找一个矩阵W_k</em>m<br>$$Z_k×_m =  W_k×_m * X_n×_m  k&lt;n$$</p>
-<p>假设我们要把矩阵的维数降为1，即降维之后只有X只有一个特征值 即k=1<br>目标是使降维后坐标在那个坐标轴的分布尽可能的分散（上图的y2），用方差来衡量数据的分散程度即</p>
-<img src="/2020/12/08/PCA主成分分析/3.png">
-<p>最后就是求解最大特征值<br>所以降维的具体过程就是<br>1.计算协方差矩阵S = Cov(X)<br>2.选择一系列正交特征向量，对应K个最大特征值，得到投影矩阵W<br>3.降维   Z = WX</p>
+        <p>1.线程A对volatile变量的写，实际上是对接下来要读取这个变量的线程发送消息（因为对一个volatile变量的写会使得线程马上将本地内存的写刷新到主内存中）<br>2.线程B对一个volatile变量的读，实际上是线程B接收了之前某个线程发出的消息，即对这个volatile变量的写之前对共享变量的修改<br>3.线程A写一个volatile变量， 线程B读一个volatile变量，实质是两个线程在通信</p>
+<p>volatile的读写屏障</p>
+<p>volatile 写指令会在 指令前加入  StoreStore屏障 禁止 volatile写指令前的普通写与该volatile写重排序 。会在指令后加入StoreLoad指令， 禁止volatile指令和后面的volatile读写指令重排序  。<br>volatile读指令会在指令后先加入LoadLoad指令， 禁止该volatile指令和后面的volatile读指令重排序。后面再加入LoadStore指令，禁止该指令与后面的普通写指令重排序</p>
 
       
 
@@ -641,7 +624,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/08/PCA主成分分析/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/16/volatile的内存语义/">展开全文 >></a>
         </p>
       
 
@@ -673,20 +656,20 @@
 
 
   
-    <article id="post-虚拟机字节码执行引擎" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-MYSQL索引" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/03/虚拟机字节码执行引擎/">虚拟机字节码执行引擎</a>
+      <a class="article-title" href="/2021/03/15/MYSQL索引/">MYSQL索引</a>
     </h1>
   
 
         
-        <a href="/2020/12/03/虚拟机字节码执行引擎/" class="archive-article-date">
-  	<time datetime="2020-12-03T13:02:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-03</time>
+        <a href="/2021/03/15/MYSQL索引/" class="archive-article-date">
+  	<time datetime="2021-03-15T08:30:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-15</time>
 </a>
         
       </header>
@@ -696,12 +679,10 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="虚拟机能干啥"><a href="#虚拟机能干啥" class="headerlink" title="虚拟机能干啥"></a>虚拟机能干啥</h3><h5 id="虚拟机的概念"><a href="#虚拟机的概念" class="headerlink" title="虚拟机的概念"></a>虚拟机的概念</h5><p>虚拟机是相对于物理机的概念，这两种都有代码执行能力。物理机是依赖于计算机体系结构，建立在处理器，缓存，指令集，操作系统层面上的。虚拟机是由软件自行实现的，所以不受物理条件的限制地指定指令集于执行引擎的结构体系,能执行不被硬件直接支持的指令集格式。<br>《java虚拟机规范》统一了虚拟机的外观模式，即统一的输入，输出。输入为<strong>字节码二进制流</strong>，输出为<strong>执行结果</strong>。</p>
-<h5 id="运行时栈帧结构"><a href="#运行时栈帧结构" class="headerlink" title="运行时栈帧结构"></a>运行时栈帧结构</h5><p>虚拟机以方法为最基本的执行单元。而方法的执行需要<strong>栈帧</strong>数据结构的支持，栈帧是虚拟机栈的栈元素。栈帧存储了方法的<strong>局部变量表，操作栈，动态连接，返回地址等信息</strong>，虚拟机栈既然是栈的结构，那就是后进先出。以java程序的角度看，虚拟机栈中的所有方法都处于执行状态，因此每次调用方法就需要将栈帧入栈。以虚拟机执行引擎的角度看，只有栈顶的方法处于执行状态中，因为执行引擎从栈顶处理（取指令），称为当前栈帧，对应的方法称为当前方法。</p>
-<h5 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h5><p>局部变量表的最大容量在编译时期就已经确定了，与执行时的状态无关，存储在该方法的Code属性的max_locals数据项中。局部变量表主要存储<strong>方法参数和方法体内定义的局部变量</strong>。<br>局部变量表以<strong>变量槽</strong>为基本存储单元，《java虚拟机规范》中没有明确要求一个变量槽的大小，只是要求能存放一个boolean,byte,char,short,int, float,reference或returnAddress类型的数据，这8中数据都可以用32位或者更小的内存来存储。因此用64位的物理空间去实现一个变量槽时，要使用对齐和补白的手段让变量槽在外观上看起来32位虚拟机一致。<br>对于引用在虚拟机中的要求：1.能根据引用直接或间接地查找到对象在java堆中的数据存放的起始地址或索引。2.能根据引用直接或间接地查找到对象所属的数据类型在方法区中的存储的类型信息<br><strong>虚拟机通过索引定位的方式使用局部变量表</strong>，索引范围从0到最大的变量槽数。<br>当一个方法被调用时，虚拟机通过局部变量表来完成参数值到参数列表的传递过程，即<strong>实参到形参的传递</strong>。如果执行的是实例方法，局部变量表中<strong>第0位索引对应的变量槽默认存储的方法所属对象实例的引用</strong>，其余参数按照参数列表顺序存放，然后再根据方法体内局部变量顺序和作用域分配其余变量槽。<br>为了节省栈帧的内存空间，局部变量表中的变量槽可以重用。方法体中定义的变量，作用域不一定会覆盖整个方法体（比如for循环中定义的变量），当当前字节码PC计数器的值超出了某个变量的作用，其对应的变量槽即可以重用。但是会产生少量的副作用，有可能会影响系统的垃圾收集</p>
-        
-          <a class="article-more-a" href="/2020/12/03/虚拟机字节码执行引擎/#more">more >></a>
-        
+        <p>首先了解索引是干什么的？索引相当于书本的目录，你想要找到一本书某一页的内容，没有索引的话，直接全扫描，直到找到想要的内容。<br><strong>索引的种类</strong><br>1.唯一索引<br>某一列或某几列的值必须唯一，允许为空<br>2.单值索引<br>对某一列的值建立索引，只包含某一列<br>3.主键索引<br>对主键建立索引，主键值不允许为空<br>4.联合索引<br>对多列的值建立索引</p>
+<p><strong>索引的实现方式</strong><br>B+树实现<br>B+树只在叶子节点存储数据，非叶子节点只存索引值，因此与B树相比起来，在同一盘块下，索引值就越多，平均树高就越小,IO次数就更少，查询速度也就越快。同时B+树查询必须走从根节点到叶子节点的路径，因此所有查询路径长度都相同，查询效率更加稳定<br>hash实现<br>hash索引在确定查询时效率很高，o（1）复杂度，但是在范围查询的时候效果非常差</p>
+<p><strong>联合索引为什么要遵循最左前缀匹配的原则</strong><br>因为B+树是先根据前面的字段排好序的，比如说有联合索引（a，b），B+树构建时先根据a排序在a确定的基础上再对b排序 ，得到类似（1，1）（1，2）（1，3）（2，1），（2，2）的结果。因此查询时候，会先匹配前面的字段，假设查询a=1，b=2的结果，会先去找a=1情况，a确定了b也是相对有序的，因此可以再利用索引。因此范围查询会使该字段后面的索引失效，因为范围查询字段该字段不确定，所以该字段后面的字段就是无序。因此无法利用到索引。<strong>简单的来，最左前缀匹配是因为左边的字段是排好序的</strong>。</p>
+
       
 
       
@@ -713,7 +694,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/03/虚拟机字节码执行引擎/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/15/MYSQL索引/">展开全文 >></a>
         </p>
       
 
@@ -745,20 +726,20 @@
 
 
   
-    <article id="post-虚拟机类加载" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-jdk动态代理原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/02/虚拟机类加载/">虚拟机类加载</a>
+      <a class="article-title" href="/2021/03/04/jdk动态代理原理/">jdk动态代理原理</a>
     </h1>
   
 
         
-        <a href="/2020/12/02/虚拟机类加载/" class="archive-article-date">
-  	<time datetime="2020-12-02T08:45:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-02</time>
+        <a href="/2021/03/04/jdk动态代理原理/" class="archive-article-date">
+  	<time datetime="2021-03-04T08:10:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-04</time>
 </a>
         
       </header>
@@ -768,12 +749,14 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p>编译器将java文件编译成Class文件后，虚拟机需要在运行时加载Class文件，才能被使用。<br>类加载的过程包括 <strong>加载-&gt;验证-&gt;准备-&gt;解析-&gt;初始化</strong> ,这个过程是说说明各阶段的开始时间的先后顺序，不代表一定要上一个阶段结束了才能开始下一阶段。</p>
-<h6 id="加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）"><a href="#加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）" class="headerlink" title="加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）"></a>加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）</h6><p>加载过程主要完成的任务：<br>    1.通过类的全限定名获取定义此类的二进制字节流,《java虚拟机规范》中并没有明确要求从哪里获取，什么时候获取，用什么方式获取。因此具体实现起来的方式有很多，从zip压缩包中读取，从网络中获取等等<br>    2.将字节流代表的静态存储结构转化为方法区的运行时的数据结构 （具体是什么数据结构？）<br>    3.在内存中生成代表这个类的java.lang.Class对象，作为方法区中这个类的各种数据的入口<br>对于第一个任务，有类加载器来完成，类加载器负责读取 Java 字节代码，并转换成 java.lang.Class 类的一个实例。<br><strong>类加载器</strong><br>    对于任意一个类，都必须由加载他的类加载器和这个类本身一起共同确定它在java虚拟机中的唯一性。换句话说，对于叫ClassLoaderTest的这样一个类，有两个不同的类加载器，加载出来的类就不是同一个类。<br>    类加载器的三层模型：其实从虚拟机的角度看，只存在两种不同的类加载器，即启动类加载器Bootstrap ClassLoader和其他类加载器。但从三层模型看，有3个系统提供的类加载。<br>    1.启动类加载器，负责加载存放在<java_home>\lib目录，或被-Xbootclasspath参数所指定的路径中存放的，且能够被java虚拟机识别的类库，将其加载到虚拟机的内存中。启动类加载器无法被java程序直接引用，用户在编写自定义类加载器的时候，如果需要把加载请求委派给引导类加载器器去处理，那直接用null代替就好<br>    2.扩展类加载器。负责加载<java_home>\lib\ext目录中，或被java.ext.dirs系统变量所指定的路径中所有的类库。可以直接在程序中使用扩展类加载器来加载class文件。<br>    3.应用程序类加载器。负责加载用户类路径上所有的类库。<br><strong>双亲委派模型</strong><br>一个类加载器收到类加载请求，<strong>他会先把请求转发给父类加载器去完成，每一层的类加载都是如此</strong>。所以所有请求最终都会发送到启动类加载器中。只有当父类加载器反馈无法完成夹杂请求时，子加载器才会尝试自己去完成。</java_home></java_home></p>
-<img src="/2020/12/02/虚拟机类加载/1.png">
-        
-          <a class="article-more-a" href="/2020/12/02/虚拟机类加载/#more">more >></a>
-        
+        <p>在弄清除原理之前，我们先来理解一下什么是动态代理。既然有动态代理，就有静态代理。上代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Rent</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">rent</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 被代理对象  </span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Host</span> <span class="keyword">implements</span> <span class="title">Rent</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rent</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"房东租房子"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">//代理类  </span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span>  <span class="title">Client</span> <span class="keyword">implements</span> <span class="title">Rent</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Host host;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rent</span><span class="params">()</span></span>&#123;</span><br><span class="line">		host.rent();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从代码中我们可以看出，静态代理实际上就是一个中介的作用，对代理对象的方法进行转发。在编译期代理类和代理对象就已经确定了。那现在假如有100个不同的代理对象，那我们是不是需要对不同的代理对象编写不同的代理？这时候就引入了动态代理，上代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Rent</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">rent</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Host</span> <span class="keyword">implements</span> <span class="title">Rent</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rent</span><span class="params">()</span></span>&#123;</span><br><span class="line">	System.out.println(<span class="string">"房东租房子"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span>  </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Object targetObect;</span><br><span class="line">	<span class="comment">//生成代理类</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">getProxy</span><span class="params">(Object targetObject)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.targetObject = targetObject;</span><br><span class="line">		<span class="keyword">return</span> Proxy.newInstance(<span class="keyword">this</span>.getClass().getClassLoader(),targetObject.getClass().getInterfaces(),<span class="keyword">this</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy ,Method method, Object[] args  )</span> throw Throwable</span>&#123;</span><br><span class="line">	Object ret  =<span class="keyword">null</span> ;</span><br><span class="line">	 ret = method.invoke(targetObejct, args);</span><br><span class="line">	 <span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//测试代码</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		Host host = <span class="keyword">new</span> Host();</span><br><span class="line">		Client client = <span class="keyword">new</span> Client();</span><br><span class="line">		Rent proxy = (Rent)client.getProxy(host);</span><br><span class="line">		proxy.rent();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个jdk动态代理的例子，在没有编写任何代理类的情况下，通过调用getProxy()方法自动生成了代理类。<strong>但是jdk动态代理只能代理实现了接口的方法，换句话说，没有接口就无法进行jdk动态代理</strong>。那为什么jdk的动态代理一定是基于接口实现的呢？因为jdk运气期间帮我们生成了一个代理类的字节码，通过类加载器加载这个字节码，然后执行引擎经过一系列处理生成代理类，再进行实例化。而生成的这个代理类是继承java.lang.reflect.Proxy类的，由于java不支持多继承，所以就只能通过实现接口来进行代理</p>
+
       
 
       
@@ -785,7 +768,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/02/虚拟机类加载/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/03/04/jdk动态代理原理/">展开全文 >></a>
         </p>
       
 
@@ -817,20 +800,20 @@
 
 
   
-    <article id="post-linearClassification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-jvm锁优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/01/linearClassification/">linearClassification</a>
+      <a class="article-title" href="/2020/12/30/jvm锁优化/">jvm锁优化</a>
     </h1>
   
 
         
-        <a href="/2020/12/01/linearClassification/" class="archive-article-date">
-  	<time datetime="2020-12-01T03:49:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
+        <a href="/2020/12/30/jvm锁优化/" class="archive-article-date">
+  	<time datetime="2020-12-30T07:27:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-30</time>
 </a>
         
       </header>
@@ -840,15 +823,12 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>SVM</strong><br>寻找一个线性分类使得，分类超平面与两个类别的距离尽可能的远</p>
-<img src="/2020/12/01/linearClassification/1.png">
-<p>选择归一化条件<br>$$<br>w^T 𝐱<em>++𝑏=+1     (1)<br>$$<br>$$<br>w^T 𝐱_−+𝑏=−1        (2)<br>$$<br>边界距离则为<br>$$<br>w/|(|w|)| .(𝐱</em>+−𝐱<em>− )=(w^T (𝐱</em>+−𝐱_−))/(||w||)=((1−𝑏)−(−1−𝑏))/(||w||)=2/(||w||)<br>$$<br>SVM的优化条件则为max/||w||</p>
-<img src="/2020/12/01/linearClassification/2.png">
-<p>等价为</p>
-<img src="/2020/12/01/linearClassification/3.png">
-<p>引入松弛变量，允许少部分样本不满足1式和2式。</p>
-<img src="/2020/12/01/linearClassification/4.png">
-<img src="/2020/12/01/linearClassification/5.png">
+        <h4 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h4><p>当一个共享资源被锁时，需要转入内核态，让操作系统去挂起和唤醒线程，这样给并发带来了很大的压力。如果计算机具有多处理器，当共享资源被锁时，可以让原本应该被阻塞的线程，空转一下，等待该共享资源被释放，这样可以避免线程挂起，这就是自旋锁。空转超过了一定次数，就将线程挂起。但是自旋的次数怎么定义呢？默认情况下是10次。在JDK6中引入了自适应的自旋锁，自旋的次数由上一次自旋时间及锁的拥有者状态来决定。如果在同一个锁对象上，自旋等待刚刚成功获得锁，且持有对象的锁正在运行中，那么会认为这次等待也大概率会成功，进而允许自旋更长时间。如果对于某个锁，自旋很少成功获得过锁，那以后获取这个锁很可能直接略去自旋过程</p>
+<h4 id="锁消除"><a href="#锁消除" class="headerlink" title="锁消除"></a>锁消除</h4><p>编译器在编译运行时，代码中要求同步，但实际不会出现资源竞争的情况，直接将锁消除</p>
+<h4 id="锁粗化"><a href="#锁粗化" class="headerlink" title="锁粗化"></a>锁粗化</h4><p>如果一系列连续操作都对同一个对象反复加锁和解锁，甚至加锁操作出现在了循环体中，虚拟机会将加锁同步范围扩展到整个操作序列的外部</p>
+<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>如果一个共享资源在多线程竞争情况下很小，可以采用轻量级锁，不用操作系统互斥量来实现。<br>工作过程：在代码即将进入同步块时，如果此同步对象没有被锁定，虚拟机首先会在当前线程栈帧中建立一个锁记录空间，用于存储锁对象目前的对象头MarkWord的拷贝。然后虚拟机，用CAS操作，将对象的MarkWord更新为指向锁记录的指针。如果更新成功，代表该线程拥有了这个对象的锁。否则，意味着至少一条线程与当前线程竞争获取该对象的锁。虚拟机会检查对象的MarkWord如果已经更新为指向锁记录的指针，说明已经拥有这个对象的锁，那直接进入同步块继续执行。否则，该对象已经被其他线程抢占了。这时候就需要膨胀为重量级锁（互斥量）来解决了</p>
+<h4 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h4><p>偏向锁是在无竞争的情况下将同步消除<br>当锁对象第一次被获取时，会进入偏向锁，同时把锁线程的id记录在对象的MarkWord中。一旦另一个线程尝试获取这个锁时，偏向模式马上宣告结束。如果对象未锁定，进入轻量级锁定状态，否则重量级锁定</p>
+
       
 
       
@@ -860,7 +840,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/01/linearClassification/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/12/30/jvm锁优化/">展开全文 >></a>
         </p>
       
 
@@ -894,7 +874,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -906,7 +886,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 壴加亻夋
+    		&copy; 2021 壴加亻夋
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
