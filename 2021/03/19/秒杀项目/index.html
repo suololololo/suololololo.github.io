@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>壴加亻夋的博客</title>
+  <title>秒杀项目 | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="壴加亻夋的博客">
-<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+  <meta name="description" content="性能优化方法1.页面缓存：对一些不经常修改的页面进行缓存主要流程：1.当用户请求页面时，先去缓存中查找，找的到话就直接返回。2.缓存中没有，去数据库查找渲染页面需要的数据，手动渲染模板。将渲染的结果存入缓存，并设置一定的过期时间。3.输出结果。这样做有什么好处？减少了数据库的访问，提高系统性能。2.对象级缓存：将用户对象存入缓存，也是同样操作流程，1.请求用户对象的时候，先去缓存中查找，找到就直接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="秒杀项目">
+<meta property="og:url" content="http://yoursite.com/2021/03/19/秒杀项目/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
+<meta property="og:description" content="性能优化方法1.页面缓存：对一些不经常修改的页面进行缓存主要流程：1.当用户请求页面时，先去缓存中查找，找的到话就直接返回。2.缓存中没有，去数据库查找渲染页面需要的数据，手动渲染模板。将渲染的结果存入缓存，并设置一定的过期时间。3.输出结果。这样做有什么好处？减少了数据库的访问，提高系统性能。2.对象级缓存：将用户对象存入缓存，也是同样操作流程，1.请求用户对象的时候，先去缓存中查找，找到就直接">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2021-03-19T10:34:30.705Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="壴加亻夋的博客">
+<meta name="twitter:title" content="秒杀项目">
+<meta name="twitter:description" content="性能优化方法1.页面缓存：对一些不经常修改的页面进行缓存主要流程：1.当用户请求页面时，先去缓存中查找，找的到话就直接返回。2.缓存中没有，去数据库查找渲染页面需要的数据，手动渲染模板。将渲染的结果存入缓存，并设置一定的过期时间。3.输出结果。这样做有什么好处？减少了数据库的访问，提高系统性能。2.对象级缓存：将用户对象存入缓存，也是同样操作流程，1.请求用户对象的时候，先去缓存中查找，找到就直接">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -150,22 +154,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-PCA主成分分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-秒杀项目" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/08/PCA主成分分析/">PCA主成分分析</a>
+    <h1 class="article-title" itemprop="name">
+      秒杀项目
     </h1>
   
 
         
-        <a href="/2020/12/08/PCA主成分分析/" class="archive-article-date">
-  	<time datetime="2020-12-08T01:57:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
+        <a href="/2021/03/19/秒杀项目/" class="archive-article-date">
+  	<time datetime="2021-03-19T02:32:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-19</time>
 </a>
         
       </header>
@@ -175,18 +177,37 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p>PCA的作用就是拿来降维，那为什么要降维呢？因为数据中有些内容没有价值，这些内容会影响算法的性能和准确率。所以就要将这些数据去除，怎样个去除法呢？</p>
-<img src="/2020/12/08/PCA主成分分析/1.png">
-<p>如上图，数据点大多分布在x2方向上，x1方向上的取值相似，就可以直接把x1的坐标去掉。但有些情况就不能直接这样去除</p>
-<img src="/2020/12/08/PCA主成分分析/2.png">
-<p>如上图，数据分布在x1和x2方向上都比较均匀，去除任何一个都会造成较大的影响，但是假如我把这些数据投影到y1，y2的坐标系上，就又变成第一个图的情况<br>现在问题就转变成了如何将数据映射到y1，y2的坐标系上。且我们希望投影到y1上尽可能的分散</p>
-<p>现在我们需要构建一个函数f(Xn<em>m)  n为特征个数， m为样本个数<br>$$Z_k×_m =  f(X_n×_m)  k&lt;n$$<br>这个问题又转化为寻找一个矩阵W_k</em>m<br>$$Z_k×_m =  W_k×_m * X_n×_m  k&lt;n$$</p>
-<p>假设我们要把矩阵的维数降为1，即降维之后只有X只有一个特征值 即k=1<br>目标是使降维后坐标在那个坐标轴的分布尽可能的分散（上图的y2），用方差来衡量数据的分散程度即</p>
-<img src="/2020/12/08/PCA主成分分析/3.png">
-<p>最后就是求解最大特征值<br>所以降维的具体过程就是<br>1.计算协方差矩阵S = Cov(X)<br>2.选择一系列正交特征向量，对应K个最大特征值，得到投影矩阵W<br>3.降维   Z = WX</p>
+        <p>性能优化方法<br>1.页面缓存：对一些不经常修改的页面进行缓存<br>主要流程：1.当用户请求页面时，先去缓存中查找，找的到话就直接返回。2.缓存中没有，去数据库查找渲染页面需要的数据，手动渲染模板。将渲染的结果存入缓存，并设置一定的过期时间。3.输出结果。<br>这样做有什么好处？减少了数据库的访问，提高系统性能。<br>2.对象级缓存：将用户对象存入缓存，也是同样操作流程，1.请求用户对象的时候，先去缓存中查找，找到就直接返回，找不到再去查数据库，最后存入缓存<br>3.秒杀页面静态化：<br>1.第一次调用请求时，会将页面静态存储在客户端 2.再次请求时，客户端会直接返回该静态页面<br>那么当数据发生更改时怎么办？动态数据问题，通过ajax向服务器发送请求解决。静态化内容，一旦发生更改，就需要生成新的静态页面<br>怎么实现？页面写成静态页面，数据通过ajax请求获取，不用通过模板引擎渲染</p>
+<p>秒杀模块问题：<br><strong>如何解决商品超卖问题？</strong><br>1.给sql语句添加数量判断，防止商品数量减为负数。<br>2.在每个用户只能秒杀同一件商品一次的情况下，给秒杀订单表里的用户id和商品id添加唯一索引<br>3.减库存时，先通过redis预减库存<br>为什么这样做有用？假设同一时间不同用户发送请求，数据库保证单一条sql语句是原子性操作，所以必定只有一个人可以操作成功。添加唯一索引保证一个用户只能秒杀同一件商品一次<br><strong>秒杀流程</strong><br>1.系统初始化，将商品库存数量加载到Redis中<br>2.收到请求，先判断内存标记中商品是否已经卖完了（用hashMap实现，存储每件商品是否已经销售完毕，当redis查到库存小于0时，会标记为销售完毕）<br>3.没卖完，redis预减库存，库存不足的话直接返回，否则进入下一步<br>4.请求入队，然后立即给客户端返回排队中的信息<br>5.请求出队，减少库存，生成订单<br>6.客户端轮询，是否秒杀成功</p>
+<p><strong>假如商品库存redis预减成功了，db操作没成功怎么办？</strong><br>出现这种情况，并不会出现什么致命错误，对于用户和系统不会产生影响。并不会出现超卖事情</p>
+<p><strong>redis库存如何与数据库保持一致</strong><br>redis库存并没有必要严格的数据库保持一致，redis数据库只是为了阻挡多余的请求到达db，起到保护作用。redis库存不一致。只会造成少买的情况</p>
+<p><strong>订单处理队列rabbitmq</strong><br>请求入队缓冲，异步下单，增强用户体验<br>请求出队，生成订单，减少库存<br>客户端定时轮询检查是否秒杀成功<br><strong>秒杀安全性设计</strong><br>秒杀接口隐藏（怎么实现？）1.接入秒杀页面时，前端通过ajax请求，请求后端用uuid生成秒杀接口，并将接口路径记录在redis中。2.秒杀时，后端会在redis中查询该接口是否有效，再进行秒杀。<br>数字公式验证码</p>
+<p><strong>分布式session</strong><br>用户登录时随机生成uuid作为cookie返回，并将这个uuid对应的用户写入redis<br>拦截器每次拦截方法，来重新获根据cookie获取对象<br>下一个页面拿到key重新获取对象<br>HandlerMethodArgumentResolver 方法 supportsParameter 如果为true 执行 resolveArgument 方法获取miaoshauser对象</p>
+<p><strong>为什么使用mq</strong><br>异步处理：相比传统的串行，并行方式，提高了系统的吞吐量<br>应用解耦：系统间通过消息通信，不用关心其他系统的处理，将消费者与生产者解耦了<br>流量削峰：可以通过消息队列长度控制请求量，可以缓解短时间内的高并发请求</p>
 
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -195,16 +216,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/08/PCA主成分分析/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/03/19/秒杀项目/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2021/03/19/springIOC源码：容器初始化过程/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          springIOC源码：容器初始化过程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/03/19/锁/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">锁</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -224,682 +313,17 @@
 
 
 
-
-
-
-  
-    <article id="post-虚拟机字节码执行引擎" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/03/虚拟机字节码执行引擎/">虚拟机字节码执行引擎</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/03/虚拟机字节码执行引擎/" class="archive-article-date">
-  	<time datetime="2020-12-03T13:02:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-03</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="虚拟机能干啥"><a href="#虚拟机能干啥" class="headerlink" title="虚拟机能干啥"></a>虚拟机能干啥</h3><h5 id="虚拟机的概念"><a href="#虚拟机的概念" class="headerlink" title="虚拟机的概念"></a>虚拟机的概念</h5><p>虚拟机是相对于物理机的概念，这两种都有代码执行能力。物理机是依赖于计算机体系结构，建立在处理器，缓存，指令集，操作系统层面上的。虚拟机是由软件自行实现的，所以不受物理条件的限制地指定指令集于执行引擎的结构体系,能执行不被硬件直接支持的指令集格式。<br>《java虚拟机规范》统一了虚拟机的外观模式，即统一的输入，输出。输入为<strong>字节码二进制流</strong>，输出为<strong>执行结果</strong>。</p>
-<h5 id="运行时栈帧结构"><a href="#运行时栈帧结构" class="headerlink" title="运行时栈帧结构"></a>运行时栈帧结构</h5><p>虚拟机以方法为最基本的执行单元。而方法的执行需要<strong>栈帧</strong>数据结构的支持，栈帧是虚拟机栈的栈元素。栈帧存储了方法的<strong>局部变量表，操作栈，动态连接，返回地址等信息</strong>，虚拟机栈既然是栈的结构，那就是后进先出。以java程序的角度看，虚拟机栈中的所有方法都处于执行状态，因此每次调用方法就需要将栈帧入栈。以虚拟机执行引擎的角度看，只有栈顶的方法处于执行状态中，因为执行引擎从栈顶处理（取指令），称为当前栈帧，对应的方法称为当前方法。</p>
-<h5 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h5><p>局部变量表的最大容量在编译时期就已经确定了，与执行时的状态无关，存储在该方法的Code属性的max_locals数据项中。局部变量表主要存储<strong>方法参数和方法体内定义的局部变量</strong>。<br>局部变量表以<strong>变量槽</strong>为基本存储单元，《java虚拟机规范》中没有明确要求一个变量槽的大小，只是要求能存放一个boolean,byte,char,short,int, float,reference或returnAddress类型的数据，这8中数据都可以用32位或者更小的内存来存储。因此用64位的物理空间去实现一个变量槽时，要使用对齐和补白的手段让变量槽在外观上看起来32位虚拟机一致。<br>对于引用在虚拟机中的要求：1.能根据引用直接或间接地查找到对象在java堆中的数据存放的起始地址或索引。2.能根据引用直接或间接地查找到对象所属的数据类型在方法区中的存储的类型信息<br><strong>虚拟机通过索引定位的方式使用局部变量表</strong>，索引范围从0到最大的变量槽数。<br>当一个方法被调用时，虚拟机通过局部变量表来完成参数值到参数列表的传递过程，即<strong>实参到形参的传递</strong>。如果执行的是实例方法，局部变量表中<strong>第0位索引对应的变量槽默认存储的方法所属对象实例的引用</strong>，其余参数按照参数列表顺序存放，然后再根据方法体内局部变量顺序和作用域分配其余变量槽。<br>为了节省栈帧的内存空间，局部变量表中的变量槽可以重用。方法体中定义的变量，作用域不一定会覆盖整个方法体（比如for循环中定义的变量），当当前字节码PC计数器的值超出了某个变量的作用，其对应的变量槽即可以重用。但是会产生少量的副作用，有可能会影响系统的垃圾收集</p>
-        
-          <a class="article-more-a" href="/2020/12/03/虚拟机字节码执行引擎/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/03/虚拟机字节码执行引擎/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-虚拟机类加载" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/02/虚拟机类加载/">虚拟机类加载</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/02/虚拟机类加载/" class="archive-article-date">
-  	<time datetime="2020-12-02T08:45:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-02</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>编译器将java文件编译成Class文件后，虚拟机需要在运行时加载Class文件，才能被使用。<br>类加载的过程包括 <strong>加载-&gt;验证-&gt;准备-&gt;解析-&gt;初始化</strong> ,这个过程是说说明各阶段的开始时间的先后顺序，不代表一定要上一个阶段结束了才能开始下一阶段。</p>
-<h6 id="加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）"><a href="#加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）" class="headerlink" title="加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）"></a>加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）</h6><p>加载过程主要完成的任务：<br>    1.通过类的全限定名获取定义此类的二进制字节流,《java虚拟机规范》中并没有明确要求从哪里获取，什么时候获取，用什么方式获取。因此具体实现起来的方式有很多，从zip压缩包中读取，从网络中获取等等<br>    2.将字节流代表的静态存储结构转化为方法区的运行时的数据结构 （具体是什么数据结构？）<br>    3.在内存中生成代表这个类的java.lang.Class对象，作为方法区中这个类的各种数据的入口<br>对于第一个任务，有类加载器来完成，类加载器负责读取 Java 字节代码，并转换成 java.lang.Class 类的一个实例。<br><strong>类加载器</strong><br>    对于任意一个类，都必须由加载他的类加载器和这个类本身一起共同确定它在java虚拟机中的唯一性。换句话说，对于叫ClassLoaderTest的这样一个类，有两个不同的类加载器，加载出来的类就不是同一个类。<br>    类加载器的三层模型：其实从虚拟机的角度看，只存在两种不同的类加载器，即启动类加载器Bootstrap ClassLoader和其他类加载器。但从三层模型看，有3个系统提供的类加载。<br>    1.启动类加载器，负责加载存放在<java_home>\lib目录，或被-Xbootclasspath参数所指定的路径中存放的，且能够被java虚拟机识别的类库，将其加载到虚拟机的内存中。启动类加载器无法被java程序直接引用，用户在编写自定义类加载器的时候，如果需要把加载请求委派给引导类加载器器去处理，那直接用null代替就好<br>    2.扩展类加载器。负责加载<java_home>\lib\ext目录中，或被java.ext.dirs系统变量所指定的路径中所有的类库。可以直接在程序中使用扩展类加载器来加载class文件。<br>    3.应用程序类加载器。负责加载用户类路径上所有的类库。<br><strong>双亲委派模型</strong><br>一个类加载器收到类加载请求，<strong>他会先把请求转发给父类加载器去完成，每一层的类加载都是如此</strong>。所以所有请求最终都会发送到启动类加载器中。只有当父类加载器反馈无法完成夹杂请求时，子加载器才会尝试自己去完成。</java_home></java_home></p>
-<img src="/2020/12/02/虚拟机类加载/1.png">
-        
-          <a class="article-more-a" href="/2020/12/02/虚拟机类加载/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/02/虚拟机类加载/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-linearClassification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/01/linearClassification/">linearClassification</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/01/linearClassification/" class="archive-article-date">
-  	<time datetime="2020-12-01T03:49:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>SVM</strong><br>寻找一个线性分类使得，分类超平面与两个类别的距离尽可能的远</p>
-<img src="/2020/12/01/linearClassification/1.png">
-<p>选择归一化条件<br>$$<br>w^T 𝐱<em>++𝑏=+1     (1)<br>$$<br>$$<br>w^T 𝐱_−+𝑏=−1        (2)<br>$$<br>边界距离则为<br>$$<br>w/|(|w|)| .(𝐱</em>+−𝐱<em>− )=(w^T (𝐱</em>+−𝐱_−))/(||w||)=((1−𝑏)−(−1−𝑏))/(||w||)=2/(||w||)<br>$$<br>SVM的优化条件则为max/||w||</p>
-<img src="/2020/12/01/linearClassification/2.png">
-<p>等价为</p>
-<img src="/2020/12/01/linearClassification/3.png">
-<p>引入松弛变量，允许少部分样本不满足1式和2式。</p>
-<img src="/2020/12/01/linearClassification/4.png">
-<img src="/2020/12/01/linearClassification/5.png">
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/01/linearClassification/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-class类文件结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/30/class类文件结构/">class类文件结构</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/30/class类文件结构/" class="archive-article-date">
-  	<time datetime="2020-11-30T08:28:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>class文件是一组以8个字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑排列在文件之中，中间没有任何分隔符<br>class文件中只有两个数据类型，<strong>无符号数和表</strong>。<br><strong>无符号数</strong>是基本的数据类型，用u1,u2,u4,u8代表1个字节,2个字节,4个字节,8个字节。<br><strong>表</strong>是由多个无符号书或其他表作为数据项构成的复合数据类型，表的命名习惯性以 _info结尾。<br>class文件具体内容</p>
-<img src="/2020/11/30/class类文件结构/1.png">
-<p>开头的四个字节为<strong>魔数</strong>，用来确定这个文件是否是一个能被虚拟机接受的class文件。值为0xCAFEBABE(咖啡宝贝),紧接着的4个字节是class文件版本号，第5和第6是次版本号0x0000,第7和第8字节为主版本号0x0037。<br><strong>常量池</strong><br>往后为<strong>常量池入口</strong>，常量池是class文件的资源仓库，是class文件第一个出现的表类型数据项目。常量池入口为一个u2类型数据，用来表明常量池容量，这个例子中为0x0074,即116，代表常量池中有115项常量，索引范围是1-115，<strong>从1开始计算</strong>。第0项常量是用来代表<strong>不引用任何一个常量池项目</strong>的含义<br>常量池主要存放两大类常量：<strong>字面量</strong>和<strong>符号引用</strong><br>java在编译的时候，并不会有连接步骤，即<strong>class类文件中不会保存各个方法，字段最终在内存中的布局信息，只有在虚拟机运行时期进行转换，才能得到真正的内存入口地址</strong><br>常量池中的每一项常量都是一个表，这些表结构的起始的第一位都是u1类型的标志位，代表当前常量属于哪种常量类型。</p>
-<img src="/2020/11/30/class类文件结构/2.png">
-<p>常量池第一项数据标志位为0x0A，查表得该数据为<strong>CONSTANT_Methodref_info</strong></p>
-        
-          <a class="article-more-a" href="/2020/11/30/class类文件结构/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/30/class类文件结构/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-GC垃圾回收算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/26/GC垃圾回收算法/">GC垃圾回收算法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/26/GC垃圾回收算法/" class="archive-article-date">
-  	<time datetime="2020-11-26T07:25:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在可行性分析算法中判定为不可达对象时，也不是“非死不可”。真正宣判一个对象死亡，要经过两次标记。<strong>第一次标记</strong>是对象在可达性分析中没有与GC roots的引用链相关联，会被标记。加入对象被第一次标记，随后会进行一次筛选，筛选条件是有无必要执行finalize()方法。<br>如果对象没有覆盖finalize()方法，或者finalize()方法已经被虚拟机调用过，那么虚拟机将这两个情况都视为<strong>没有必要执行，直接被第二次标记</strong>。假如对象被判定为有必要执行finalize()方法，对象就会被放置在F-Queue的队列中，稍后由低调度优先级的Finalize线程执行他们finalize()方法，但这个线程只保证会执行他们的finalize方法，但不保证执行完，因为该方法有可能出现死循环等极端情况。<br>若执行该方法，让该对象重新与GC roots的引用链相关联了，则不会被第二次标记，并移出“即将回收”的集合。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalizeEscapeGC</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> FinalizeEscapeGC SAVE_HOOK = <span class="keyword">null</span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">isAlive</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"yes,i am still alive"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.finalize();</span><br><span class="line">		System.out.println(<span class="string">"finalize method executed!"</span>);</span><br><span class="line">		FinalizeEscapeGC.SAVE_HOOK = <span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">		SAVE_HOOK = <span class="keyword">new</span> FinalizeEscapeGC();</span><br><span class="line">		SAVE_HOOK =<span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		Thread.sleep(<span class="number">500</span>);</span><br><span class="line">		<span class="keyword">if</span>(SAVE_HOOK!=<span class="keyword">null</span>)&#123;</span><br><span class="line">			SAVE_HOOK.isAlive();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"i am dead"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		SAVE_HOOK =<span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		Thread.sleep(<span class="number">500</span>);</span><br><span class="line">		<span class="keyword">if</span>(SAVE_HOOK!=<span class="keyword">null</span>)&#123;</span><br><span class="line">			SAVE_HOOK.isAlive();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"i am dead"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/11/26/GC垃圾回收算法/1.png">
-<p>第一次执行SVAE_HOOK=null语句时 ， FinalizeEscapeGC 对象被第一次标记，后虚拟机执行了finalize()方法，避免了第二次标记。第二次执行SAVE_HOOK = null 时， FinalizeEscapeGC对象被两次标记，被回收。</p>
-        
-          <a class="article-more-a" href="/2020/11/26/GC垃圾回收算法/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/26/GC垃圾回收算法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-GC之对象存活判断" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/26/GC之对象存活判断/">GC之对象存活判断</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/26/GC之对象存活判断/" class="archive-article-date">
-  	<time datetime="2020-11-26T02:49:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>垃圾收集器在对堆回收之前，必须先判断哪些对象还活着，哪些已经死去，即是否还有可能被用到</p>
-<p><strong>引用计数算法</strong></p>
-<p>最简单的方法就是，在对象中添加一个引用计数器，每当有一个地方引用它，计数+1，当一个引用失效时，计数-1，任何时刻计数器为0时，说明该对象已经死了。这个算法最大的问题就是无法解决循环引用的问题</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReferenceCountingGC</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> Object instance = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> _1MB = <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">byte</span>[] bigSize = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1MB];</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testGC</span><span class="params">()</span></span>&#123;</span><br><span class="line">		ReferenceCountingGC objA =  <span class="keyword">new</span> ReferenceCoutingGC();</span><br><span class="line">		ReferenceCountingGC objB =  <span class="keyword">new</span> ReferenceCountingGC();</span><br><span class="line">        objA.instance = objB;</span><br><span class="line">        objB.instance = objA;</span><br><span class="line">        objA = <span class="keyword">null</span>;</span><br><span class="line">        objB = <span class="keyword">null</span>;</span><br><span class="line">        System.gc();</span><br><span class="line">        </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/11/26/GC之对象存活判断/1.jpg">
-<p>当执行到第七行时，两个对象的引用计数为2 ， 即 objA的引用和instance的引用。 当objA指向null时，引用-1 ，引用计数为1。但是这两个对象已经无法访问，应该被回收，但引用计数算法无法回收他们。<br><strong>可达性分析算法</strong><br>算法的基本思路是通过一系列称为GC Roots的根对象作为起点集，通过图引用搜索，当某个对象不可达时，说明此对象不可能再被使用</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/26/GC之对象存活判断/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-java多线程-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/23/java多线程-1/">java多线程</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/23/java多线程-1/" class="archive-article-date">
-  	<time datetime="2020-11-23T07:56:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-23</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Class类锁，可以对所有对象实例起作用，即Class类锁，锁住了所有类的对象实例。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/23/java多线程-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-java泛型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/02/java泛型/">java泛型</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/02/java泛型/" class="archive-article-date">
-  	<time datetime="2020-11-02T06:51:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-02</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>泛型类的定义</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Pair</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">	<span class="keyword">private</span> T first;</span><br><span class="line">    <span class="keyword">private</span> T second;</span><br><span class="line">   	<span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(T first , T second)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.first = first;</span><br><span class="line">        <span class="keyword">this</span>.second = second;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面定义中，T表示类型变量， 常见的做法是用E表示集合元素类型，K和V分别表示表的键和值的类型。T表示任意类型。</p>
-<p>泛型方法 ,<strong>类型变量放在修饰符后面，返回值前面。泛型方法可以在普通类中定义，也可以在泛型类中定义</strong>。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Arrayalg</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">getMiddle</span><span class="params">(T a )</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> T;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用方法1</span></span><br><span class="line">String middle =  Arrayalg.&lt;String&gt;getMiddle(<span class="string">"good"</span>);</span><br><span class="line"><span class="comment">//调用方法2</span></span><br><span class="line">String middle = Arrayalg.getMiddle(<span class="string">"good"</span>);</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more--&gt;</span><br><span class="line">有时候我们需要对类型变量进行约束,比如说我只允许类型变量是Comparable类型的, 一个类型变量也允许多个限定，如果有多个限定，最多只有一个限定是类，且它必须是限定列表中的第一个限定</span><br><span class="line">```java</span><br><span class="line">public static &lt;T extends Comparable &gt; T min(T[] a )</span><br><span class="line">public static &lt;T extends Comparable&amp;Seralizable&gt; T min (T [] a )</span><br></pre></td></tr></table></figure>
-
-<p><strong>泛型代码和虚拟机，虚拟机中没有泛型对象，所有对象都属于普通类。因此无论何时定义一个泛型类型，都会自动提供一个相应的原始类型。原始类型就是将类型变量擦除后得到类型</strong> </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Pair&lt;T&gt; 的原始类型 ,因为T是一个无限定的变量，所以直接用Object替换</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pair</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Object first;</span><br><span class="line">	<span class="keyword">private</span> Object second;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(Object first, Object second)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.first = first;</span><br><span class="line">		<span class="keyword">this</span>.second =second;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//如果有多个限定，则采用第一个限定来替换类型变量</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Internal</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Comparable</span> &amp;<span class="title">Serializable</span>&gt; <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> T lower;</span><br><span class="line">	<span class="keyword">private</span> T upper;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//原始类型</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Internal</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Comparable lower;</span><br><span class="line">	<span class="keyword">private</span> Comparable upper;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>编写一个泛型方法调用时，如果擦除了返回类型，编译器会插入强制类型转换。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;Employee&gt; buddies = <span class="keyword">new</span> Pair&lt;Employee&gt;();</span><br><span class="line">Employee buddy = buddies.getFirst();</span><br><span class="line"><span class="comment">//getFirst类型擦除后的返回类型是Object，编译器自动插入转换到Employee的强制类型转换。编译器把这个方法转换为两条虚拟机指令，1.对原始方法Pair.getFirst的调用 2. 将返回的Object类型强制转换为Employee类型。</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="java泛型的缺陷"><a href="#java泛型的缺陷" class="headerlink" title="java泛型的缺陷"></a>java泛型的缺陷</h4><p>java选择泛型实现方式是“类型擦除式泛型”，而C#实现的方式是“具现化式泛型”，即C#里面的泛型无论是在程序源码里面，编译后的中间语言表示里面，抑或是运行期的CLR里面都是切实存在的，List<int> 和List<string>就是两个不同的类型。而java泛型只在程序源码中出现，在编译后的字节码文件中，全部泛型都被替换为原来的裸类型，并在相应的地方加入强制转型代码，因此ArrayList<int> 和ArrayList<string>其实是同一个类型，在这种情况下，会造成一些影响</string></int></string></int></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TypeErasureGnerics</span>&lt;<span class="title">E</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(Objece item)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(item <span class="keyword">instanceof</span> E)&#123;  <span class="comment">//不合法，无法对泛型进行实例判断</span></span><br><span class="line">		...</span><br><span class="line">		&#125;</span><br><span class="line">		E newItem  = <span class="keyword">new</span> E(); <span class="comment">//不合法，无法使用泛型创建对象</span></span><br><span class="line">		E[] itemArray = <span class="keyword">new</span> E[<span class="number">10</span>]; <span class="comment">//不合法，无法使用泛型创建数组</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那么存在这些缺点，为什么java要选择以这样的方式实现泛型呢？主要原因是实现泛型时，要保证二进制向后兼容性，即在比如JDK1.2编译出的Class文件，也要在JDK12乃至以后的任何版本都能正常运行。那JDK1.2版本没有支持泛型，到java5.0突然要支持泛型，还要让以前编译的程序在新版本虚拟机还能正常运行，意味着以前没有的限制不能突然冒出来。因此，有两条路可以选择<br>1.需要泛型化的类型，以前有的就保持不变，创建一套新的平行的泛型化版本的新类型<br>2.直接泛化已有的类型，即让所有需要泛型化的已有类型都原地泛型化，不添加任何平行于已有类型的泛型版<br>由于java的代码遗留问题，迫使java不得不选择第二条路，但第二条路不是意味着一定只能使用类型擦除来实现<br>java选择第二条路，直接把已有的类型泛型化，要让所有需要泛型化的已有类型，譬如 ArrayList，原地泛型化后变为ArrayList<t>,且还要保证以前直接用ArrayList的代码在泛型新版本里必须还能用这同一个容器，即ArrayList类型是所有这些ArrayList<integer>，ArrayList<string>的父类，这就是裸类型。<br>裸类型的实现有两种选择：一种是在编译的时候直接将ArrayList<integer>类型还原为 ArrayList类型，只在元素访问，修改时自动插入一些强制类型转换和检查指令。 第二种是在运行期由java虚拟机自动真实地构造出ArrayList<integer>类型，并且实现从ArrayList<integer>派生自ArrayList的继承关系，显然java选择了前者</integer></integer></integer></string></integer></t></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericParadigm</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Map&lt;String,String&gt;  map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">"hello"</span>,<span class="string">"你好"</span>);</span><br><span class="line">        map.put(<span class="string">"how are you "</span>,<span class="string">"你好吗"</span>);</span><br><span class="line">        System.out.println(map.get(<span class="string">"hello"</span>));</span><br><span class="line">        System.out.println(map.get(<span class="string">"how are you "</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>将编译后的Class文件反编译一下</p>
-<img src="/2020/11/02/java泛型/1.png">
-<p>发现泛型都不见了，在元素访问的时候加上了从Object到Sting的强制转换</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/02/java泛型/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-GreedyAlgorithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/GreedyAlgorithm/">GreedyAlgorithm</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/GreedyAlgorithm/" class="archive-article-date">
-  	<time datetime="2020-11-01T12:11:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/GreedyAlgorithm/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
-    </nav>
   
+
+  
+
+  
+
+  
+
+
 
 
           </div>
@@ -930,8 +354,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
