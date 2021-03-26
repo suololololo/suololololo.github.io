@@ -152,6 +152,168 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-jvm后端编译和优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/26/jvm后端编译和优化/">jvm后端编译和优化</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/26/jvm后端编译和优化/" class="archive-article-date">
+  	<time datetime="2020-12-26T08:37:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-26</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="为什么HotSpot虚拟机要使用解释器与编译器并存的架构？"><a href="#为什么HotSpot虚拟机要使用解释器与编译器并存的架构？" class="headerlink" title="为什么HotSpot虚拟机要使用解释器与编译器并存的架构？"></a>为什么HotSpot虚拟机要使用解释器与编译器并存的架构？</h4><p>先来看看解释器与编译器各自的优势<br>当程序需要迅速启动和执行时，解释器可以首先发挥作用，不用编译，直接执行程序。但是解释器的执行效率较低，当遇到热点代码时，编译器将他们编译成本地代码，可以减少解释器的中间损耗。当程序运行环境中内存资源限制较大，可以使用解释执行节约内存，反之可以使用编译器来提高效率，（体现了时空转换的思想）。同时，解释器可以作为编译器激进优化的逃生门，即让编译器选择一些不能保证任何时候都正确的做法，但大多时候能提升运行速度的优化手段。当激进优化的假设不成立时，使用<strong>逆优化</strong>退回到解释器执行。<br>HotSpot虚拟机中内置了两个即使编译器，客户端编译器和服务端编译器。即时编译器编译本地代码时需要占用程序运行时间，通常编译出优化程度越高的代码，所占用的时间越多。而且当需要编译出优化程度更高的代码，可能需要解释器帮忙收起性能监控信息，这时候解释器的执行速度也会有所影响。<br>为了平衡程序启动速度和运行效率，采用了分层编译的策略<br>1.第0层，程序纯解释执行，并且解释器不开启性能监控功能<br>2.第1层，使用客户端编译器将字节码编译成本地代码来执行，进行简单可靠的优化。不开启性能监控功能<br>3.第2层，仍然使用客户端编译执行，仅开启方法及回边次数统计等有限性能监控功能<br>4.第3层，仍然使用客户端编译执行，开启全部性能监控<br>5.第4层，使用服务端编译器将字节码编译为本地代码执行。相比客户端编译器，服务端编译器会启用更多编译好事更长的优化，还会根据性能监控信息进行一些不可靠的激进优化<br>使用分层编译时，解释器，客户端编译器，服务端编译器会同时执行</p>
+<h4 id="热点代码"><a href="#热点代码" class="headerlink" title="热点代码"></a>热点代码</h4><p>即时编译器的编译目标是热点代码，热点代码包括：<strong>被多次调用的方法</strong>，<strong>被多次执行的循环体</strong>。这两种情况下，被编译的对象都是整个方法体，而不是单独的循环体。<br>那这个多次怎么定义呢？就是怎么判断一段代码是不是热点代码？即<strong>热点探测</strong><br>热点探测的实现方式：1.<strong>基于采样的热点探测</strong> ：虚拟机周期性检查各个线程的调用栈顶，如果发现某个方法经常出现在栈顶，那这个方法就是热点方法2.<strong>基于计数器的热点探测</strong>：虚拟机为每个方法建立计数器，统计方法执行次数，如果次数超过一定的阈值，就是热点热点代码<br>HotSpot采用的是第二种方法，为每个方法建立的<strong>方法调用计数器和回边计数器</strong>。当一个方法被调用时，先检查代码是否被编译过，如果被编译过，直接加载。否则，方法调用计数器+1，判断两个计数器的之和是否超过阈值，若超过，向编译器提交编译请求，然后异步的用解释器执行，直到编译完成。若没有超过，直接解释器执行。<br>方法计数器统计的不是方法被调用的绝对次数，而是一个相对的执行频率，即一段时间内方法被调用的次数。当超过一定时间限度，若方法的调用次数不足以让编译器编译，那该方法的调用计数器就会减半<br>回边计数器： 回边就是遇到控制流向后跳转的指令。 当解释器遇到回边指令时，先检查方法是否被编译过，如果编译过，直接加载执行。否则，回边计数器+1，判断两个计数器之和是否超过阈值，若超过，向编译器提交栈上替换编译请求，然后把回边计数器的值稍微降低，异步用解释器执行，等待编译器输出编译结果。如果没超过，直接用解释器执行</p>
+        
+          <a class="article-more-a" href="/2020/12/26/jvm后端编译和优化/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/26/jvm后端编译和优化/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-java前端编译" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/21/java前端编译/">java前端编译</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/21/java前端编译/" class="archive-article-date">
+  	<time datetime="2020-12-21T13:05:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-21</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>java编译过程大致分为1个准备过程和3个处理过程<br>1.准备过程：初始化插入时注解处理器 （没明白）<br>2.解析和填充符号表</p>
+<ul>
+<li>词法和语法分析，构建抽象语法树</li>
+<li>填充符号表</li>
+</ul>
+<p>3.插入式注解处理器注解处理过程<br>4.分析和字节码生成（语义分析）</p>
+<ul>
+<li>标注检查，检查变量使用前是否已被声明，变量与赋值直接的数据类型是否能够匹配。在这个阶段中编译器会进行一个常量折叠<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a  = <span class="number">1</span> + <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>在抽象语法树中能看到 1，2，+结点，但经过常量折叠后就直接变成3了</p>
+<ul>
+<li>数据及控制流分析， 检查局部变量在使用前是否已经被赋值，方法的每条路径是否都有返回值，是否所有的受查异常都得到了正确处理<br>下面有个关于final修饰符得例子<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法一</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> arg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">final</span> <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 方法二</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foos</span><span class="params">(<span class="keyword">int</span> arg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> <span class="keyword">var</span>  = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>编译后经过反编译</p>
+<img src="/2020/12/21/java前端编译/1.png">
+<p>发现里面根本没有final关键字，说明在运行期间根本无法检查这个错误，只能在编译期间来检查，具体由com.sun.tools.javac.comp.Flow里得flow()方法完成</p>
+<ul>
+<li>解语法糖，包括擦除泛型，自动装箱拆箱，变长参数，遍历循环等等</li>
+<li>字节码生成 在这个过程中，编译器把语句块，对于实例构造器是{}块，对于类构造器是static{}块，变量初始化，调用父类的实例构造器 收敛到<init>和<clinit>方法中，最后将符号表交到com.sun.tools.javac.jvm.ClassWriter类手上，由这个类的writeClass()方法输出字节码，生成Class文件，编译结束</clinit></init></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/21/java前端编译/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-PCA主成分分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -706,164 +868,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/11/23/java多线程-1/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-java泛型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/02/java泛型/">java泛型</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/02/java泛型/" class="archive-article-date">
-  	<time datetime="2020-11-02T06:51:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-02</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>泛型类的定义</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Pair</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">	<span class="keyword">private</span> T first;</span><br><span class="line">    <span class="keyword">private</span> T second;</span><br><span class="line">   	<span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(T first , T second)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.first = first;</span><br><span class="line">        <span class="keyword">this</span>.second = second;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面定义中，T表示类型变量， 常见的做法是用E表示集合元素类型，K和V分别表示表的键和值的类型。T表示任意类型。</p>
-<p>泛型方法 ,<strong>类型变量放在修饰符后面，返回值前面。泛型方法可以在普通类中定义，也可以在泛型类中定义</strong>。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Arrayalg</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">getMiddle</span><span class="params">(T a )</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> T;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用方法1</span></span><br><span class="line">String middle =  Arrayalg.&lt;String&gt;getMiddle(<span class="string">"good"</span>);</span><br><span class="line"><span class="comment">//调用方法2</span></span><br><span class="line">String middle = Arrayalg.getMiddle(<span class="string">"good"</span>);</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more--&gt;</span><br><span class="line">有时候我们需要对类型变量进行约束,比如说我只允许类型变量是Comparable类型的, 一个类型变量也允许多个限定，如果有多个限定，最多只有一个限定是类，且它必须是限定列表中的第一个限定</span><br><span class="line">```java</span><br><span class="line">public static &lt;T extends Comparable &gt; T min(T[] a )</span><br><span class="line">public static &lt;T extends Comparable&amp;Seralizable&gt; T min (T [] a )</span><br></pre></td></tr></table></figure>
-
-<p><strong>泛型代码和虚拟机，虚拟机中没有泛型对象，所有对象都属于普通类。因此无论何时定义一个泛型类型，都会自动提供一个相应的原始类型。原始类型就是将类型变量擦除后得到类型</strong> </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Pair&lt;T&gt; 的原始类型 ,因为T是一个无限定的变量，所以直接用Object替换</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pair</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Object first;</span><br><span class="line">	<span class="keyword">private</span> Object second;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(Object first, Object second)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.first = first;</span><br><span class="line">		<span class="keyword">this</span>.second =second;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//如果有多个限定，则采用第一个限定来替换类型变量</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Internal</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Comparable</span> &amp;<span class="title">Serializable</span>&gt; <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> T lower;</span><br><span class="line">	<span class="keyword">private</span> T upper;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//原始类型</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Internal</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Comparable lower;</span><br><span class="line">	<span class="keyword">private</span> Comparable upper;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>编写一个泛型方法调用时，如果擦除了返回类型，编译器会插入强制类型转换。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;Employee&gt; buddies = <span class="keyword">new</span> Pair&lt;Employee&gt;();</span><br><span class="line">Employee buddy = buddies.getFirst();</span><br><span class="line"><span class="comment">//getFirst类型擦除后的返回类型是Object，编译器自动插入转换到Employee的强制类型转换。编译器把这个方法转换为两条虚拟机指令，1.对原始方法Pair.getFirst的调用 2. 将返回的Object类型强制转换为Employee类型。</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="java泛型的缺陷"><a href="#java泛型的缺陷" class="headerlink" title="java泛型的缺陷"></a>java泛型的缺陷</h4><p>java选择泛型实现方式是“类型擦除式泛型”，而C#实现的方式是“具现化式泛型”，即C#里面的泛型无论是在程序源码里面，编译后的中间语言表示里面，抑或是运行期的CLR里面都是切实存在的，List<int> 和List<string>就是两个不同的类型。而java泛型只在程序源码中出现，在编译后的字节码文件中，全部泛型都被替换为原来的裸类型，并在相应的地方加入强制转型代码，因此ArrayList<int> 和ArrayList<string>其实是同一个类型，在这种情况下，会造成一些影响</string></int></string></int></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TypeErasureGnerics</span>&lt;<span class="title">E</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(Objece item)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(item <span class="keyword">instanceof</span> E)&#123;  <span class="comment">//不合法，无法对泛型进行实例判断</span></span><br><span class="line">		...</span><br><span class="line">		&#125;</span><br><span class="line">		E newItem  = <span class="keyword">new</span> E(); <span class="comment">//不合法，无法使用泛型创建对象</span></span><br><span class="line">		E[] itemArray = <span class="keyword">new</span> E[<span class="number">10</span>]; <span class="comment">//不合法，无法使用泛型创建数组</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那么存在这些缺点，为什么java要选择以这样的方式实现泛型呢？主要原因是实现泛型时，要保证二进制向后兼容性，即在比如JDK1.2编译出的Class文件，也要在JDK12乃至以后的任何版本都能正常运行。那JDK1.2版本没有支持泛型，到java5.0突然要支持泛型，还要让以前编译的程序在新版本虚拟机还能正常运行，意味着以前没有的限制不能突然冒出来。因此，有两条路可以选择<br>1.需要泛型化的类型，以前有的就保持不变，创建一套新的平行的泛型化版本的新类型<br>2.直接泛化已有的类型，即让所有需要泛型化的已有类型都原地泛型化，不添加任何平行于已有类型的泛型版<br>由于java的代码遗留问题，迫使java不得不选择第二条路，但第二条路不是意味着一定只能使用类型擦除来实现<br>java选择第二条路，直接把已有的类型泛型化，要让所有需要泛型化的已有类型，譬如 ArrayList，原地泛型化后变为ArrayList<t>,且还要保证以前直接用ArrayList的代码在泛型新版本里必须还能用这同一个容器，即ArrayList类型是所有这些ArrayList<integer>，ArrayList<string>的父类，这就是裸类型。<br>裸类型的实现有两种选择：一种是在编译的时候直接将ArrayList<integer>类型还原为 ArrayList类型，只在元素访问，修改时自动插入一些强制类型转换和检查指令。 第二种是在运行期由java虚拟机自动真实地构造出ArrayList<integer>类型，并且实现从ArrayList<integer>派生自ArrayList的继承关系，显然java选择了前者</integer></integer></integer></string></integer></t></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericParadigm</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Map&lt;String,String&gt;  map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">"hello"</span>,<span class="string">"你好"</span>);</span><br><span class="line">        map.put(<span class="string">"how are you "</span>,<span class="string">"你好吗"</span>);</span><br><span class="line">        System.out.println(map.get(<span class="string">"hello"</span>));</span><br><span class="line">        System.out.println(map.get(<span class="string">"how are you "</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>将编译后的Class文件反编译一下</p>
-<img src="/2020/11/02/java泛型/1.png">
-<p>发现泛型都不见了，在元素访问的时候加上了从Object到Sting的强制转换</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/02/java泛型/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-GreedyAlgorithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/GreedyAlgorithm/">GreedyAlgorithm</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/GreedyAlgorithm/" class="archive-article-date">
-  	<time datetime="2020-11-01T12:11:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/GreedyAlgorithm/">展开全文 >></a>
         </p>
       
 

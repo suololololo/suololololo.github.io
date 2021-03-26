@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>springIOC源码：容器初始化过程 | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="12345public class  MyBeanTest&amp;#123;	public static void main(String[]args)&amp;#123;		BeanFactory  beanFactory = new XmlBeanFactory(new ClassPathResource(&quot;Bean.xml&quot;))	&amp;#125;&amp;#125;  上面这个代码执行后，IOC容器进行初始化，1.将">
+  <meta name="description" content="什么是SpringIOC容器IOC即控制反转，把传统上由程序代码控制的对象创建权，调用权交给了容器，通过容器来实现对象组件的装配和管理。控制反转的概念就是将对象的控制权进行转移，从程序代码转移到了外部容器。SpringIOC容器负责创建对象，管理对象，装配对象，配置对象，并管理这些对象的整个生命周期。 IOC有什么用？1.解耦，由容器直接去维护具体的对象2.管理对象的创建和依赖关系的维护3.托管了">
 <meta property="og:type" content="article">
 <meta property="og:title" content="springIOC源码：容器初始化过程">
 <meta property="og:url" content="http://yoursite.com/2021/03/19/springIOC源码：容器初始化过程/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
-<meta property="og:description" content="12345public class  MyBeanTest&amp;#123;	public static void main(String[]args)&amp;#123;		BeanFactory  beanFactory = new XmlBeanFactory(new ClassPathResource(&quot;Bean.xml&quot;))	&amp;#125;&amp;#125;  上面这个代码执行后，IOC容器进行初始化，1.将">
+<meta property="og:description" content="什么是SpringIOC容器IOC即控制反转，把传统上由程序代码控制的对象创建权，调用权交给了容器，通过容器来实现对象组件的装配和管理。控制反转的概念就是将对象的控制权进行转移，从程序代码转移到了外部容器。SpringIOC容器负责创建对象，管理对象，装配对象，配置对象，并管理这些对象的整个生命周期。 IOC有什么用？1.解耦，由容器直接去维护具体的对象2.管理对象的创建和依赖关系的维护3.托管了">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2021-03-19T13:11:29.126Z">
+<meta property="og:updated_time" content="2021-03-24T10:24:24.980Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springIOC源码：容器初始化过程">
-<meta name="twitter:description" content="12345public class  MyBeanTest&amp;#123;	public static void main(String[]args)&amp;#123;		BeanFactory  beanFactory = new XmlBeanFactory(new ClassPathResource(&quot;Bean.xml&quot;))	&amp;#125;&amp;#125;  上面这个代码执行后，IOC容器进行初始化，1.将">
+<meta name="twitter:description" content="什么是SpringIOC容器IOC即控制反转，把传统上由程序代码控制的对象创建权，调用权交给了容器，通过容器来实现对象组件的装配和管理。控制反转的概念就是将对象的控制权进行转移，从程序代码转移到了外部容器。SpringIOC容器负责创建对象，管理对象，装配对象，配置对象，并管理这些对象的整个生命周期。 IOC有什么用？1.解耦，由容器直接去维护具体的对象2.管理对象的创建和依赖关系的维护3.托管了">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -177,7 +177,14 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span>  <span class="title">MyBeanTest</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">		BeanFactory  beanFactory = <span class="keyword">new</span> XmlBeanFactory(<span class="keyword">new</span> ClassPathResource(<span class="string">"Bean.xml"</span>))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p><strong>什么是SpringIOC容器</strong><br>IOC即控制反转，把传统上由程序代码控制的对象创建权，调用权交给了容器，通过容器来实现对象组件的装配和管理。控制反转的概念就是将对象的控制权进行转移，从程序代码转移到了外部容器。<br>SpringIOC容器负责创建对象，管理对象，装配对象，配置对象，并管理这些对象的整个生命周期。</p>
+<p>IOC有什么用？<br>1.解耦，由容器直接去维护具体的对象<br>2.管理对象的创建和依赖关系的维护<br>3.托管了类的产生过程。</p>
+<p>IOC的优点？<br>1.ioc和依赖注入把应用代码量降到了最低<br>2.它使应用容易测试，单元测试不再需要单例和JNDI查找机制<br>3.最小的代价和最小的侵入性使松散耦合得以实现<br>4.IOC容器支持加载服务时的饿汉式初始化和懒加载</p>
+<p>BeanFactory和ApplicationContext有什么区别<br>ApplicationContext 是BeanFactory的子接口， BeanFactory加载Beans的方式是延迟加载，只有在用到的时候才会加载。而ApplicationContext是一次性全部加载。BeanFactory通常以编程的方式创建，ApplicationContext还能以声明的方式创建。BeanFactory需要手动注册，而ApplicationContext可以自动注册</p>
+<p><strong>什么是依赖注入</strong><br>依赖注入是IOC的一种实现方式，依赖注入就是组件之间的依赖关系由容器在应用系统运行期间来决定，也就是由容器动态的将某种依赖关系的目标对象实例注入到应用系统中的各个关联主件中/<br><strong>依赖注入的原则</strong><br>应用组件不负责查找资源和其他依赖的对象，而是将这一个任务交给容器来做<br><strong>有哪几种注入方式</strong><br>1.接口注入。 易用性和扩展性比较差。<br>2.构造器注入。容器通过触发一个类的构造器来实现。<br>3.setter注入。Setter注入是容器通过调用无参构造器，然后再经过setter方法注入属性</p>
+<p><strong>什么是bean的自动装配</strong><br>Spring容器能够自动装配相互合作的bean，无需自己查找或创建与其关联的其他对象，由容器负责把相互协作的对象引用赋予各个对象。<br>自动装配方式<br>1.byName。 通过bean的名称自动装配<br>2.byType。通过参数的数据类型自动装配<br>3.autowire。自动探测。如果有构造方法，就通过constructor装配，否则通过byType<br>4.constructor 。利用构造函数进行装配，并且构造函数的参数通过byType装配</p>
+<p>@Autowire自动装配的过程<br>1.开启注解支持<br>2.扫描查询，启动spring ioc时，容器自动装载了一个注解处理器。容器扫描到@Autowire时，会先在容器中查询对应的类型的bean。如果查询结果刚好为一个，就将该bean装配给autowire指定对象。如果查询结果不止一个，那么autowire会根据名称来查找。<br>3.如果查询结果为空，就会抛出异常</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span>  <span class="title">MyBeanTest</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">		BeanFactory  beanFactory = <span class="keyword">new</span> XmlBeanFactory(<span class="keyword">new</span> ClassPathResource(<span class="string">"Bean.xml"</span>))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>上面这个代码执行后，IOC容器进行初始化，<br>1.将Bean.xml文件封装成Resource对象。这时Resource实例已经有了配置文件的路径信息<br>2.获取Document实例，通过Resource对象，读取xml文件，封装成Document对象。这时Document实例已经有了配置文件的标签<br>3.获取并注册BeanDefintion。解析Document实例中的标签，最终获得BeanDefinnition实例。这时BeanDefinion实例中已经有了bean的id，name，alias，class等信息。注册过程BeanDefinition向IOC容器进行注册，相当于将bean的name作为key，BeanDefinition作为value，放入一个map中。</p>
 

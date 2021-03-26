@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>壴加亻夋的博客</title>
+  <title>TCP是怎样保证可靠传输的 | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="壴加亻夋的博客">
-<meta property="og:url" content="http://yoursite.com/page/4/index.html">
+  <meta name="description" content="1.检验和接收方接收到数据后对数据经过检验，计算出的校验和如果不符合发送方给的检验和，说明数据有问题。2.确认应答和序列号接收方会对收到的数据进行应答，发送一个ack号。而序号能够将收到的数据根据序列号排序，并且去掉重复序列号的数据3.超时重传机制。当发送方发送了数据报后，经过一定的时间没有收到ack确认，就会对没有收到ack确认的数据包进行重传4.连接管理TCP传输是面向连接的传输，需要经过三次">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP是怎样保证可靠传输的">
+<meta property="og:url" content="http://yoursite.com/2021/03/26/TCP是怎样保证可靠传输的/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
+<meta property="og:description" content="1.检验和接收方接收到数据后对数据经过检验，计算出的校验和如果不符合发送方给的检验和，说明数据有问题。2.确认应答和序列号接收方会对收到的数据进行应答，发送一个ack号。而序号能够将收到的数据根据序列号排序，并且去掉重复序列号的数据3.超时重传机制。当发送方发送了数据报后，经过一定的时间没有收到ack确认，就会对没有收到ack确认的数据包进行重传4.连接管理TCP传输是面向连接的传输，需要经过三次">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2021-03-26T08:58:20.830Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="壴加亻夋的博客">
+<meta name="twitter:title" content="TCP是怎样保证可靠传输的">
+<meta name="twitter:description" content="1.检验和接收方接收到数据后对数据经过检验，计算出的校验和如果不符合发送方给的检验和，说明数据有问题。2.确认应答和序列号接收方会对收到的数据进行应答，发送一个ack号。而序号能够将收到的数据根据序列号排序，并且去掉重复序列号的数据3.超时重传机制。当发送方发送了数据报后，经过一定的时间没有收到ack确认，就会对没有收到ack确认的数据包进行重传4.连接管理TCP传输是面向连接的传输，需要经过三次">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -150,22 +154,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-java泛型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-TCP是怎样保证可靠传输的" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/02/java泛型/">java泛型</a>
+    <h1 class="article-title" itemprop="name">
+      TCP是怎样保证可靠传输的
     </h1>
   
 
         
-        <a href="/2020/11/02/java泛型/" class="archive-article-date">
-  	<time datetime="2020-11-02T06:51:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-02</time>
+        <a href="/2021/03/26/TCP是怎样保证可靠传输的/" class="archive-article-date">
+  	<time datetime="2021-03-26T08:21:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-26</time>
 </a>
         
       </header>
@@ -175,33 +177,33 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>泛型类的定义</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Pair</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">	<span class="keyword">private</span> T first;</span><br><span class="line">    <span class="keyword">private</span> T second;</span><br><span class="line">   	<span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(T first , T second)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.first = first;</span><br><span class="line">        <span class="keyword">this</span>.second = second;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面定义中，T表示类型变量， 常见的做法是用E表示集合元素类型，K和V分别表示表的键和值的类型。T表示任意类型。</p>
-<p>泛型方法 ,<strong>类型变量放在修饰符后面，返回值前面。泛型方法可以在普通类中定义，也可以在泛型类中定义</strong>。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Arrayalg</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">getMiddle</span><span class="params">(T a )</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> T;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用方法1</span></span><br><span class="line">String middle =  Arrayalg.&lt;String&gt;getMiddle(<span class="string">"good"</span>);</span><br><span class="line"><span class="comment">//调用方法2</span></span><br><span class="line">String middle = Arrayalg.getMiddle(<span class="string">"good"</span>);</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more--&gt;</span><br><span class="line">有时候我们需要对类型变量进行约束,比如说我只允许类型变量是Comparable类型的, 一个类型变量也允许多个限定，如果有多个限定，最多只有一个限定是类，且它必须是限定列表中的第一个限定</span><br><span class="line">```java</span><br><span class="line">public static &lt;T extends Comparable &gt; T min(T[] a )</span><br><span class="line">public static &lt;T extends Comparable&amp;Seralizable&gt; T min (T [] a )</span><br></pre></td></tr></table></figure>
-
-<p><strong>泛型代码和虚拟机，虚拟机中没有泛型对象，所有对象都属于普通类。因此无论何时定义一个泛型类型，都会自动提供一个相应的原始类型。原始类型就是将类型变量擦除后得到类型</strong> </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Pair&lt;T&gt; 的原始类型 ,因为T是一个无限定的变量，所以直接用Object替换</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pair</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Object first;</span><br><span class="line">	<span class="keyword">private</span> Object second;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Pair</span><span class="params">(Object first, Object second)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.first = first;</span><br><span class="line">		<span class="keyword">this</span>.second =second;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//如果有多个限定，则采用第一个限定来替换类型变量</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Internal</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Comparable</span> &amp;<span class="title">Serializable</span>&gt; <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> T lower;</span><br><span class="line">	<span class="keyword">private</span> T upper;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//原始类型</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Internal</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Comparable lower;</span><br><span class="line">	<span class="keyword">private</span> Comparable upper;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>编写一个泛型方法调用时，如果擦除了返回类型，编译器会插入强制类型转换。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Pair&lt;Employee&gt; buddies = <span class="keyword">new</span> Pair&lt;Employee&gt;();</span><br><span class="line">Employee buddy = buddies.getFirst();</span><br><span class="line"><span class="comment">//getFirst类型擦除后的返回类型是Object，编译器自动插入转换到Employee的强制类型转换。编译器把这个方法转换为两条虚拟机指令，1.对原始方法Pair.getFirst的调用 2. 将返回的Object类型强制转换为Employee类型。</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="java泛型的缺陷"><a href="#java泛型的缺陷" class="headerlink" title="java泛型的缺陷"></a>java泛型的缺陷</h4><p>java选择泛型实现方式是“类型擦除式泛型”，而C#实现的方式是“具现化式泛型”，即C#里面的泛型无论是在程序源码里面，编译后的中间语言表示里面，抑或是运行期的CLR里面都是切实存在的，List<int> 和List<string>就是两个不同的类型。而java泛型只在程序源码中出现，在编译后的字节码文件中，全部泛型都被替换为原来的裸类型，并在相应的地方加入强制转型代码，因此ArrayList<int> 和ArrayList<string>其实是同一个类型，在这种情况下，会造成一些影响</string></int></string></int></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TypeErasureGnerics</span>&lt;<span class="title">E</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(Objece item)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(item <span class="keyword">instanceof</span> E)&#123;  <span class="comment">//不合法，无法对泛型进行实例判断</span></span><br><span class="line">		...</span><br><span class="line">		&#125;</span><br><span class="line">		E newItem  = <span class="keyword">new</span> E(); <span class="comment">//不合法，无法使用泛型创建对象</span></span><br><span class="line">		E[] itemArray = <span class="keyword">new</span> E[<span class="number">10</span>]; <span class="comment">//不合法，无法使用泛型创建数组</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>那么存在这些缺点，为什么java要选择以这样的方式实现泛型呢？主要原因是实现泛型时，要保证二进制向后兼容性，即在比如JDK1.2编译出的Class文件，也要在JDK12乃至以后的任何版本都能正常运行。那JDK1.2版本没有支持泛型，到java5.0突然要支持泛型，还要让以前编译的程序在新版本虚拟机还能正常运行，意味着以前没有的限制不能突然冒出来。因此，有两条路可以选择<br>1.需要泛型化的类型，以前有的就保持不变，创建一套新的平行的泛型化版本的新类型<br>2.直接泛化已有的类型，即让所有需要泛型化的已有类型都原地泛型化，不添加任何平行于已有类型的泛型版<br>由于java的代码遗留问题，迫使java不得不选择第二条路，但第二条路不是意味着一定只能使用类型擦除来实现<br>java选择第二条路，直接把已有的类型泛型化，要让所有需要泛型化的已有类型，譬如 ArrayList，原地泛型化后变为ArrayList<t>,且还要保证以前直接用ArrayList的代码在泛型新版本里必须还能用这同一个容器，即ArrayList类型是所有这些ArrayList<integer>，ArrayList<string>的父类，这就是裸类型。<br>裸类型的实现有两种选择：一种是在编译的时候直接将ArrayList<integer>类型还原为 ArrayList类型，只在元素访问，修改时自动插入一些强制类型转换和检查指令。 第二种是在运行期由java虚拟机自动真实地构造出ArrayList<integer>类型，并且实现从ArrayList<integer>派生自ArrayList的继承关系，显然java选择了前者</integer></integer></integer></string></integer></t></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GenericParadigm</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Map&lt;String,String&gt;  map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        map.put(<span class="string">"hello"</span>,<span class="string">"你好"</span>);</span><br><span class="line">        map.put(<span class="string">"how are you "</span>,<span class="string">"你好吗"</span>);</span><br><span class="line">        System.out.println(map.get(<span class="string">"hello"</span>));</span><br><span class="line">        System.out.println(map.get(<span class="string">"how are you "</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>将编译后的Class文件反编译一下</p>
-<img src="/2020/11/02/java泛型/1.png">
-<p>发现泛型都不见了，在元素访问的时候加上了从Object到Sting的强制转换</p>
+        <p>1.检验和<br>接收方接收到数据后对数据经过检验，计算出的校验和如果不符合发送方给的检验和，说明数据有问题。<br>2.确认应答和序列号<br>接收方会对收到的数据进行应答，发送一个ack号。而序号能够将收到的数据根据序列号排序，并且去掉重复序列号的数据<br>3.超时重传机制。<br>当发送方发送了数据报后，经过一定的时间没有收到ack确认，就会对没有收到ack确认的数据包进行重传<br>4.连接管理<br>TCP传输是面向连接的传输，需要经过三次握手和四次挥手<br>5.流量控制<br>接收端在接收到数据后，需要对其处理。如果发送端发送数据太快，接收端的接收缓冲区很快就被充满了。因此需要对发送端的发送速率进行控制。<br>实现方式有：<br>1.滑动窗口：发送方发送的数据包只能限制在滑动窗口内。滑动窗口的数据包分为已发送但未被确认的，可以发送但还未发送的数据包。滑动窗口期待收到确认的数据包在窗口最左边。当收到该确认时，窗口就向后方移动。通过限制滑动窗口的大小，可以达到流量控制的效果</p>
+<p>6.拥塞控制<br>1.慢启动阶段，TCP先以一个MSS开始传输，每收到一个ack确认就增加一个MSS，窗口大小就指数级增长。如果出现因超时丢包就将拥塞窗口设置为1，将慢启动阈值设置为窗口值的一半，并重新启动慢启动过程。当窗口值吵够慢启动阈值时，进入拥塞避免状态<br>2.拥塞避免阶段：让拥塞窗口缓慢的增大，每一个RTT，拥塞窗口大小增加1。如果出现超时丢包，拥塞窗口设置为1，窗口阈值设置为窗口值一半。 如果是出现了3个冗余ACK，进入快速恢复阶段<br>3.快速恢复阶段：将阈值设置为当前窗口值一半，然后进入拥塞避免</p>
+<p><strong>流量控制与拥塞控制</strong><br>流量控制是端到端的控制，例如A给B发数据，A发送太快了，导致B没法接收，但是A到B之间的网络没有出现问题。<br>拥塞控制是一个全局性过程，控制的是A到B之间的网络。是A到B之间的网络发生堵塞导致传输过慢或者丢包，来不及传输</p>
 
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -210,16 +212,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/02/java泛型/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/03/26/TCP是怎样保证可靠传输的/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2021/03/25/ThreadLocal详解/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">ThreadLocal详解</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -239,684 +300,17 @@
 
 
 
-
-
-
-  
-    <article id="post-GreedyAlgorithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/GreedyAlgorithm/">GreedyAlgorithm</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/GreedyAlgorithm/" class="archive-article-date">
-  	<time datetime="2020-11-01T12:11:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/GreedyAlgorithm/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-LeetCode题目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/31/LeetCode题目/">LeetCode题目</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/31/LeetCode题目/" class="archive-article-date">
-  	<time datetime="2020-10-31T02:22:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-31</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>深度优先搜索</strong></p>
-<img src="/2020/10/31/LeetCode题目/1.png">
-        
-          <a class="article-more-a" href="/2020/10/31/LeetCode题目/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/31/LeetCode题目/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-AdaBoost" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/30/AdaBoost/">AdaBoost</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/30/AdaBoost/" class="archive-article-date">
-  	<time datetime="2020-10-30T11:39:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-30</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>AdaBoost是以基于集成学习的思想，将多个弱分类器进行结合，得到强分类器。Adaboost采用迭代的思想，每次迭代只训练一个弱分类器，训练好的弱分类器将参与下一次迭代的使用。N次迭代中，一共有N个弱分类器，其中N-1是以前训练好的，参数不再改变。第N次训练第N个分类器，第N个分类器更可能分对前N-1个分类器没分对的数据。最终的分类结果是由N个分类加权的结果。</p>
-<p>Adaboost一般采用单层决策树作为弱分类器。单层决策树只能根据一维特征来做决策。即如果数据具有多个维度，只能根据一个维度的数据来做决策。比如平面坐标上的点(x,y)，只能采取针对横坐标或纵坐标进行决策，比如x&gt;5为正类，其余为负类。那么怎样达到将多个弱分类结合，达到强分类的效果的呢？</p>
-<p><strong>权重</strong> 关键就在于权重，我们可以对不同的分类器赋予不同的权重，分类效果好的，错误率低的分类器，我们可以赋予高的权重。还存在着另外一个权重，就是数据权重，上面说到采用单层决策树作为弱分类器，而该弱分类器关注到的数据非常有限，所以我们得对数据赋予一定的权重，让该分类器关注哪一方面的数据。这也涉及到分类器的多样性问题，即不同分类器，不能对相同的数据具有相同的分类结果，这样在结合时，就完全起不到效果。数据权重可以让第N个分类器，更可能分对前N-1个分类器没分对的数据。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/30/AdaBoost/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-LinearRegression" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/29/LinearRegression/">LinearRegression</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/29/LinearRegression/" class="archive-article-date">
-  	<time datetime="2020-10-29T07:08:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>线性回归</strong></p>
-<p>线性回归模型即为 y=wTx+b ,w属于m维向量空间即m维行向量，m的x的特征数，b属于一维向量空间， 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。</p>
-<img src="/2020/10/29/LinearRegression/1.png">
-<p>那怎样才叫满足呢？我们定义一个损失函数</p>
-<img src="/2020/10/29/LinearRegression/2.png">
-<p>我们将b看成特殊的一个向量，即在x和w中都增加一维，变成n+1维，增加的那一维x值为1，w值为b，相乘后仍然得到原式的结果，模型更改为y = wTb ， w属于m+1维向量空间， x属于m+1维向量空间<br>令X=(x1,x2,x3…xn)T所以损失函数化简为</p>
-
-<p>$$<br>l(w) =1/2(y-Xw)^T * (y-Xw)   先将向量化成自身的内积<br>$$<br>$$<br>求导过程  =1/2 (-X)^T(y-Xw) +1/2 (y-Xw)^T(-X)<br>=(-X)^T<em>(y-Xw)<br>$$<br>上式对w求偏导，并令其为0，求loss函数的最小值，这样求得的w就是最满足数据的参数，将这个参数带回模型就可以得到想要的模型， 但是这样的求法存在着 *</em>偏导数为0无法求出解析解，或损失函数不是处处可导，或者解析解太耗时，特征空间维度太高的问题** ， 且矩阵逆的计算需要大量的内存，O（m**3）所以大部分时候是采用梯度下降的方法。</p>
-<p><strong>随机梯度下降</strong></p>
-<p>loss沿负梯度方向下降最快，于是随机选择一个初始点，朝这个点的负梯度方向前进一定的距离，到达一个新的点，重复这个过程，持续超负梯度方向前进，最终达到一个局部最小值，如果loss函数是凸函数，即是最小值。</p>
-<p>表示为w = w-lr*G   ， lr为学习率， G为梯度大小 </p>
-<p>迭代的进行参数更新。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/29/LinearRegression/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-pytorch杂记2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/21/pytorch杂记2/">pytorch杂记2</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/21/pytorch杂记2/" class="archive-article-date">
-  	<time datetime="2020-10-21T11:36:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-21</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>一些常用函数</strong></p>
-<p>torch.cat: 将两个张量拼接起来</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">a  = torch.randn(2,3)</span><br><span class="line">b = torch.randn(4,3)</span><br><span class="line">c = torch.cat((a,b),dim=0)  #dim = 0 , 代表按行拼接, dim=1 ,代表按照列拼接</span><br><span class="line">print(c)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;tensor([[-2.4133,  0.9273, -1.7999],</span><br><span class="line">        [-0.8778, -0.9217,  1.9684],</span><br><span class="line">        [ 0.7688,  2.3844,  1.5250],</span><br><span class="line">        [ 1.0025,  0.2864, -0.3318],</span><br><span class="line">        [ 0.5948, -0.2036, -0.5568],</span><br><span class="line">        [ 1.9656, -0.0477, -0.7944]])</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/21/pytorch杂记2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-pytorch杂记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/20/pytorch杂记/">pytorch杂记</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/20/pytorch杂记/" class="archive-article-date">
-  	<time datetime="2020-10-20T01:15:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-20</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>一些常用函数</strong></p>
-<p><strong>np.random.shuffle (lst)</strong>  : 对列表中的元素进行打乱，随机排序 ，无返回值</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">10</span>)</span><br><span class="line">np.random.shuffle(arr)</span><br><span class="line">print(arr)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;array([<span class="number">3</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-
-<p>在多维矩阵中，只对第一维进行打乱， 即只对行进行打乱 ， </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">9</span>).reshape((<span class="number">3</span>,<span class="number">3</span>))</span><br><span class="line">np.random.shuffle(arr)</span><br><span class="line">print(arr)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;array([[<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>],</span><br><span class="line">       [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">       [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])</span><br></pre></td></tr></table></figure>
-
-<p><strong>torch.tensor.view(*args)</strong> 将tensor进行维度变换， 返回的tensor必须与原tensor具有相同的数目的元素，但可以有不同的大小。且view只能用在在内存上存储的连续的张量，而<strong>reshape函数调用是不依赖于tensor在内存中是不是连续的。</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"> </span><br><span class="line">x = torch.Tensor(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">print(x)</span><br><span class="line"> </span><br><span class="line">y = x.view(<span class="number">1</span>,<span class="number">8</span>)</span><br><span class="line">print(y)</span><br><span class="line"> </span><br><span class="line">z = x.view(<span class="number">-1</span>,<span class="number">4</span>)  <span class="comment"># the size -1 is inferred from other dimensions</span></span><br><span class="line">print(z)</span><br><span class="line"> </span><br><span class="line">t = x.view(<span class="number">8</span>)</span><br><span class="line">print(t)</span><br></pre></td></tr></table></figure>
-
-<p>输出</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">tensor([[[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>],</span><br><span class="line">         [<span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>]],</span><br><span class="line"></span><br><span class="line">        [[<span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>],</span><br><span class="line">         [<span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]]])</span><br><span class="line"></span><br><span class="line"><span class="comment">#x.view(1,8)生成的是[1,8]的张量</span></span><br><span class="line">tensor([[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>, <span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>,</span><br><span class="line">         <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment">#x.view(-1,4)其中-1是在4下的另一个维度的大小，也就是8/4=2，所以生成的是[2,4]的张量</span></span><br><span class="line">tensor([[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>],</span><br><span class="line">        [<span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>, <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]])</span><br><span class="line"></span><br><span class="line">x.view(<span class="number">8</span>)生成的是[<span class="number">8</span>,]的张量，是个数组</span><br><span class="line">tensor([<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>, <span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>,</span><br><span class="line">        <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>])</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2020/10/20/pytorch杂记/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/20/pytorch杂记/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-java多线程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/19/java多线程/">java多线程</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/19/java多线程/" class="archive-article-date">
-  	<time datetime="2020-10-19T11:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-19</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>同步和死锁</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">private</span>  <span class="keyword">int</span> ticket = <span class="number">5</span> ;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i  = <span class="number">0</span> ;  i &lt;<span class="number">100</span> ; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (ticket&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(Thread.currentThread().getName()+<span class="string">"卖票， ticket = "</span> + ticket--);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/10/19/java多线程/image-20201019190335553.png">
-
-<p>没有进行资源同步时，两个线程的执行没有达到互斥的效果，且5张票被卖了8次</p>
-        
-          <a class="article-more-a" href="/2020/10/19/java多线程/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/19/java多线程/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-question" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/14/question/">question</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/14/question/" class="archive-article-date">
-  	<time datetime="2020-10-14T07:47:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-14</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>2020.10.14 今日学习疑惑之处</p>
-<p><strong>pytorch中搭建卷积神经网络</strong>：</p>
-<p>batchsize是什么？ 为什么图片在经过多层卷积和maxpooling后，要经过out = out.view(batchsize,-1) 才能与全连接层连接， 最后还要经过soft_max，才能进行输出</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">out = out.view(batchsize,<span class="number">-1</span>)</span><br><span class="line">out =self.fc(out)</span><br><span class="line">out = F.log_softmax(out,dim=<span class="number">1</span>)</span><br><span class="line"><span class="keyword">return</span>  out</span><br></pre></td></tr></table></figure>
-
-<p><strong>解答</strong></p>
-<p>图片在经过多层卷积和maxpooling后，要经过out = out.view(batchsize,-1) 才能与全连接层连接的原因</p>
-<p>out.view()的作用是将 batchsize *  c * h * w 的特征图转化为 batchsize * n  的tensor</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/14/question/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-cnn" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/13/cnn/">cnn参数量和计算量计算</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/13/cnn/" class="archive-article-date">
-  	<time datetime="2020-10-13T03:32:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-13</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>参数量</strong></p>
-<p>假设cnn输入是5<em>5 * 4 ，卷积核为2</em>2 ， 输出是2 通道</p>
-<p>参数量的大小则为 （4*2 *2 +1） *2 </p>
-<p>因为输入为4通道， 每个通道得采用1个卷积核进行卷积， 且每个通道对应的卷积核是不同的，  所以参数量为4 * 2 *2 ，同时还得加上一个偏置量 ， 这个一个偏置量是4 个通道所共享的 ， 所以参数量为 4 * 2 *2 +1 ，因为输出是双通道 ， 所以得用两个这样的卷积核 ， 因此总参数量为  （4 * 2 *2 +1） * 2</p>
-<p><strong>计算量</strong></p>
-<p>卷积层浮点数FLOPS计算量 ， 卷积操作本质上是个线性运算 ，通常可表示为：</p>
-<p>y=Wx+b</p>
-<p>乘法运算</p>
-<p>卷积核为k1*k2  ，输入通道为Cin， 输出通道为Cout ， 高Hout ， 宽 Wout</p>
-<p>得到特征图的一个像素，要 k1*k2 * Cin 次乘法 ， 而特征图的总像素有 Cout * Hout * Wout</p>
-<p>总乘法就为 k1*k2 * Cin * Cout * Hout * Wout</p>
-<p>加法运算</p>
-<p>每次乘法都会伴随着一次加法 ，所以总加法为  k1*k2 * Cin * Cout * Hout * Wout</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/13/cnn/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
-    </nav>
   
+
+  
+
+  
+
+  
+
+
 
 
           </div>
@@ -947,8 +341,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

@@ -152,6 +152,146 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-TCP是怎样保证可靠传输的" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/26/TCP是怎样保证可靠传输的/">TCP是怎样保证可靠传输的</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/26/TCP是怎样保证可靠传输的/" class="archive-article-date">
+  	<time datetime="2021-03-26T08:21:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-26</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.检验和<br>接收方接收到数据后对数据经过检验，计算出的校验和如果不符合发送方给的检验和，说明数据有问题。<br>2.确认应答和序列号<br>接收方会对收到的数据进行应答，发送一个ack号。而序号能够将收到的数据根据序列号排序，并且去掉重复序列号的数据<br>3.超时重传机制。<br>当发送方发送了数据报后，经过一定的时间没有收到ack确认，就会对没有收到ack确认的数据包进行重传<br>4.连接管理<br>TCP传输是面向连接的传输，需要经过三次握手和四次挥手<br>5.流量控制<br>接收端在接收到数据后，需要对其处理。如果发送端发送数据太快，接收端的接收缓冲区很快就被充满了。因此需要对发送端的发送速率进行控制。<br>实现方式有：<br>1.滑动窗口：发送方发送的数据包只能限制在滑动窗口内。滑动窗口的数据包分为已发送但未被确认的，可以发送但还未发送的数据包。滑动窗口期待收到确认的数据包在窗口最左边。当收到该确认时，窗口就向后方移动。通过限制滑动窗口的大小，可以达到流量控制的效果</p>
+<p>6.拥塞控制<br>1.慢启动阶段，TCP先以一个MSS开始传输，每收到一个ack确认就增加一个MSS，窗口大小就指数级增长。如果出现因超时丢包就将拥塞窗口设置为1，将慢启动阈值设置为窗口值的一半，并重新启动慢启动过程。当窗口值吵够慢启动阈值时，进入拥塞避免状态<br>2.拥塞避免阶段：让拥塞窗口缓慢的增大，每一个RTT，拥塞窗口大小增加1。如果出现超时丢包，拥塞窗口设置为1，窗口阈值设置为窗口值一半。 如果是出现了3个冗余ACK，进入快速恢复阶段<br>3.快速恢复阶段：将阈值设置为当前窗口值一半，然后进入拥塞避免</p>
+<p><strong>流量控制与拥塞控制</strong><br>流量控制是端到端的控制，例如A给B发数据，A发送太快了，导致B没法接收，但是A到B之间的网络没有出现问题。<br>拥塞控制是一个全局性过程，控制的是A到B之间的网络。是A到B之间的网络发生堵塞导致传输过慢或者丢包，来不及传输</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/26/TCP是怎样保证可靠传输的/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-ThreadLocal详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/25/ThreadLocal详解/">ThreadLocal详解</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/25/ThreadLocal详解/" class="archive-article-date">
+  	<time datetime="2021-03-25T08:41:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-25</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Threadlocal主要用来存储线程局部的变量，仅线程自身可见。 <strong>怎么实现的</strong>，因为每个线程对象都持有一个ThreadLocalMap（threadLocals变量），所有线程持有的ThreaLocalMap都是同一个，但是他们是通过不同的ThreadLocal去访问。因为ThreadLocalMap中存储的是键值对，键是ThreadLocal，值才是自己设置的。每个线程只能访问到自己的ThreadLocal，所以保证了线程自身可见。</p>
+<p>ThreadLocal的作用<br>1.在进行对象跨层传递的时候，使用ThreadLocal可以避免多次传递，打破层次间的约束。<br>2.线程间数据隔离<br>3.进行事务操作，用于存储线程事务信息<br>4.数据库连接，Session会话管理</p>
+<p>内部源码<br>1.每个Thread维护着一个ThreadLocalMap的引用<br>2.ThreadLocalMap是ThreadLocal的内部类，用Entry来存储<br>3.ThreadLocal创建的副本是存储在自己的threadLocals中的，也就是自己的ThreadLocalMap<br>4.ThreadLocalMap的键值为ThreadLocal对象，而且可以有多个ThreadLocal变量，因此保存在map中<br><strong>Entry中为什么对ThreadLocal的引用要用弱引用？</strong> 防止内存泄漏 怎么理解</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/25/ThreadLocal详解/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-jvm面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -252,7 +392,14 @@
   <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span>  <span class="title">MyBeanTest</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">		BeanFactory  beanFactory = <span class="keyword">new</span> XmlBeanFactory(<span class="keyword">new</span> ClassPathResource(<span class="string">"Bean.xml"</span>))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p><strong>什么是SpringIOC容器</strong><br>IOC即控制反转，把传统上由程序代码控制的对象创建权，调用权交给了容器，通过容器来实现对象组件的装配和管理。控制反转的概念就是将对象的控制权进行转移，从程序代码转移到了外部容器。<br>SpringIOC容器负责创建对象，管理对象，装配对象，配置对象，并管理这些对象的整个生命周期。</p>
+<p>IOC有什么用？<br>1.解耦，由容器直接去维护具体的对象<br>2.管理对象的创建和依赖关系的维护<br>3.托管了类的产生过程。</p>
+<p>IOC的优点？<br>1.ioc和依赖注入把应用代码量降到了最低<br>2.它使应用容易测试，单元测试不再需要单例和JNDI查找机制<br>3.最小的代价和最小的侵入性使松散耦合得以实现<br>4.IOC容器支持加载服务时的饿汉式初始化和懒加载</p>
+<p>BeanFactory和ApplicationContext有什么区别<br>ApplicationContext 是BeanFactory的子接口， BeanFactory加载Beans的方式是延迟加载，只有在用到的时候才会加载。而ApplicationContext是一次性全部加载。BeanFactory通常以编程的方式创建，ApplicationContext还能以声明的方式创建。BeanFactory需要手动注册，而ApplicationContext可以自动注册</p>
+<p><strong>什么是依赖注入</strong><br>依赖注入是IOC的一种实现方式，依赖注入就是组件之间的依赖关系由容器在应用系统运行期间来决定，也就是由容器动态的将某种依赖关系的目标对象实例注入到应用系统中的各个关联主件中/<br><strong>依赖注入的原则</strong><br>应用组件不负责查找资源和其他依赖的对象，而是将这一个任务交给容器来做<br><strong>有哪几种注入方式</strong><br>1.接口注入。 易用性和扩展性比较差。<br>2.构造器注入。容器通过触发一个类的构造器来实现。<br>3.setter注入。Setter注入是容器通过调用无参构造器，然后再经过setter方法注入属性</p>
+<p><strong>什么是bean的自动装配</strong><br>Spring容器能够自动装配相互合作的bean，无需自己查找或创建与其关联的其他对象，由容器负责把相互协作的对象引用赋予各个对象。<br>自动装配方式<br>1.byName。 通过bean的名称自动装配<br>2.byType。通过参数的数据类型自动装配<br>3.autowire。自动探测。如果有构造方法，就通过constructor装配，否则通过byType<br>4.constructor 。利用构造函数进行装配，并且构造函数的参数通过byType装配</p>
+<p>@Autowire自动装配的过程<br>1.开启注解支持<br>2.扫描查询，启动spring ioc时，容器自动装载了一个注解处理器。容器扫描到@Autowire时，会先在容器中查询对应的类型的bean。如果查询结果刚好为一个，就将该bean装配给autowire指定对象。如果查询结果不止一个，那么autowire会根据名称来查找。<br>3.如果查询结果为空，就会抛出异常</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span>  <span class="title">MyBeanTest</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span></span>&#123;</span><br><span class="line">		BeanFactory  beanFactory = <span class="keyword">new</span> XmlBeanFactory(<span class="keyword">new</span> ClassPathResource(<span class="string">"Bean.xml"</span>))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>上面这个代码执行后，IOC容器进行初始化，<br>1.将Bean.xml文件封装成Resource对象。这时Resource实例已经有了配置文件的路径信息<br>2.获取Document实例，通过Resource对象，读取xml文件，封装成Document对象。这时Document实例已经有了配置文件的标签<br>3.获取并注册BeanDefintion。解析Document实例中的标签，最终获得BeanDefinnition实例。这时BeanDefinion实例中已经有了bean的id，name，alias，class等信息。注册过程BeanDefinition向IOC容器进行注册，相当于将bean的name作为key，BeanDefinition作为value，放入一个map中。</p>
 
@@ -685,166 +832,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/03/17/HashMap源码分析/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-fail-fast机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/17/fail-fast机制/">fail-fast机制</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/17/fail-fast机制/" class="archive-article-date">
-  	<time datetime="2021-03-17T02:44:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-17</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>fail-fast机制是java容器提供的一种 在遍历容器时发现容器结构被修改时快速抛出异常的机制。因此面对并发时，迭代器会干净利落的失败。抛出ConcurrentModificationException<br>容器结构被修改无非就两种情况<br>单线程环境下<br>迭代器遍历，集合结构被修改 ，<br>多线程环境下<br>一个线程遍历，一个线程修改<br>但是listIterator.remove()方法修改集合结构时不会抛出这个异常(可以看源码为什么不会这样)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		IteratorTest();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">IteratorTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	Vector&lt;String&gt; vector = <span class="keyword">new</span> Vector&lt;&gt;();</span><br><span class="line">		vector.add(<span class="string">"1"</span>);</span><br><span class="line">        vector.add(<span class="string">"2"</span>);</span><br><span class="line">        vector.add(<span class="string">"3"</span>);</span><br><span class="line">        ListIterator  iterator = vector.listIterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">            System.out.println(iterator.next());</span><br><span class="line">            vector.remove(<span class="string">"3"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个例子直接用容器修改会抛异常</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		IteratorTest();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">IteratorTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	Vector&lt;String&gt; vector = <span class="keyword">new</span> Vector&lt;&gt;();</span><br><span class="line">		vector.add(<span class="string">"1"</span>);</span><br><span class="line">        vector.add(<span class="string">"2"</span>);</span><br><span class="line">        vector.add(<span class="string">"3"</span>);</span><br><span class="line">        ListIterator  iterator = vector.listIterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">            System.out.println(iterator.next());</span><br><span class="line">            iterator.remove(<span class="string">"3"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个例子并不会抛异常，多线程环境下也是同样的情况<br>我们来看看迭代器的部分源码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * An optimized version of AbstractList.Itr</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> expectedModCount = modCount;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//省略的部分代码</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (lastRet == -<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException();</span><br><span class="line">        <span class="keyword">synchronized</span> (Vector.<span class="keyword">this</span>) &#123;</span><br><span class="line">            checkForComodification();</span><br><span class="line">            Vector.<span class="keyword">this</span>.remove(lastRet);</span><br><span class="line">            expectedModCount = modCount;</span><br><span class="line">        &#125;</span><br><span class="line">        cursor = lastRet;</span><br><span class="line">        lastRet = -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">forEachRemaining</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> E&gt; action)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//省略的部分代码</span></span><br><span class="line">            checkForComodification();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (modCount != expectedModCount)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>可以看到每次初始化一个迭代器的时候都会执行 int expectedModCount = modCount ，modeCount就是期待修改的次数，每次容器进行修改时都会modCount++，每次迭代初始化都会执行checkForComodification()检查expectedModCount 和modCount是否相等，如果不相等说明容器结构被改变了，抛出异常。 **<br>**我们可以看下用迭代器修改集合结构为什么不会抛异常，因为每次迭代修改完结构后就会执行expectedModCount = modCount语句，所以expectedModCount和modCount必定是相等的，就不会抛出异常了</strong></p>
-<p>怎样避免fail-fast机制<br>使用java.util.concurrent包下的类去取代java.util包下的类。所以，本例中只需要将Vector替换成java.util.concurrent包下对应的类即可</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.ListIterator;</span><br><span class="line"><span class="keyword">import</span> java.util.Vector;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.CopyOnWriteArrayList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123; </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * CopyOnWriteArrayList的fail-fast测试</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@org</span>.junit.Test</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            List list = <span class="keyword">new</span> CopyOnWriteArrayList&lt;&gt;();</span><br><span class="line">            list.add(<span class="string">"1"</span>);</span><br><span class="line">            list.add(<span class="string">"2"</span>);</span><br><span class="line">            list.add(<span class="string">"3"</span>);</span><br><span class="line">            ListIterator itr = list.listIterator();</span><br><span class="line">            <span class="keyword">while</span> (itr.hasNext()) &#123;</span><br><span class="line">                System.out.println(itr.next());</span><br><span class="line">                list.add(<span class="string">"5"</span>);</span><br><span class="line">                list.remove(<span class="string">"2"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(list.toString());</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/17/fail-fast机制/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-锁的内存语义" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/16/锁的内存语义/">锁的内存语义</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/16/锁的内存语义/" class="archive-article-date">
-  	<time datetime="2021-03-16T06:19:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-16</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1.线程A释放一个锁，相当于给接下来要获取这个锁的线程发送了消息  因为释放锁后，需要将共享变量写回主内存。<br>2.线程B获取一个锁，相当于接受了之前某个线程的信息 。获取锁，需要重新从主内存中获取共享变量<br>3.线程A释放锁，线程B获取锁，相当于A向B发送了信息</p>
-<p>ReentrantLock重入锁<br>重入锁又实现为公平锁和非公平锁<br>公平锁在获取时会先读取一个volatile变量state，后面CAS写入volatile变量state<br>非公平锁获取时会用CAS更新volatile变量，这个操作具有volatile读和volatile写的内存语义。<br>公平锁和非公平锁在释放的时候最后都会写一个volatile变量state<br><strong>双重检查锁定误区与延迟初始化</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User user = <span class="keyword">new</span> User();</span><br></pre></td></tr></table></figure>
-
-<p>执行这样一条语句需要三个指令</p>
-<ol>
-<li>memory =  allocate(); 分配对象的内存空间</li>
-<li>ctorInstance(memory); 对象初始化</li>
-<li>instance = memory ; 设置instance 指向刚分配的内存地址<br>指令重排序的时候有可能时  1-》3-》2的结果 在这样的情形下 执行以下代码就有可能出现问题<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">public</span> Instance <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(instance==<span class="keyword">null</span>)&#123;</span><br><span class="line">		<span class="keyword">synchronized</span>(User.class)&#123;</span><br><span class="line">			<span class="keyword">if</span>(instance==<span class="keyword">null</span>)</span><br><span class="line">				instance = <span class="keyword">new</span> Instance();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>在线程A执行1，3指令后。线程B进行检查发现不为null，这时候直接去使用该对象就会出现问题。<br>解决方法 只要将instance变量声明为volatile，就会禁止2，3指令的重排序</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/16/锁的内存语义/">展开全文 >></a>
         </p>
       
 
