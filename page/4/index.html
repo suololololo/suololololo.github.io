@@ -152,6 +152,74 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java多线程-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/23/java多线程-1/">java多线程</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/23/java多线程-1/" class="archive-article-date">
+  	<time datetime="2020-11-23T07:56:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-23</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Class类锁，可以对所有对象实例起作用，即Class类锁，锁住了所有类的对象实例。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/23/java多线程-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-java泛型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -801,86 +869,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/10/14/question/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-cnn" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/13/cnn/">cnn参数量和计算量计算</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/13/cnn/" class="archive-article-date">
-  	<time datetime="2020-10-13T03:32:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-13</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>参数量</strong></p>
-<p>假设cnn输入是5<em>5 * 4 ，卷积核为2</em>2 ， 输出是2 通道</p>
-<p>参数量的大小则为 （4*2 *2 +1） *2 </p>
-<p>因为输入为4通道， 每个通道得采用1个卷积核进行卷积， 且每个通道对应的卷积核是不同的，  所以参数量为4 * 2 *2 ，同时还得加上一个偏置量 ， 这个一个偏置量是4 个通道所共享的 ， 所以参数量为 4 * 2 *2 +1 ，因为输出是双通道 ， 所以得用两个这样的卷积核 ， 因此总参数量为  （4 * 2 *2 +1） * 2</p>
-<p><strong>计算量</strong></p>
-<p>卷积层浮点数FLOPS计算量 ， 卷积操作本质上是个线性运算 ，通常可表示为：</p>
-<p>y=Wx+b</p>
-<p>乘法运算</p>
-<p>卷积核为k1*k2  ，输入通道为Cin， 输出通道为Cout ， 高Hout ， 宽 Wout</p>
-<p>得到特征图的一个像素，要 k1*k2 * Cin 次乘法 ， 而特征图的总像素有 Cout * Hout * Wout</p>
-<p>总乘法就为 k1*k2 * Cin * Cout * Hout * Wout</p>
-<p>加法运算</p>
-<p>每次乘法都会伴随着一次加法 ，所以总加法为  k1*k2 * Cin * Cout * Hout * Wout</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/13/cnn/">展开全文 >></a>
         </p>
       
 

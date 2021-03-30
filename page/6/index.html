@@ -152,6 +152,64 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-多级页表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="多级页表"><a href="#多级页表" class="headerlink" title="多级页表"></a>多级页表</h1><p>基本概念：</p>
+<p><strong>页</strong>:分页存储管理将进程的逻辑地址空间划分为若干页，并对其编号。每个页的大小称为页面大小</p>
+<p><strong>页表</strong>：将比物理地址大的逻辑地址映射到物理地址的一种映射机制，并将对应关系存放在一张表中</p>
+<p><strong>页表项</strong>：在页表中的一行为一个页表项，即一个页号与其对应的物理块号称为一个页表项</p>
+<p>例题：假设一个机器有38位的虚拟地址和32位的物理地址，一个有16KB个页、4字节表项的二级页表，应该对第一级页表域分配多少位，对第二级页表域分配多少位？请解释原因。</p>
+<p>页面数：16kb个，页面大小即为2的38次方-16kb=2的24次方。即偏移量为24位。表项为4字节即说明一个2级页表中有2的平方个页表项，所以pt2=2，即pt1=38-2-24=12</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/07/多级页表/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-指针与数组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

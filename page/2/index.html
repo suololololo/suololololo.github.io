@@ -152,6 +152,73 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-HashMap源码分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/17/HashMap源码分析/">HashMap源码分析</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/17/HashMap源码分析/" class="archive-article-date">
+  	<time datetime="2021-03-17T07:07:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-17</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/17/HashMap源码分析/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-fail-fast机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -784,77 +851,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/12/27/java内存模型/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-AOT" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/26/AOT/">AOT</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/26/AOT/" class="archive-article-date">
-  	<time datetime="2020-12-26T11:03:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-26</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="AOT优点"><a href="#AOT优点" class="headerlink" title="AOT优点"></a>AOT优点</h4><p>1.AOT提前编译针对了JIT的弱点，即时编译器在编译时要占用程序运行时间和内存。在编译过程种最耗时的优化措施之一是通过“过程间分析”来获得某个程序点上某个变量的值是否一定为常量，某段代码块是否永远不可能被使用，在某个点的调用某个虚方法是否只能有单一版本等分析结论，这个过程会占用大量程序运行时间和内存。如果将这个分析提前到程序运行之前的静态编译，那就可以放心大胆地进行了。<br>2.AOT给即时编译器做缓存加速，改善java程序地启动时间，以及需要一段时间预热才能到达最高性能的问题。针对目标机器，为应用程序进行提前编译，运行时，直接加载这些编译的结果，实现加快程序启动速度，减少程序达到全速运行状态所需的时间。<br><strong>提前编译的代码输出质量，不一定比即时编译高</strong></p>
-<h4 id="JIT优点"><a href="#JIT优点" class="headerlink" title="JIT优点"></a>JIT优点</h4><p>1.<strong>性能分析制导优化</strong>。即时编译器运行过程中，会不断收集性能监控信息，比如某个程序点抽象类通常会是什么实际类型，循环通常会执行多少次，等等。这些在静态编译过程中是无法知道的<br>2.<strong>激进预测性优化</strong>。提前编译静态优化必须保证优化后所有的程序外部可见性影响与优化前是等效的，不然优化后会导致程序报错或者结果不对。但是即时编译就可采用激进优化，采取正确的可能性很大但无法保证绝对正确的预测判断，可以大胆地按照高概率假设进行优化。万一出问题，退回低级编译器或解释器上执行<br>3.<strong>链接时优化</strong>，动态链接。</p>
-        
-          <a class="article-more-a" href="/2020/12/26/AOT/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/26/AOT/">展开全文 >></a>
         </p>
       
 

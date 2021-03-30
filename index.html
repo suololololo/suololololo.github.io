@@ -152,6 +152,76 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java多线程面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/27/java多线程面试题/">java多线程面试题</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/27/java多线程面试题/" class="archive-article-date">
+  	<time datetime="2021-03-27T10:40:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-27</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>什么是线程？什么是进程？线程和进程有什么区别？线程有什么好处？</strong><br>线程是CPU调度的基本单位，进程是资源分配的基本单位，进程是系统中正在运行的一个应用程序。好处：多个线程一起去协同完成一个任务，通过充分共享资源来达到提升效率。<br><strong>创建线程方式有哪几种？</strong><br>1.继承Thread类，重写run方法 2.实现Runnable接口，重写run方法 3.实现Callable接口<br>这三种有什么区别？使用接口的方法可以避免java单继承的限制，前两种方法本质上没有什么区别<br>第三种方法可以摆脱 run方法无返回值，无法声明异常等局限，Callable接口任务拿到的是一个Future对象，表示异步计算的结果。Callable重写的是call方法<br><strong>Thread中start和run的区别</strong><br>start方法会启动一个线程，此线程处于就绪状态，可以被JVM来调度执行，在调度过程中，会调用run方法来完成业务逻辑。所以通过start方法可以达到多线程的目的<br>直接调用run方法的话，相当于一个普通方法的调用，程序中仍然只有主线程这一个线程。<br><strong>守护线程和非守护线程的区别</strong><br>1.非守护线程会阻止jvm的正常停止，即只有全部非守护线程运行完毕，jvm才会停止<br>2.守护线程不会阻止jvm的正常停止<br>3.守护线程通常执行一些重要性不高的任务</p>
+<p><strong>什么是竞态条件</strong><br>多个线程竞争同一个资源，如果对资源访问顺序敏感，就称存在竞态条件。</p>
+<p><strong>怎样安全得停止一个线程</strong><br>使用共享volatile变量<br><strong>sleep和wait的区别</strong><br>1.sleep是线程中的方法，wait是Object中的方法<br>2.sleep不是释放lock，wait会，且会加入到等待队列中<br>3.sleep方法不依赖于同步器synchronized，但是wait需要依赖<br>4.sleep不要被唤醒，但是wait需要<br>5.</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/27/java多线程面试题/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-TCP是怎样保证可靠传输的" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -176,7 +246,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>1.检验和<br>接收方接收到数据后对数据经过检验，计算出的校验和如果不符合发送方给的检验和，说明数据有问题。<br>2.确认应答和序列号<br>接收方会对收到的数据进行应答，发送一个ack号。而序号能够将收到的数据根据序列号排序，并且去掉重复序列号的数据<br>3.超时重传机制。<br>当发送方发送了数据报后，经过一定的时间没有收到ack确认，就会对没有收到ack确认的数据包进行重传<br>4.连接管理<br>TCP传输是面向连接的传输，需要经过三次握手和四次挥手<br>5.流量控制<br>接收端在接收到数据后，需要对其处理。如果发送端发送数据太快，接收端的接收缓冲区很快就被充满了。因此需要对发送端的发送速率进行控制。<br>实现方式有：<br>1.滑动窗口：发送方发送的数据包只能限制在滑动窗口内。滑动窗口的数据包分为已发送但未被确认的，可以发送但还未发送的数据包。滑动窗口期待收到确认的数据包在窗口最左边。当收到该确认时，窗口就向后方移动。通过限制滑动窗口的大小，可以达到流量控制的效果</p>
-<p>6.拥塞控制<br>1.慢启动阶段，TCP先以一个MSS开始传输，每收到一个ack确认就增加一个MSS，窗口大小就指数级增长。如果出现因超时丢包就将拥塞窗口设置为1，将慢启动阈值设置为窗口值的一半，并重新启动慢启动过程。当窗口值吵够慢启动阈值时，进入拥塞避免状态<br>2.拥塞避免阶段：让拥塞窗口缓慢的增大，每一个RTT，拥塞窗口大小增加1。如果出现超时丢包，拥塞窗口设置为1，窗口阈值设置为窗口值一半。 如果是出现了3个冗余ACK，进入快速恢复阶段<br>3.快速恢复阶段：将阈值设置为当前窗口值一半，然后进入拥塞避免</p>
+<p>6.拥塞控制<br>1.慢启动阶段，TCP先以一个MSS开始传输，每收到一个ack确认就增加一个MSS，窗口大小就指数级增长。如果出现因超时丢包就将拥塞窗口设置为1，将慢启动阈值设置为窗口值的一半，并重新启动慢启动过程。当窗口值吵够慢启动阈值时，进入拥塞避免状态<br>2.拥塞避免阶段：让拥塞窗口缓慢的增大，每一个RTT，拥塞窗口大小增加1。如果出现超时丢包，拥塞窗口设置为1，窗口阈值设置为窗口值一半，重新进入慢启动阶段。 如果是出现了3个冗余ACK，进入快速恢复阶段<br>3.快速恢复阶段：将阈值设置为当前窗口值一半，然后进入拥塞避免</p>
 <p><strong>流量控制与拥塞控制</strong><br>流量控制是端到端的控制，例如A给B发数据，A发送太快了，导致B没法接收，但是A到B之间的网络没有出现问题。<br>拥塞控制是一个全局性过程，控制的是A到B之间的网络。是A到B之间的网络发生堵塞导致传输过慢或者丢包，来不及传输</p>
 
       
@@ -765,73 +835,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/03/18/秒杀系统数据库层面的思考/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-HashMap源码分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/17/HashMap源码分析/">HashMap源码分析</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/17/HashMap源码分析/" class="archive-article-date">
-  	<time datetime="2021-03-17T07:07:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-17</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/17/HashMap源码分析/">展开全文 >></a>
         </p>
       
 
