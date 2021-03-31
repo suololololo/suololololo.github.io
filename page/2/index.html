@@ -152,6 +152,76 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-秒杀系统数据库层面的思考" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/18/秒杀系统数据库层面的思考/">秒杀系统数据库层面的思考</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/18/秒杀系统数据库层面的思考/" class="archive-article-date">
+  	<time datetime="2021-03-18T01:52:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-18</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>秒杀系统如何解决超卖的问题？<br>1.在每个用户只能秒杀同一件商品一次的时候，给秒杀商品表的的用户id和商品id加上唯一索引<br>2.执行sql语句减库存的时候，判断库存大于0。<br>为什么这样做就可以防止超卖呢？<br>既然我这两个操作都在数据库层面进行的改进。那么我们就应该从数据库层面思考。<br>首先我使用的是Innodb存储引擎。<strong>为什么要用innodb存储引擎？</strong><br>1.innodb引擎支持事务操作，支持ACID特性。而MyISAM不支持。<br>2.innodb引擎支持行级别锁定，而MyISAM不支持<br>3.支持外键<br>4.支持崩溃后的安全恢复</p>
+<p><strong>我们再来思考innodb行级锁定是怎么实现的？</strong><br>innodb行级锁定是通过给索引的索引项加锁实现的。也就是说只有通过索引项查询数据才能能行级锁，其余时间会使用表级锁<br>1.这个锁是加在索引上的，不是加在记录上的，不是加在行上的，即使记录有多行，他们的索引相同就会被锁定。<br>这时我们可以来思考上面的问题了。<br>秒杀的基本操作包括：1.减库存2.下订单 且这两个操作是事务操作。  举个例子:当同一个用户同时来了两个请求，库存为1，同时减了库存（能否同时减库存有待考究，这里好像会有写排他锁），但是无法创建新订单，必然会导致一个事务失败，导致事务回滚，就不会超卖了。</p>
+<p><strong>另外一种解决超卖的方式</strong><br>利用redis单线程预减库存，库存为0是拒绝所有请求，最后再他写入数据库。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/18/秒杀系统数据库层面的思考/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-HashMap源码分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -779,78 +849,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/12/27/volatile的实现/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-java内存模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/27/java内存模型/">java内存模型</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/27/java内存模型/" class="archive-article-date">
-  	<time datetime="2020-12-27T09:13:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-27</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>java内存模型的主要目的是定义程序中各种变量的访问规则，关注虚拟机把变量从内存中取到工作内存和把变量存储到内存中的底层细节。<br>这里的变量只包括实例字段，静态字段和构成数组对象的元素等公有变量，不包括线程私有的变量。因为私有变量是线程私有的，不存在从主内存读写的问题</p>
-<h4 id="内存中的交互问题"><a href="#内存中的交互问题" class="headerlink" title="内存中的交互问题"></a>内存中的交互问题</h4><img src="/2020/12/27/java内存模型/1.png">
-<p>简单的说就是，java线程从工作内存读写变量的主内存副本，并写回主内存。<br>相对应的原子操作<br>1.lock：作用于主内存变量，把一个变量标识为一条线程独占<br>2.unlock:作用于主内存变量，把一个处于锁定状态的变量释放出来，释放后的变量才可以被其他线程锁定<br>3.read：作用于主内存变量，把一个变量的值从主内存传输到线程的工作内存中，以便load使用<br>4.load：作用于工作内存变量，把read操作从主内存中得到的变量值放入工作内存的变量副本中<br>5.use：作用于工作内存变量，把工作内存中的一个变量值传递给执行引擎<br>6.assign：作用于工作内存变量，将一个从执行引擎接收的值赋给工作内存变量<br>7.store：作用于工作内存变量，把工作内存中一个变量的值传输到主内存中<br>8.write：作用于主内存的变量，把store操作中从工作内存中得到的变量的值放入主内存的变量中</p>
-        
-          <a class="article-more-a" href="/2020/12/27/java内存模型/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/27/java内存模型/">展开全文 >></a>
         </p>
       
 

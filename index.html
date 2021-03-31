@@ -152,6 +152,80 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-http和https" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/30/http和https/">http和https</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/30/http和https/" class="archive-article-date">
+  	<time datetime="2021-03-30T08:23:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-30</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>URI和URL有什么区别</strong><br>URI是统一资源标识符，用来唯一标识一个资源。URI一般由三部分组成，1.访问资源的命名机制2.存放资源的主机名3.资源自身的名称，由路径标识。URL是统一资源定位符，是URL在Internet上的一种URI的实现方式。URL一般由三部分组成：1.协议 2. 存有该资源的主机IP地址3.主机资源的具体地址</p>
+<p><strong>HTTP中GET和POST的区别</strong><br>1.GET请求的数据会附在URL后面，以问号开头的那一串参数 ， 而POST请求参数则是存放在HTTP数据报中<br>2.POST的安全性比GET安全性高<br>3.GET主要用于信息获取，POST请求表示一个可能修改服务器上资源的请求</p>
+<p><strong>浏览器输入一个网址的过程会发生什么</strong><br>1.客户端浏览器会把输入的域名解析成对应的IP。解析过程如下：1。先查询浏览器缓存，看是否有缓存对应的DNS记录 2. 查找系统缓存 ，查找本机的hosts文件 3. 查找路由器缓存  4.使用DNS的域名服务器进行查询。先查询本地域名服务器，再查根域名服务器，查顶级域名服务器，查权威域名服务器  以上的每一步只要查得到结果就立刻返回<br>2.主机浏览器得到IP地址后，与服务器建立TCP连接。然后就是三次握手的过程<br>3.建立TCP连接后，就给web服务器发送一个HTTP请求<br>4.服务器处理请求<br>5.服务器返回一个HTML响应<br>6.释放TCP连接<br>7.浏览器显示页面</p>
+<p><strong>session与cookie的区别</strong><br>1.cookie是浏览器提供的一种缓存机制，它可以用于维持客户端与服务端之间的会话<br>2.session指的是维持客户端与服务端会话的一种机制，它可以通过cookie实现，也可以通过别手段实现<br>3.如果用cookie实现会话，那么会话会保存在客户端浏览器中<br>4.session机制提供的会话是保存在服务端的</p>
+<p><strong>Http和Https的区别</strong><br>http运行在TCP之上，明文传输，客户端与服务器端都无法验证对方身份，而https是在http基础之上再加了一层ssl。HTTPS运行再ssl上，ssl运行在tcp上，添加了认证和加密机制<br>1.端口不同， http用80端口 ， https用443端口，两者的连接方式也不同<br>2.资源消耗：和http通信相比，https通信会由于加减密处理消耗更多的cpu资源和内存资源<br>3.开销：https需要证书</p>
+<p><strong>https工作原理：</strong><br>1.服务端生成证书，发送给客户端 。客户端对证书有效期，合法性，域名是否与请求域名一致，证书的公钥进行验证<br>2.客户端生成随机数，用公钥给随机数加密。发送给服务端<br>3.服务器用私钥解密，得到随机数。 然后用随机数给数据报加密。发送给客户端<br>4.客户端收到后用随机数对称解密，获取内容明文</p>
+<p><strong>http状态码</strong><br>1开头表示   信息，服务器收到请求，需要请求者继续执行操作<br>2 开头表示  成功，操作被成功接收并处理</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/30/http和https/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-java多线程面试题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -765,76 +839,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/03/18/线程池的实现/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-秒杀系统数据库层面的思考" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/18/秒杀系统数据库层面的思考/">秒杀系统数据库层面的思考</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/18/秒杀系统数据库层面的思考/" class="archive-article-date">
-  	<time datetime="2021-03-18T01:52:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-18</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>秒杀系统如何解决超卖的问题？<br>1.在每个用户只能秒杀同一件商品一次的时候，给秒杀商品表的的用户id和商品id加上唯一索引<br>2.执行sql语句减库存的时候，判断库存大于0。<br>为什么这样做就可以防止超卖呢？<br>既然我这两个操作都在数据库层面进行的改进。那么我们就应该从数据库层面思考。<br>首先我使用的是Innodb存储引擎。<strong>为什么要用innodb存储引擎？</strong><br>1.innodb引擎支持事务操作，支持ACID特性。而MyISAM不支持。<br>2.innodb引擎支持行级别锁定，而MyISAM不支持<br>3.支持外键<br>4.支持崩溃后的安全恢复</p>
-<p><strong>我们再来思考innodb行级锁定是怎么实现的？</strong><br>innodb行级锁定是通过给索引的索引项加锁实现的。也就是说只有通过索引项查询数据才能能行级锁，其余时间会使用表级锁<br>1.这个锁是加在索引上的，不是加在记录上的，不是加在行上的，即使记录有多行，他们的索引相同就会被锁定。<br>这时我们可以来思考上面的问题了。<br>秒杀的基本操作包括：1.减库存2.下订单 且这两个操作是事务操作。  举个例子:当同一个用户同时来了两个请求，库存为1，同时减了库存（能否同时减库存有待考究，这里好像会有写排他锁），但是无法创建新订单，必然会导致一个事务失败，导致事务回滚，就不会超卖了。</p>
-<p><strong>另外一种解决超卖的方式</strong><br>利用redis单线程预减库存，库存为0是拒绝所有请求，最后再他写入数据库。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/18/秒杀系统数据库层面的思考/">展开全文 >></a>
         </p>
       
 

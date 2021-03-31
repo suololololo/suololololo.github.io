@@ -152,6 +152,71 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-文件系统多级索引" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="文件系统多级索引"><a href="#文件系统多级索引" class="headerlink" title="文件系统多级索引"></a>文件系统多级索引</h1><p>文件实现的关键问题就是怎样为文件分配磁盘块</p>
+<p>为了解决<strong>在内存中使用链表分配</strong>的缺点（需要将全部文件的整个表放在内存中的问题）采用多级索引方式为文件分配磁盘块。</p>
+<p>具体实现方式如下：</p>
+<p>为每个文件单独定义一个索引块，该索引块存储了文件内容真正的块的地址。</p>
+<p>简单的说就是，在读取文件时，先将该索引块读入内存，再通过该索引块去磁盘中寻找文件内容真正的块</p>
+<p><img src="//yoursite.com/2019/12/08/文件系统多级索引/D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%871.png" alt></p>
+<p>上图是一级索引</p>
+<p>多级索引：</p>
+<p><img src="//yoursite.com/2019/12/08/文件系统多级索引/D:%5CHexo%5Csource_posts%5C%E5%9B%BE%E7%89%872.png" alt></p>
+<p><strong>看题：一个UNIX 系统使用1KB磁盘块和4字节磁盘地址。如果每个i节点中有10个直接表项以及一个一次间接块、一个二次间接块和一个三次间接块，那么文件的最大尺寸是多少</strong>？</p>
+<p>1kb磁盘块即为文件的一个小块的大小，也就是索引块的大小。所以<strong>一个索引块里存放地址的数目2^10B/4=256个</strong>。故一个一次间接索引块里存放256个地址，二次索引块里存放256*256个地址</p>
+<p>三次间接块存放256*256  *256个地址。而每个地址对应一个磁盘块。</p>
+<p>因此一共有10+256+256^2+256^3=16843018块。 即16843018*1kb 约为16.06GB大小</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/08/文件系统多级索引/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-多级页表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     

@@ -152,6 +152,78 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java内存模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/27/java内存模型/">java内存模型</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/27/java内存模型/" class="archive-article-date">
+  	<time datetime="2020-12-27T09:13:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-27</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>java内存模型的主要目的是定义程序中各种变量的访问规则，关注虚拟机把变量从内存中取到工作内存和把变量存储到内存中的底层细节。<br>这里的变量只包括实例字段，静态字段和构成数组对象的元素等公有变量，不包括线程私有的变量。因为私有变量是线程私有的，不存在从主内存读写的问题</p>
+<h4 id="内存中的交互问题"><a href="#内存中的交互问题" class="headerlink" title="内存中的交互问题"></a>内存中的交互问题</h4><img src="/2020/12/27/java内存模型/1.png">
+<p>简单的说就是，java线程从工作内存读写变量的主内存副本，并写回主内存。<br>相对应的原子操作<br>1.lock：作用于主内存变量，把一个变量标识为一条线程独占<br>2.unlock:作用于主内存变量，把一个处于锁定状态的变量释放出来，释放后的变量才可以被其他线程锁定<br>3.read：作用于主内存变量，把一个变量的值从主内存传输到线程的工作内存中，以便load使用<br>4.load：作用于工作内存变量，把read操作从主内存中得到的变量值放入工作内存的变量副本中<br>5.use：作用于工作内存变量，把工作内存中的一个变量值传递给执行引擎<br>6.assign：作用于工作内存变量，将一个从执行引擎接收的值赋给工作内存变量<br>7.store：作用于工作内存变量，把工作内存中一个变量的值传输到主内存中<br>8.write：作用于主内存的变量，把store操作中从工作内存中得到的变量的值放入主内存的变量中</p>
+        
+          <a class="article-more-a" href="/2020/12/27/java内存模型/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/27/java内存模型/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-AOT" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -797,80 +869,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/11/26/GC垃圾回收算法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-GC之对象存活判断" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/26/GC之对象存活判断/">GC之对象存活判断</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/26/GC之对象存活判断/" class="archive-article-date">
-  	<time datetime="2020-11-26T02:49:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>垃圾收集器在对堆回收之前，必须先判断哪些对象还活着，哪些已经死去，即是否还有可能被用到</p>
-<p><strong>引用计数算法</strong></p>
-<p>最简单的方法就是，在对象中添加一个引用计数器，每当有一个地方引用它，计数+1，当一个引用失效时，计数-1，任何时刻计数器为0时，说明该对象已经死了。这个算法最大的问题就是无法解决循环引用的问题</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReferenceCountingGC</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> Object instance = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> _1MB = <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">byte</span>[] bigSize = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2</span> * _1MB];</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testGC</span><span class="params">()</span></span>&#123;</span><br><span class="line">		ReferenceCountingGC objA =  <span class="keyword">new</span> ReferenceCoutingGC();</span><br><span class="line">		ReferenceCountingGC objB =  <span class="keyword">new</span> ReferenceCountingGC();</span><br><span class="line">        objA.instance = objB;</span><br><span class="line">        objB.instance = objA;</span><br><span class="line">        objA = <span class="keyword">null</span>;</span><br><span class="line">        objB = <span class="keyword">null</span>;</span><br><span class="line">        System.gc();</span><br><span class="line">        </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/11/26/GC之对象存活判断/1.jpg">
-<p>当执行到第七行时，两个对象的引用计数为2 ， 即 objA的引用和instance的引用。 当objA指向null时，引用-1 ，引用计数为1。但是这两个对象已经无法访问，应该被回收，但引用计数算法无法回收他们。<br><strong>可达性分析算法</strong><br>算法的基本思路是通过一系列称为GC Roots的根对象作为起点集，通过图引用搜索，当某个对象不可达时，说明此对象不可能再被使用</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/26/GC之对象存活判断/">展开全文 >></a>
         </p>
       
 
