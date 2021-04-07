@@ -152,6 +152,76 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-AdaBoost" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/30/AdaBoost/">AdaBoost</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/30/AdaBoost/" class="archive-article-date">
+  	<time datetime="2020-10-30T11:39:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-30</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>AdaBoost是以基于集成学习的思想，将多个弱分类器进行结合，得到强分类器。Adaboost采用迭代的思想，每次迭代只训练一个弱分类器，训练好的弱分类器将参与下一次迭代的使用。N次迭代中，一共有N个弱分类器，其中N-1是以前训练好的，参数不再改变。第N次训练第N个分类器，第N个分类器更可能分对前N-1个分类器没分对的数据。最终的分类结果是由N个分类加权的结果。</p>
+<p>Adaboost一般采用单层决策树作为弱分类器。单层决策树只能根据一维特征来做决策。即如果数据具有多个维度，只能根据一个维度的数据来做决策。比如平面坐标上的点(x,y)，只能采取针对横坐标或纵坐标进行决策，比如x&gt;5为正类，其余为负类。那么怎样达到将多个弱分类结合，达到强分类的效果的呢？</p>
+<p><strong>权重</strong> 关键就在于权重，我们可以对不同的分类器赋予不同的权重，分类效果好的，错误率低的分类器，我们可以赋予高的权重。还存在着另外一个权重，就是数据权重，上面说到采用单层决策树作为弱分类器，而该弱分类器关注到的数据非常有限，所以我们得对数据赋予一定的权重，让该分类器关注哪一方面的数据。这也涉及到分类器的多样性问题，即不同分类器，不能对相同的数据具有相同的分类结果，这样在结合时，就完全起不到效果。数据权重可以让第N个分类器，更可能分对前N-1个分类器没分对的数据。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/30/AdaBoost/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-LinearRegression" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -853,78 +923,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/07/15/routerArchitecture/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-tcp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/14/tcp/">TCP</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/14/tcp/" class="archive-article-date">
-  	<time datetime="2020-07-14T06:36:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-14</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="TCP报文格式"><a href="#TCP报文格式" class="headerlink" title="TCP报文格式"></a>TCP报文格式</h5><img src="/2020/07/14/tcp/format.png">
-
-<p><img src="//yoursite.com/2020/07/14/tcp/format.png" alt></p>
-        
-          <a class="article-more-a" href="/2020/07/14/tcp/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/14/tcp/">展开全文 >></a>
         </p>
       
 
