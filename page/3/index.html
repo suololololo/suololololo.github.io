@@ -152,6 +152,297 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-jdk动态代理原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/04/jdk动态代理原理/">jdk动态代理原理</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/04/jdk动态代理原理/" class="archive-article-date">
+  	<time datetime="2021-03-04T08:10:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-04</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在弄清除原理之前，我们先来理解一下什么是动态代理。既然有动态代理，就有静态代理。上代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Rent</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">rent</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 被代理对象  </span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Host</span> <span class="keyword">implements</span> <span class="title">Rent</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rent</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"房东租房子"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">//代理类  </span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span>  <span class="title">Client</span> <span class="keyword">implements</span> <span class="title">Rent</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Host host;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rent</span><span class="params">()</span></span>&#123;</span><br><span class="line">		host.rent();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从代码中我们可以看出，静态代理实际上就是一个中介的作用，对代理对象的方法进行转发。在编译期代理类和代理对象就已经确定了。那现在假如有100个不同的代理对象，那我们是不是需要对不同的代理对象编写不同的代理？这时候就引入了动态代理，上代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Rent</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">rent</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Host</span> <span class="keyword">implements</span> <span class="title">Rent</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rent</span><span class="params">()</span></span>&#123;</span><br><span class="line">	System.out.println(<span class="string">"房东租房子"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span>  </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Object targetObect;</span><br><span class="line">	<span class="comment">//生成代理类</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">getProxy</span><span class="params">(Object targetObject)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.targetObject = targetObject;</span><br><span class="line">		<span class="keyword">return</span> Proxy.newInstance(<span class="keyword">this</span>.getClass().getClassLoader(),targetObject.getClass().getInterfaces(),<span class="keyword">this</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy ,Method method, Object[] args  )</span> throw Throwable</span>&#123;</span><br><span class="line">	Object ret  =<span class="keyword">null</span> ;</span><br><span class="line">	 ret = method.invoke(targetObejct, args);</span><br><span class="line">	 <span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//测试代码</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		Host host = <span class="keyword">new</span> Host();</span><br><span class="line">		Client client = <span class="keyword">new</span> Client();</span><br><span class="line">		Rent proxy = (Rent)client.getProxy(host);</span><br><span class="line">		proxy.rent();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个jdk动态代理的例子，在没有编写任何代理类的情况下，通过调用getProxy()方法自动生成了代理类。<strong>但是jdk动态代理只能代理实现了接口的方法，换句话说，没有接口就无法进行jdk动态代理</strong>。那为什么jdk的动态代理一定是基于接口实现的呢？因为jdk运气期间帮我们生成了一个代理类的字节码，通过类加载器加载这个字节码，然后执行引擎经过一系列处理生成代理类，再进行实例化。而生成的这个代理类是继承java.lang.reflect.Proxy类的，由于java不支持多继承，所以就只能通过实现接口来进行代理</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/04/jdk动态代理原理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-jvm锁优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/30/jvm锁优化/">jvm锁优化</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/30/jvm锁优化/" class="archive-article-date">
+  	<time datetime="2020-12-30T07:27:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-30</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h4><p>当一个共享资源被锁时，需要转入内核态，让操作系统去挂起和唤醒线程，这样给并发带来了很大的压力。如果计算机具有多处理器，当共享资源被锁时，可以让原本应该被阻塞的线程，空转一下，等待该共享资源被释放，这样可以避免线程挂起，这就是自旋锁。空转超过了一定次数，就将线程挂起。但是自旋的次数怎么定义呢？默认情况下是10次。在JDK6中引入了自适应的自旋锁，自旋的次数由上一次自旋时间及锁的拥有者状态来决定。如果在同一个锁对象上，自旋等待刚刚成功获得锁，且持有对象的锁正在运行中，那么会认为这次等待也大概率会成功，进而允许自旋更长时间。如果对于某个锁，自旋很少成功获得过锁，那以后获取这个锁很可能直接略去自旋过程</p>
+<h4 id="锁消除"><a href="#锁消除" class="headerlink" title="锁消除"></a>锁消除</h4><p>编译器在编译运行时，代码中要求同步，但实际不会出现资源竞争的情况，直接将锁消除</p>
+<h4 id="锁粗化"><a href="#锁粗化" class="headerlink" title="锁粗化"></a>锁粗化</h4><p>如果一系列连续操作都对同一个对象反复加锁和解锁，甚至加锁操作出现在了循环体中，虚拟机会将加锁同步范围扩展到整个操作序列的外部</p>
+<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>如果一个共享资源在多线程竞争情况下很小，可以采用轻量级锁，不用操作系统互斥量来实现。<br>工作过程：在代码即将进入同步块时，如果此同步对象没有被锁定，虚拟机首先会在当前线程栈帧中建立一个锁记录空间，用于存储锁对象目前的对象头MarkWord的拷贝。然后虚拟机，用CAS操作，将对象的MarkWord更新为指向锁记录的指针。如果更新成功，代表该线程拥有了这个对象的锁。否则，意味着至少一条线程与当前线程竞争获取该对象的锁。虚拟机会检查对象的MarkWord如果已经更新为指向锁记录的指针，说明已经拥有这个对象的锁，那直接进入同步块继续执行。否则，该对象已经被其他线程抢占了。这时候就需要膨胀为重量级锁（互斥量）来解决了</p>
+<h4 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h4><p>偏向锁是在无竞争的情况下将同步消除<br>当锁对象第一次被获取时，会进入偏向锁，同时把锁线程的id记录在对象的MarkWord中。一旦另一个线程尝试获取这个锁时，偏向模式马上宣告结束。如果对象未锁定，进入轻量级锁定状态，否则重量级锁定</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/30/jvm锁优化/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-java先行发生原则" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/27/java先行发生原则/">java先行发生原则</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/27/java先行发生原则/" class="archive-article-date">
+  	<time datetime="2020-12-27T11:36:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-27</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先行发生是指java内存模型中定义的两项操作之间的偏序关系，假如A动作先于B,则B能观察到A带来的影响。影响包括修改了内存中共享变量的值，发送了消息，调用了方法</p>
+<h4 id="java内存模型中的自带的先行发生关系"><a href="#java内存模型中的自带的先行发生关系" class="headerlink" title="java内存模型中的自带的先行发生关系"></a>java内存模型中的自带的先行发生关系</h4><p>假如不满足下列规则，就没有顺序性保障，虚拟机可以对他们进行任意重排序<br>1.程序次序规则：在一个线程内，按照程序控制流顺序，书写在前面的操作先行发生于书写在后面的操作。控制流是指分支，循环等结构<br>2.管程锁定规则：一个unlock操作先行于后面对同一个锁的unlock操作 。 后面是时间概念<br>3.volatile变量规则：对于一个volatile变量的写操作先行于后面的读操作<br>4.线程启动规则：一个线程start操作先行于此线程的每一个动作<br>5.线程终止规则：线程中所有操作都先行于此线程的终止检测<br>6.线程中断规则：对线程interrupt的方法调用先行发生于被中断线程的代码检测到中断事件的发生<br>7.对象终结规则：一个对象的初始化完成先行于它的finalize（）方法的开始<br>8.传递性：如果操作A先行发生于操作B，操作B先行发生于操作C，那么A先行于C</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/27/java先行发生原则/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-volatile的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/27/volatile的实现/">volatile的实现</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/27/volatile的实现/" class="archive-article-date">
+  	<time datetime="2020-12-27T10:46:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-27</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>volatile关键字保证了两项特性：<br>1.<strong>保证此变量对所有线程的可见性</strong>，当一个线程修改了这个变量的值，新值对于其他线程是立即得知的。<br>2.禁止指令重排序优化</p>
+<h4 id="可见性的实现"><a href="#可见性的实现" class="headerlink" title="可见性的实现"></a>可见性的实现</h4><p>假设T表示一个线程，V和W表示两个volatile变量<br>java内存模型规定，只有当线程T对变量V执行的前一个动作是load时，才能对变量V执行use动作。只有当线程T对变量的后一个动作是use时，才能对变量V执行load动作。即load和use是相关联的，必选同时连续出现。<strong>这条规则意味着每次使用变量V时，必须先从主存中刷新最新的值，用于保证能看见其他线程对V的修改</strong><br>只有当线程T对变量V执行的前一个动作是assign时，才能对变量执行store动作。只有当线程T对变量V的后一个动作是store时，才能对变量V执行assign动作。即assign和store是相关联的，必须同时连续出现。<strong>这条规则意味着每次修改变量V时，必须立刻同步会主存中，用于保证其他线程能看见自己对V的修改</strong></p>
+<p>有volatile修饰的变量，在编译时会多出一条指令  lock addl $0×0，(%esp);</p>
+<p>这条lock指令会导致</p>
+<p>1.将当前缓存行数据写回内存。具体实现：锁定这块内存区域的缓存，并写回内存，并使用一致性机制来确保修改的原子性。缓存一致性机制会阻止同时修改由两个以上处理器缓存的内存区域数据。</p>
+<p>2.使其他cpu缓存了该内存地址的数据无效。具体实现：处理器使用嗅探技术，保证内部缓存，系统内存和其他处理器的缓存的数据在总线上保持一致。如果通过嗅探知道一个处理器正在修改内存区域，而该区域的数据处于共享状态。那么正在嗅探的处理器会使它的缓存无效，并在下次使用到缓存数据时，强行用内存的数据填充</p>
+<h4 id="禁止指令重排序优化的实现"><a href="#禁止指令重排序优化的实现" class="headerlink" title="禁止指令重排序优化的实现"></a>禁止指令重排序优化的实现</h4><p>volatile关键字会在本地代码中插入内存屏障，禁止指令重排序。形如lock addl $0x0,(%esp)的指令。这个指令是将本地缓存写入内存的作用，这意味着在执行这个指令之前，所有之前的操作都已经执行完成。若没执行完成，会改变程序结果，导致程序出错。所以指令重排序无法越过内存屏障。因为如果越过，且重排序，就无法保证lock addl $0x0,(%esp)指令前所有操作都已完成。</p>
+<p>假定动作A是线程T对变量V实施的use或assigh操作，动作F是和动作A相关联的load或store操作，动作P是和动作F相关联的read或write操作。 假定动作B是线程T对变量V实施的use或assigh操作，动作G是和动作B相关的load或store操作，动作Q是和动作G相关联的read或write操作。<br>如果动作A先于B，则F先于G，P先于Q<br><strong>这条规则意味着volatile修饰的变量不会被指令重排序优化，从而保证代码的执行顺序比程序顺序相同</strong></p>
+<h4 id="原子操作的实现"><a href="#原子操作的实现" class="headerlink" title="原子操作的实现"></a>原子操作的实现</h4><p>1.使用总线锁定的方法。当一个处理器需要将缓存中的数据写回内存时，先锁定总线，阻止了其他处理器的请求。该处理器就可以独占内存<br>2.使用缓存锁定的方法。当一个处理器需要将缓存中的数据写回内存时，锁定与缓存数据对应的内存地址，然后写回。缓存一致性会阻止两个以上的处理器同时修改处理缓存的内存区域数据</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/27/volatile的实现/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-java内存模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -605,304 +896,9 @@
 
 
   
-    <article id="post-虚拟机类加载" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/02/虚拟机类加载/">虚拟机类加载</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/02/虚拟机类加载/" class="archive-article-date">
-  	<time datetime="2020-12-02T08:45:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-02</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>编译器将java文件编译成Class文件后，虚拟机需要在运行时加载Class文件，才能被使用。<br>类加载的过程包括 <strong>加载-&gt;验证-&gt;准备-&gt;解析-&gt;初始化</strong> ,这个过程是说说明各阶段的开始时间的先后顺序，不代表一定要上一个阶段结束了才能开始下一阶段。</p>
-<h6 id="加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）"><a href="#加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）" class="headerlink" title="加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）"></a>加载（加载过程只是类加载过程的一个阶段，与类加载的含义不同）</h6><p>加载过程主要完成的任务：<br>    1.通过类的全限定名获取定义此类的二进制字节流,《java虚拟机规范》中并没有明确要求从哪里获取，什么时候获取，用什么方式获取。因此具体实现起来的方式有很多，从zip压缩包中读取，从网络中获取等等<br>    2.将字节流代表的静态存储结构转化为方法区的运行时的数据结构 （具体是什么数据结构？）<br>    3.在内存中生成代表这个类的java.lang.Class对象，作为方法区中这个类的各种数据的入口<br>对于第一个任务，有类加载器来完成，类加载器负责读取 Java 字节代码，并转换成 java.lang.Class 类的一个实例。<br><strong>类加载器</strong><br>    对于任意一个类，都必须由加载他的类加载器和这个类本身一起共同确定它在java虚拟机中的唯一性。换句话说，对于叫ClassLoaderTest的这样一个类，有两个不同的类加载器，加载出来的类就不是同一个类。<br>    类加载器的三层模型：其实从虚拟机的角度看，只存在两种不同的类加载器，即启动类加载器Bootstrap ClassLoader和其他类加载器。但从三层模型看，有3个系统提供的类加载。<br>    1.启动类加载器，负责加载存放在<java_home>\lib目录，或被-Xbootclasspath参数所指定的路径中存放的，且能够被java虚拟机识别的类库，将其加载到虚拟机的内存中。启动类加载器无法被java程序直接引用，用户在编写自定义类加载器的时候，如果需要把加载请求委派给引导类加载器器去处理，那直接用null代替就好<br>    2.扩展类加载器。负责加载<java_home>\lib\ext目录中，或被java.ext.dirs系统变量所指定的路径中所有的类库。可以直接在程序中使用扩展类加载器来加载class文件。<br>    3.应用程序类加载器。负责加载用户类路径上所有的类库。<br><strong>双亲委派模型</strong><br>一个类加载器收到类加载请求，<strong>他会先把请求转发给父类加载器去完成，每一层的类加载都是如此</strong>。所以所有请求最终都会发送到启动类加载器中。只有当父类加载器反馈无法完成夹杂请求时，子加载器才会尝试自己去完成。</java_home></java_home></p>
-<img src="/2020/12/02/虚拟机类加载/1.png">
-        
-          <a class="article-more-a" href="/2020/12/02/虚拟机类加载/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/02/虚拟机类加载/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-linearClassification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/01/linearClassification/">linearClassification</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/01/linearClassification/" class="archive-article-date">
-  	<time datetime="2020-12-01T03:49:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>SVM</strong><br>寻找一个线性分类使得，分类超平面与两个类别的距离尽可能的远</p>
-<img src="/2020/12/01/linearClassification/1.png">
-<p>选择归一化条件<br>$$<br>w^T 𝐱<em>++𝑏=+1     (1)<br>$$<br>$$<br>w^T 𝐱_−+𝑏=−1        (2)<br>$$<br>边界距离则为<br>$$<br>w/|(|w|)| .(𝐱</em>+−𝐱<em>− )=(w^T (𝐱</em>+−𝐱_−))/(||w||)=((1−𝑏)−(−1−𝑏))/(||w||)=2/(||w||)<br>$$<br>SVM的优化条件则为max/||w||</p>
-<img src="/2020/12/01/linearClassification/2.png">
-<p>等价为</p>
-<img src="/2020/12/01/linearClassification/3.png">
-<p>引入松弛变量，允许少部分样本不满足1式和2式。</p>
-<img src="/2020/12/01/linearClassification/4.png">
-<img src="/2020/12/01/linearClassification/5.png">
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/01/linearClassification/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-class类文件结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/30/class类文件结构/">class类文件结构</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/30/class类文件结构/" class="archive-article-date">
-  	<time datetime="2020-11-30T08:28:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>class文件是一组以8个字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑排列在文件之中，中间没有任何分隔符<br>class文件中只有两个数据类型，<strong>无符号数和表</strong>。<br><strong>无符号数</strong>是基本的数据类型，用u1,u2,u4,u8代表1个字节,2个字节,4个字节,8个字节。<br><strong>表</strong>是由多个无符号书或其他表作为数据项构成的复合数据类型，表的命名习惯性以 _info结尾。<br>class文件具体内容</p>
-<img src="/2020/11/30/class类文件结构/1.png">
-<p>开头的四个字节为<strong>魔数</strong>，用来确定这个文件是否是一个能被虚拟机接受的class文件。值为0xCAFEBABE(咖啡宝贝),紧接着的4个字节是class文件版本号，第5和第6是次版本号0x0000,第7和第8字节为主版本号0x0037。<br><strong>常量池</strong><br>往后为<strong>常量池入口</strong>，常量池是class文件的资源仓库，是class文件第一个出现的表类型数据项目。常量池入口为一个u2类型数据，用来表明常量池容量，这个例子中为0x0074,即116，代表常量池中有115项常量，索引范围是1-115，<strong>从1开始计算</strong>。第0项常量是用来代表<strong>不引用任何一个常量池项目</strong>的含义<br>常量池主要存放两大类常量：<strong>字面量</strong>和<strong>符号引用</strong><br>java在编译的时候，并不会有连接步骤，即<strong>class类文件中不会保存各个方法，字段最终在内存中的布局信息，只有在虚拟机运行时期进行转换，才能得到真正的内存入口地址</strong><br>常量池中的每一项常量都是一个表，这些表结构的起始的第一位都是u1类型的标志位，代表当前常量属于哪种常量类型。</p>
-<img src="/2020/11/30/class类文件结构/2.png">
-<p>常量池第一项数据标志位为0x0A，查表得该数据为<strong>CONSTANT_Methodref_info</strong></p>
-        
-          <a class="article-more-a" href="/2020/11/30/class类文件结构/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/30/class类文件结构/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-GC垃圾回收算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/26/GC垃圾回收算法/">GC垃圾回收算法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/26/GC垃圾回收算法/" class="archive-article-date">
-  	<time datetime="2020-11-26T07:25:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-26</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在可行性分析算法中判定为不可达对象时，也不是“非死不可”。真正宣判一个对象死亡，要经过两次标记。<strong>第一次标记</strong>是对象在可达性分析中没有与GC roots的引用链相关联，会被标记。加入对象被第一次标记，随后会进行一次筛选，筛选条件是有无必要执行finalize()方法。<br>如果对象没有覆盖finalize()方法，或者finalize()方法已经被虚拟机调用过，那么虚拟机将这两个情况都视为<strong>没有必要执行，直接被第二次标记</strong>。假如对象被判定为有必要执行finalize()方法，对象就会被放置在F-Queue的队列中，稍后由低调度优先级的Finalize线程执行他们finalize()方法，但这个线程只保证会执行他们的finalize方法，但不保证执行完，因为该方法有可能出现死循环等极端情况。<br>若执行该方法，让该对象重新与GC roots的引用链相关联了，则不会被第二次标记，并移出“即将回收”的集合。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalizeEscapeGC</span></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> FinalizeEscapeGC SAVE_HOOK = <span class="keyword">null</span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">isAlive</span><span class="params">()</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"yes,i am still alive"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.finalize();</span><br><span class="line">		System.out.println(<span class="string">"finalize method executed!"</span>);</span><br><span class="line">		FinalizeEscapeGC.SAVE_HOOK = <span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">		SAVE_HOOK = <span class="keyword">new</span> FinalizeEscapeGC();</span><br><span class="line">		SAVE_HOOK =<span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		Thread.sleep(<span class="number">500</span>);</span><br><span class="line">		<span class="keyword">if</span>(SAVE_HOOK!=<span class="keyword">null</span>)&#123;</span><br><span class="line">			SAVE_HOOK.isAlive();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"i am dead"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		SAVE_HOOK =<span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		Thread.sleep(<span class="number">500</span>);</span><br><span class="line">		<span class="keyword">if</span>(SAVE_HOOK!=<span class="keyword">null</span>)&#123;</span><br><span class="line">			SAVE_HOOK.isAlive();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"i am dead"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<img src="/2020/11/26/GC垃圾回收算法/1.png">
-<p>第一次执行SVAE_HOOK=null语句时 ， FinalizeEscapeGC 对象被第一次标记，后虚拟机执行了finalize()方法，避免了第二次标记。第二次执行SAVE_HOOK = null 时， FinalizeEscapeGC对象被两次标记，被回收。</p>
-        
-          <a class="article-more-a" href="/2020/11/26/GC垃圾回收算法/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/26/GC垃圾回收算法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 

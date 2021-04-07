@@ -152,6 +152,312 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-LinearRegression" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/29/LinearRegression/">LinearRegression</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/29/LinearRegression/" class="archive-article-date">
+  	<time datetime="2020-10-29T07:08:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>线性回归</strong></p>
+<p>线性回归模型即为 y=wTx+b ,w属于m维向量空间即m维行向量，m的x的特征数，b属于一维向量空间， 训练过程中，我们需要去寻一个w和b，使得这个模型满足所有数据。</p>
+<img src="/2020/10/29/LinearRegression/1.png">
+<p>那怎样才叫满足呢？我们定义一个损失函数</p>
+<img src="/2020/10/29/LinearRegression/2.png">
+<p>我们将b看成特殊的一个向量，即在x和w中都增加一维，变成n+1维，增加的那一维x值为1，w值为b，相乘后仍然得到原式的结果，模型更改为y = wTb ， w属于m+1维向量空间， x属于m+1维向量空间<br>令X=(x1,x2,x3…xn)T所以损失函数化简为</p>
+
+<p>$$<br>l(w) =1/2(y-Xw)^T * (y-Xw)   先将向量化成自身的内积<br>$$<br>$$<br>求导过程  =1/2 (-X)^T(y-Xw) +1/2 (y-Xw)^T(-X)<br>=(-X)^T<em>(y-Xw)<br>$$<br>上式对w求偏导，并令其为0，求loss函数的最小值，这样求得的w就是最满足数据的参数，将这个参数带回模型就可以得到想要的模型， 但是这样的求法存在着 *</em>偏导数为0无法求出解析解，或损失函数不是处处可导，或者解析解太耗时，特征空间维度太高的问题** ， 且矩阵逆的计算需要大量的内存，O（m**3）所以大部分时候是采用梯度下降的方法。</p>
+<p><strong>随机梯度下降</strong></p>
+<p>loss沿负梯度方向下降最快，于是随机选择一个初始点，朝这个点的负梯度方向前进一定的距离，到达一个新的点，重复这个过程，持续超负梯度方向前进，最终达到一个局部最小值，如果loss函数是凸函数，即是最小值。</p>
+<p>表示为w = w-lr*G   ， lr为学习率， G为梯度大小 </p>
+<p>迭代的进行参数更新。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/29/LinearRegression/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-pytorch杂记2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/21/pytorch杂记2/">pytorch杂记2</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/21/pytorch杂记2/" class="archive-article-date">
+  	<time datetime="2020-10-21T11:36:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-21</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>一些常用函数</strong></p>
+<p>torch.cat: 将两个张量拼接起来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">a  = torch.randn(2,3)</span><br><span class="line">b = torch.randn(4,3)</span><br><span class="line">c = torch.cat((a,b),dim=0)  #dim = 0 , 代表按行拼接, dim=1 ,代表按照列拼接</span><br><span class="line">print(c)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;tensor([[-2.4133,  0.9273, -1.7999],</span><br><span class="line">        [-0.8778, -0.9217,  1.9684],</span><br><span class="line">        [ 0.7688,  2.3844,  1.5250],</span><br><span class="line">        [ 1.0025,  0.2864, -0.3318],</span><br><span class="line">        [ 0.5948, -0.2036, -0.5568],</span><br><span class="line">        [ 1.9656, -0.0477, -0.7944]])</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/21/pytorch杂记2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-pytorch杂记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/20/pytorch杂记/">pytorch杂记</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/20/pytorch杂记/" class="archive-article-date">
+  	<time datetime="2020-10-20T01:15:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-20</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>一些常用函数</strong></p>
+<p><strong>np.random.shuffle (lst)</strong>  : 对列表中的元素进行打乱，随机排序 ，无返回值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">10</span>)</span><br><span class="line">np.random.shuffle(arr)</span><br><span class="line">print(arr)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;array([<span class="number">3</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<p>在多维矩阵中，只对第一维进行打乱， 即只对行进行打乱 ， </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">9</span>).reshape((<span class="number">3</span>,<span class="number">3</span>))</span><br><span class="line">np.random.shuffle(arr)</span><br><span class="line">print(arr)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;array([[<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>],</span><br><span class="line">       [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">       [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]])</span><br></pre></td></tr></table></figure>
+
+<p><strong>torch.tensor.view(*args)</strong> 将tensor进行维度变换， 返回的tensor必须与原tensor具有相同的数目的元素，但可以有不同的大小。且view只能用在在内存上存储的连续的张量，而<strong>reshape函数调用是不依赖于tensor在内存中是不是连续的。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"> </span><br><span class="line">x = torch.Tensor(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">print(x)</span><br><span class="line"> </span><br><span class="line">y = x.view(<span class="number">1</span>,<span class="number">8</span>)</span><br><span class="line">print(y)</span><br><span class="line"> </span><br><span class="line">z = x.view(<span class="number">-1</span>,<span class="number">4</span>)  <span class="comment"># the size -1 is inferred from other dimensions</span></span><br><span class="line">print(z)</span><br><span class="line"> </span><br><span class="line">t = x.view(<span class="number">8</span>)</span><br><span class="line">print(t)</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">tensor([[[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>],</span><br><span class="line">         [<span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>]],</span><br><span class="line"></span><br><span class="line">        [[<span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>],</span><br><span class="line">         [<span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]]])</span><br><span class="line"></span><br><span class="line"><span class="comment">#x.view(1,8)生成的是[1,8]的张量</span></span><br><span class="line">tensor([[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>, <span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>,</span><br><span class="line">         <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment">#x.view(-1,4)其中-1是在4下的另一个维度的大小，也就是8/4=2，所以生成的是[2,4]的张量</span></span><br><span class="line">tensor([[<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>],</span><br><span class="line">        [<span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>, <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>]])</span><br><span class="line"></span><br><span class="line">x.view(<span class="number">8</span>)生成的是[<span class="number">8</span>,]的张量，是个数组</span><br><span class="line">tensor([<span class="number">1.3712e-14</span>, <span class="number">6.4069e+02</span>, <span class="number">4.3066e+21</span>, <span class="number">1.1824e+22</span>, <span class="number">4.3066e+21</span>, <span class="number">6.3828e+28</span>,</span><br><span class="line">        <span class="number">3.8016e-39</span>, <span class="number">0.0000e+00</span>])</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2020/10/20/pytorch杂记/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/20/pytorch杂记/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-java多线程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/19/java多线程/">java多线程</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/19/java多线程/" class="archive-article-date">
+  	<time datetime="2020-10-19T11:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-19</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>同步和死锁</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">private</span>  <span class="keyword">int</span> ticket = <span class="number">5</span> ;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i  = <span class="number">0</span> ;  i &lt;<span class="number">100</span> ; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (ticket&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">500</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(Thread.currentThread().getName()+<span class="string">"卖票， ticket = "</span> + ticket--);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<img src="/2020/10/19/java多线程/image-20201019190335553.png">
+
+<p>没有进行资源同步时，两个线程的执行没有达到互斥的效果，且5张票被卖了8次</p>
+        
+          <a class="article-more-a" href="/2020/10/19/java多线程/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/19/java多线程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-question" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -650,288 +956,9 @@
 
 
   
-    <article id="post-pipelineRdt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/13/pipelineRdt/">流水线可靠数据传输协议</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/13/pipelineRdt/" class="archive-article-date">
-  	<time datetime="2020-07-13T12:10:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>因为停等协议下的可靠数据传输效率非常低，因此采取流水线的方法增强性能</p>
-<p>采取流水线技术的可靠数据传输协议必须具有以下条件：</p>
-<p>1.必须增加序号范围，原基础上的rdt只有0和1两个序号，显然无法解决有多个在输送中未确认的报文的问题</p>
-<p>2.协议的发送方和接收方两端必须缓存多个分组</p>
-<p>3.所需序号范围和对缓冲的要求取决于数据传输协议如何处理丢失，损坏及延时过大的分组。</p>
-<p>解决流水线的差错的两种基本方法</p>
-<p>1.回退N步 2.选择重传</p>
-<h4 id="回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）"><a href="#回退N步-GO-BACK-N（移动窗口协议-sliding-window-protocol）" class="headerlink" title="回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）"></a>回退N步 GO-BACK-N（移动窗口协议 sliding-window protocol）</h4><img src="/2020/07/13/pipelineRdt/GBN.jpg">
-
-<p><img src="/pipelineRdt/GBN.jpg" alt></p>
-<p>基序号base 定义为最早未被确认分组的序号，即图中4号</p>
-<p>下一个序号nextseqnum定义为最小未使用序号，即图中7号</p>
-        
-          <a class="article-more-a" href="/2020/07/13/pipelineRdt/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/13/pipelineRdt/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-rdt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/13/rdt/">可靠数据传输原理</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/13/rdt/" class="archive-article-date">
-  	<time datetime="2020-07-13T07:11:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-13</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h5 id="1-经完全可靠信道的可靠数据传输-rdt1-0"><a href="#1-经完全可靠信道的可靠数据传输-rdt1-0" class="headerlink" title="1.经完全可靠信道的可靠数据传输 rdt1.0"></a>1.经完全可靠信道的可靠数据传输 rdt1.0</h5><p>在这种情况下，先假设底层信道是完全可靠的，即运输层提供可靠信道，不会产生错误，不会丢弃分组</p>
-<p>即</p>
-<img src="/2020/07/13/rdt/rdt1.jpg" title="rdt1">
-
-<p><img src="/rdt/rdt1.jpg" alt></p>
-<p>状态机如下图</p>
-<img src="/2020/07/13/rdt/FSM1.jpg">
-
-<p><img src="//yoursite.com/2020/07/13/rdt/D:%5CHexo%5Csource_posts%5Crdt%5CFSM1.jpg" alt></p>
-<p>在发送端，通过rdt_send(data)来等待上层的调用，然后产生一个包含该数据的分组，并发送到信道中</p>
-<p>在接收方，通过rdt_rcv(packet)来等待下层的调用，然后从packet中取出数据，并将数据上传给应用层</p>
-<h5 id="2-经具有比特差错信道的可靠传输-rdt2-0"><a href="#2-经具有比特差错信道的可靠传输-rdt2-0" class="headerlink" title="2.经具有比特差错信道的可靠传输 rdt2.0"></a>2.经具有比特差错信道的可靠传输 rdt2.0</h5>
-        
-          <a class="article-more-a" href="/2020/07/13/rdt/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/13/rdt/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-lambda" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>C++lambda函数</strong></p>
-<p>语法定义如下</p>
-<p><code>[capture](parameters)-&gt;return_type{body}</code></p>
-<p>定义中比较难理解的就是[]中的内容</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[] <span class="comment">//没有定义任何变量。使用未定义变量会引发错误。</span></span><br><span class="line">[x，&amp;y] <span class="comment">//x以传值方式传入（默认），y以引用方式传入</span></span><br><span class="line">[&amp;] <span class="comment">//任何被使用到的外部变量都隐式地引用方式加以引用</span></span><br><span class="line">[=] <span class="comment">//任何被使用到的外部变量都隐式地以传值的方式加以引用</span></span><br><span class="line">[&amp;,x] <span class="comment">//x显式地以传值方式加以引用。其余变量以引用方式加以引用。</span></span><br><span class="line">[=,&amp;z] <span class="comment">//z显式地以引用方式加以引用。其余变量以传值方式加以引用</span></span><br></pre></td></tr></table></figure>
-
-<p>具体例子</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"> 2 </span>&#123;</span><br><span class="line"> <span class="number">3</span>     <span class="keyword">int</span> a = <span class="number">5</span>, b = <span class="number">7</span>;</span><br><span class="line"> <span class="number">4</span>     <span class="keyword">auto</span> total = [](<span class="keyword">int</span> x, <span class="keyword">int</span> y)-&gt;<span class="keyword">int</span> &#123;<span class="keyword">return</span> x + y; &#125;;    <span class="comment">//接受两个参数</span></span><br><span class="line"> <span class="number">5</span>     <span class="built_in">cout</span> &lt;&lt; total(a, b)&lt;&lt;<span class="built_in">endl</span>;  <span class="comment">//12</span></span><br><span class="line"> <span class="number">6</span>     <span class="keyword">auto</span> fun1 = [=] &#123;<span class="keyword">return</span> a + b; &#125;;   <span class="comment">//值传递捕捉父作用域变量</span></span><br><span class="line"> <span class="number">7</span>     <span class="built_in">cout</span> &lt;&lt; fun1() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//12</span></span><br><span class="line"> <span class="number">8</span>     <span class="keyword">auto</span> fun2 = [&amp;](<span class="keyword">int</span> c) &#123;b = a + c; a = <span class="number">1</span>; &#125;;    <span class="comment">//省略了返回值类型，引用捕获所有</span></span><br><span class="line"> <span class="number">9</span>     fun2(<span class="number">3</span>);    <span class="comment">//1 8</span></span><br><span class="line"><span class="number">10</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt;<span class="string">" "</span>&lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="number">11</span>     a = <span class="number">5</span>; b = <span class="number">7</span>;   <span class="comment">//被修改后，重新赋值</span></span><br><span class="line"><span class="number">12</span>     <span class="keyword">auto</span> fun3 = [=, &amp;b](<span class="keyword">int</span> c) <span class="keyword">mutable</span> &#123;b = a + c; a = <span class="number">1</span>; &#125;;    <span class="comment">//以值传递捕捉的变量，在函数体里如果要修改，要加mutaple,因为默认const修饰</span></span><br><span class="line"><span class="number">13</span>     fun3(<span class="number">3</span>);</span><br><span class="line"><span class="number">14</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="string">" "</span> &lt;&lt;b&lt;&lt; <span class="built_in">endl</span>;    <span class="comment">//5,8</span></span><br><span class="line"><span class="number">15</span>     a = <span class="number">5</span>; b = <span class="number">7</span>;   <span class="comment">//被修改后，重新赋值</span></span><br><span class="line"><span class="number">16</span>     <span class="keyword">auto</span> fun4 = [=](<span class="keyword">int</span> x, <span class="keyword">int</span> y) <span class="keyword">mutable</span>-&gt;<span class="keyword">int</span> &#123;a += x; b += y; <span class="keyword">return</span> a + b; &#125;;</span><br><span class="line"><span class="number">17</span>     <span class="keyword">int</span> t = fun4(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line"><span class="number">18</span>     <span class="built_in">cout</span> &lt;&lt; t &lt;&lt; <span class="built_in">endl</span>;  <span class="comment">//42</span></span><br><span class="line"><span class="number">19</span>     <span class="built_in">cout</span> &lt;&lt; a &lt;&lt;<span class="string">" "</span>&lt;&lt; b &lt;&lt; <span class="built_in">endl</span>;    <span class="comment">//5 7</span></span><br><span class="line"><span class="number">20</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">21</span> &#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/14/lambda/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-this与callee与caller" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>js</p>
-<p>this引用的是函数据以执行的环境对象，在全局中this的对象引用就是window</p>
-<p>callee是arguments对象的一个属性，指向拥有这个arguments对象的函数</p>
-<p>caller是一个函数对象属性，保存着调用当前函数的 函数 的 引用</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/13/this与callee与caller/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
     </nav>
   
 

@@ -152,6 +152,309 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-sychronized与lock的区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/06/sychronized与lock的区别/">sychronized与lock的区别</a>
+    </h1>
+  
+
+        
+        <a href="/2021/04/06/sychronized与lock的区别/" class="archive-article-date">
+  	<time datetime="2021-04-06T08:27:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-06</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.synchronized在执行完同步代码后会释放锁，线程执行发生异常，jvm会让线程释放锁。Lock 必须在finnally中释放锁<br>2.sychronized会阻塞其他线程。 而lock是分情况而定，lock有多个锁获取的方式，大致就是可以尝试获取锁，线程可以不用一直等待<br>3.锁类型：sychronized是可重入的 不可中断的 非公平的 。 lock是可重入，可中断（使用lockInterruptibly获取锁(只有在等待的时候可以获取锁)）可公平的<br>4.性能方面：sychronized适合少量同步， lock适合大量同步。因为sychronized支持偏向锁，轻量级锁定等锁升级。而lock提供了多样化的同步，比如有时间限制的同步（哪个类实现了），可以被interrupt的同步。Lock可以提高多个线程进行读操作的效率</p>
+<p>公平锁/非公平锁<br>可重入锁<br>独享锁 共享锁<br>互斥锁 读写锁<br>乐观锁 悲观锁<br>分段锁<br>偏向锁/轻量级锁/重量级锁<br>自旋锁</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/04/06/sychronized与lock的区别/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-排序算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/06/排序算法/">排序算法</a>
+    </h1>
+  
+
+        
+        <a href="/2021/04/06/排序算法/" class="archive-article-date">
+  	<time datetime="2021-04-06T08:06:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-06</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>常见算法及其复杂度稳定性</p>
+<p>选择排序 on2 不稳定</p>
+<p>冒泡 on2 稳定</p>
+<p>插入排序 on2 稳定</p>
+<p>快速排序 nlogn 不稳定</p>
+<p>shell排序 nlogn 不稳定</p>
+<p>快速排序 nlogn 不稳定</p>
+<p>归并排序 nlogn 稳定</p>
+<p>堆排  nlogn n 不稳定</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/04/06/排序算法/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-String" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/06/String/">String</a>
+    </h1>
+  
+
+        
+        <a href="/2021/04/06/String/" class="archive-article-date">
+  	<time datetime="2021-04-06T07:35:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-06</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String a = <span class="string">"ab"</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这句话的执行过程   先去常量池查找是否有”ab”常量，如果有直接返回引用， 如果没有在常量池创建一个，然后返回它的引用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String a = <span class="keyword">new</span> String(<span class="string">"ab"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>执行过程 ，先去常量池查找是否有”ab”常量，如果有直接返回引用， 如果没有在常量池创建一个，然后返回它的引用。然后再在java堆中创建一个String ， String内容指向它。所以整个过程创建了两个对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">String s1 = <span class="string">"helloworld"</span>;</span><br><span class="line">String s2 = <span class="string">"hello"</span>;</span><br><span class="line">String s3 = <span class="string">"world"</span>;</span><br><span class="line">String s4 = s2+s3;</span><br><span class="line">System.out.println(s1==s4);  <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+
+<p>s4的执行过程 JVM会先new一个StringBuilder 然后调用append方法将s2和s3拼接 ，最后toString（）返回堆中的一个String的引用,所以是false</p>
+<p><strong>String.intern()方法</strong><br>返回常量池中这个字符串的引用， 如果常量池不存在就创建一个，然后再返回引用</p>
+<p>String的长度限制<br>内部是数组实现的 ，数组下标不能超过int的限制 int 为2的31-1</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/04/06/String/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-ReentrantReadWriteLock实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/04/03/ReentrantReadWriteLock实现/">ReentrantReadWriteLock实现</a>
+    </h1>
+  
+
+        
+        <a href="/2021/04/03/ReentrantReadWriteLock实现/" class="archive-article-date">
+  	<time datetime="2021-04-03T06:43:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-03</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>ReentrantReadWriteLock是怎样实现互斥与同步的？即读锁和写锁是怎样协调工作的</strong><br>ReentranReadWriteLock内部定义了一个读锁与写锁，内部定义一个同步类Sync，实现tryAcquire和tryRelease和tryAcquireShared和tryRelease方法就可以实现互斥锁和共享锁。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ReservedStackAccess</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryAcquire</span><span class="params">(<span class="keyword">int</span> acquires)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Walkthrough:</span></span><br><span class="line"><span class="comment">     * 1. If read count nonzero or write count nonzero</span></span><br><span class="line"><span class="comment">     *    and owner is a different thread, fail.</span></span><br><span class="line"><span class="comment">     * 2. If count would saturate, fail. (This can only</span></span><br><span class="line"><span class="comment">     *    happen if count is already nonzero.)</span></span><br><span class="line"><span class="comment">     * 3. Otherwise, this thread is eligible for lock if</span></span><br><span class="line"><span class="comment">     *    it is either a reentrant acquire or</span></span><br><span class="line"><span class="comment">     *    queue policy allows it. If so, update state</span></span><br><span class="line"><span class="comment">     *    and set owner.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    Thread current = Thread.currentThread();</span><br><span class="line">    <span class="keyword">int</span> c = getState();</span><br><span class="line">    <span class="keyword">int</span> w = exclusiveCount(c);</span><br><span class="line">    <span class="keyword">if</span> (c != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// (Note: if c != 0 and w == 0 then shared count != 0)</span></span><br><span class="line">        <span class="keyword">if</span> (w == <span class="number">0</span> || current != getExclusiveOwnerThread())</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (w + exclusiveCount(acquires) &gt; MAX_COUNT)</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"Maximum lock count exceeded"</span>);</span><br><span class="line">        <span class="comment">// Reentrant acquire</span></span><br><span class="line">        setState(c + acquires);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (writerShouldBlock() ||</span><br><span class="line">        !compareAndSetState(c, c + acquires))</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    setExclusiveOwnerThread(current);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1.获取当前锁状态c<br>2.获取当前排他锁状态<br>3.如果c不为0<br>    3.1且如果w为0，则说明当前有共享锁<br>    3.2如果w不为0，且当前持有排他锁线程 不为当前线程<br>    3.3否则，当前排他锁数量，加上要增加的数量超过最大值，抛异常<br>    3.4否则，设置状态（这里并没有用CAS设置） 返回成功<br>4.如果c为0，则无线程获取锁<br>    4.1如果写线程应该被阻塞或者尝试CAS加锁失败了返回false<br>    4.2CAS加锁成功，设置当前线程获取排他锁，返回true</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ReservedStackAccess</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryRelease</span><span class="params">(<span class="keyword">int</span> releases)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!isHeldExclusively())</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalMonitorStateException();</span><br><span class="line">    <span class="keyword">int</span> nextc = getState() - releases;</span><br><span class="line">    <span class="keyword">boolean</span> free = exclusiveCount(nextc) == <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (free)</span><br><span class="line">        setExclusiveOwnerThread(<span class="keyword">null</span>);</span><br><span class="line">    setState(nextc);</span><br><span class="line">    <span class="keyword">return</span> free;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1.如果当前线程不持有排他锁 ，抛异常<br>2.减少锁的进入数<br>3.如果减少到为0 ，设置当前无线程持有排他锁<br>4.否则设置锁的数量为减少后的数量，返回false</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ReservedStackAccess</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">tryAcquireShared</span><span class="params">(<span class="keyword">int</span> unused)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Walkthrough:</span></span><br><span class="line"><span class="comment">     * 1. If write lock held by another thread, fail.</span></span><br><span class="line"><span class="comment">     * 2. Otherwise, this thread is eligible for</span></span><br><span class="line"><span class="comment">     *    lock wrt state, so ask if it should block</span></span><br><span class="line"><span class="comment">     *    because of queue policy. If not, try</span></span><br><span class="line"><span class="comment">     *    to grant by CASing state and updating count.</span></span><br><span class="line"><span class="comment">     *    Note that step does not check for reentrant</span></span><br><span class="line"><span class="comment">     *    acquires, which is postponed to full version</span></span><br><span class="line"><span class="comment">     *    to avoid having to check hold count in</span></span><br><span class="line"><span class="comment">     *    the more typical non-reentrant case.</span></span><br><span class="line"><span class="comment">     * 3. If step 2 fails either because thread</span></span><br><span class="line"><span class="comment">     *    apparently not eligible or CAS fails or count</span></span><br><span class="line"><span class="comment">     *    saturated, chain to version with full retry loop.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    Thread current = Thread.currentThread();</span><br><span class="line">    <span class="keyword">int</span> c = getState();</span><br><span class="line">    <span class="keyword">if</span> (exclusiveCount(c) != <span class="number">0</span> &amp;&amp;</span><br><span class="line">        getExclusiveOwnerThread() != current)</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> r = sharedCount(c);</span><br><span class="line">    <span class="keyword">if</span> (!readerShouldBlock() &amp;&amp;</span><br><span class="line">        r &lt; MAX_COUNT &amp;&amp;</span><br><span class="line">        compareAndSetState(c, c + SHARED_UNIT)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (r == <span class="number">0</span>) &#123;</span><br><span class="line">            firstReader = current;</span><br><span class="line">            firstReaderHoldCount = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (firstReader == current) &#123;</span><br><span class="line">            firstReaderHoldCount++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            HoldCounter rh = cachedHoldCounter;</span><br><span class="line">            <span class="keyword">if</span> (rh == <span class="keyword">null</span> ||</span><br><span class="line">                rh.tid != LockSupport.getThreadId(current))</span><br><span class="line">                cachedHoldCounter = rh = readHolds.get();</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (rh.count == <span class="number">0</span>)</span><br><span class="line">                readHolds.set(rh);</span><br><span class="line">            rh.count++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fullTryAcquireShared(current);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1.获取当前排他锁数量<br>2.排他锁数不为0，且排他锁拥有者不为当前线程 返回<br>3.否则，获取当前共享锁数量， 尝试CAS加锁<br>    3.1成功，如果加锁前共享锁数量为0，把当前线程设置为firstReader，firstReader拥有锁数设置为1，<br>    3.2否则如果firstReader==当前线程，当前线程拥有锁数加1<br>    3.3否则 设置共享锁数量<br>4.CAS加锁失败， 自旋加锁</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ReservedStackAccess</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryReleaseShared</span><span class="params">(<span class="keyword">int</span> unused)</span> </span>&#123;</span><br><span class="line">    Thread current = Thread.currentThread();</span><br><span class="line">    <span class="keyword">if</span> (firstReader == current) &#123;</span><br><span class="line">        <span class="comment">// assert firstReaderHoldCount &gt; 0;</span></span><br><span class="line">        <span class="keyword">if</span> (firstReaderHoldCount == <span class="number">1</span>)</span><br><span class="line">            firstReader = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            firstReaderHoldCount--;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        HoldCounter rh = cachedHoldCounter;</span><br><span class="line">        <span class="keyword">if</span> (rh == <span class="keyword">null</span> ||</span><br><span class="line">            rh.tid != LockSupport.getThreadId(current))</span><br><span class="line">            rh = readHolds.get();</span><br><span class="line">        <span class="keyword">int</span> count = rh.count;</span><br><span class="line">        <span class="keyword">if</span> (count &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">            readHolds.remove();</span><br><span class="line">            <span class="keyword">if</span> (count &lt;= <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">throw</span> unmatchedUnlockException();</span><br><span class="line">        &#125;</span><br><span class="line">        --rh.count;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        <span class="keyword">int</span> c = getState();</span><br><span class="line">        <span class="keyword">int</span> nextc = c - SHARED_UNIT;</span><br><span class="line">        <span class="keyword">if</span> (compareAndSetState(c, nextc))</span><br><span class="line">            <span class="comment">// Releasing the read lock has no effect on readers,</span></span><br><span class="line">            <span class="comment">// but it may allow waiting writers to proceed if</span></span><br><span class="line">            <span class="comment">// both read and write locks are now free.</span></span><br><span class="line">            <span class="keyword">return</span> nextc == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>CAS减锁</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/04/03/ReentrantReadWriteLock实现/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-http和https" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -590,289 +893,9 @@
 
 
   
-    <article id="post-秒杀项目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/19/秒杀项目/">秒杀项目</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/19/秒杀项目/" class="archive-article-date">
-  	<time datetime="2021-03-19T02:32:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-19</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>性能优化方法<br>1.页面缓存：对一些不经常修改的页面进行缓存<br>主要流程：1.当用户请求页面时，先去缓存中查找，找的到话就直接返回。2.缓存中没有，去数据库查找渲染页面需要的数据，手动渲染模板。将渲染的结果存入缓存，并设置一定的过期时间。3.输出结果。<br>这样做有什么好处？减少了数据库的访问，提高系统性能。<br>2.对象级缓存：将用户对象存入缓存，也是同样操作流程，1.请求用户对象的时候，先去缓存中查找，找到就直接返回，找不到再去查数据库，最后存入缓存<br>3.秒杀页面静态化：<br>1.第一次调用请求时，会将页面静态存储在客户端 2.再次请求时，客户端会直接返回该静态页面<br>那么当数据发生更改时怎么办？动态数据问题，通过ajax向服务器发送请求解决。静态化内容，一旦发生更改，就需要生成新的静态页面<br>怎么实现？页面写成静态页面，数据通过ajax请求获取，不用通过模板引擎渲染</p>
-<p>秒杀模块问题：<br><strong>如何解决商品超卖问题？</strong><br>1.给sql语句添加数量判断，防止商品数量减为负数。<br>2.在每个用户只能秒杀同一件商品一次的情况下，给秒杀订单表里的用户id和商品id添加唯一索引<br>3.减库存时，先通过redis预减库存<br>为什么这样做有用？假设同一时间不同用户发送请求，数据库保证单一条sql语句是原子性操作，所以必定只有一个人可以操作成功。添加唯一索引保证一个用户只能秒杀同一件商品一次<br><strong>秒杀流程</strong><br>1.系统初始化，将商品库存数量加载到Redis中<br>2.收到请求，先判断内存标记中商品是否已经卖完了（用hashMap实现，存储每件商品是否已经销售完毕，当redis查到库存小于0时，会标记为销售完毕）<br>3.没卖完，redis预减库存，库存不足的话直接返回，否则进入下一步<br>4.请求入队，然后立即给客户端返回排队中的信息<br>5.请求出队，减少库存，生成订单<br>6.客户端轮询，是否秒杀成功</p>
-<p><strong>假如商品库存redis预减成功了，db操作没成功怎么办？</strong><br>出现这种情况，并不会出现什么致命错误，对于用户和系统不会产生影响。并不会出现超卖事情</p>
-<p><strong>redis库存如何与数据库保持一致</strong><br>redis库存并没有必要严格的数据库保持一致，redis数据库只是为了阻挡多余的请求到达db，起到保护作用。redis库存不一致。只会造成少买的情况</p>
-<p><strong>订单处理队列rabbitmq</strong><br>请求入队缓冲，异步下单，增强用户体验<br>请求出队，生成订单，减少库存<br>客户端定时轮询检查是否秒杀成功<br><strong>秒杀安全性设计</strong><br>秒杀接口隐藏（怎么实现？）1.接入秒杀页面时，前端通过ajax请求，请求后端用uuid生成秒杀接口，并将接口路径记录在redis中。2.秒杀时，后端会在redis中查询该接口是否有效，再进行秒杀。<br>数字公式验证码</p>
-<p><strong>分布式session</strong><br>用户登录时随机生成uuid作为cookie返回，并将这个uuid对应的用户写入redis<br>拦截器每次拦截方法，来重新获根据cookie获取对象<br>下一个页面拿到key重新获取对象<br>HandlerMethodArgumentResolver 方法 supportsParameter 如果为true 执行 resolveArgument 方法获取miaoshauser对象</p>
-<p><strong>为什么使用mq</strong><br>异步处理：相比传统的串行，并行方式，提高了系统的吞吐量<br>应用解耦：系统间通过消息通信，不用关心其他系统的处理，将消费者与生产者解耦了<br>流量削峰：可以通过消息队列长度控制请求量，可以缓解短时间内的高并发请求</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/19/秒杀项目/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-锁" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/19/锁/">锁</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/19/锁/" class="archive-article-date">
-  	<time datetime="2021-03-19T01:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-19</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>死锁</strong><br>死锁指的是多个线程在竞争同一资源，而造成互相阻塞的情况<br>产生死锁的必要条件<br>1.互斥条件：同一资源在同一时间只能被一个线程占有<br>2.请求保持条件：一个线程因请求资源被阻塞时，对已经请求到的资源仍保持持有状态<br>3.非抢占条件：一个资源被线程持有后，其他线程不能抢占，只能等待该线程使用完后，自己释放<br>4.环形等待条件：产生死锁，一定会出现资源-线程环形等待链</p>
-<p><strong>乐观锁与悲观锁</strong><br>乐观锁的实现方式<br>1.自旋CAS：先读取旧值，在操作期间比较旧值有没有发送改变，没有改变则更换成新值，发送了改变则不改。<br>缺点：<br>1.ABA问题， 自旋CAS只比较旧的状态和当前的状态，对于这两个状态之间发生的事情不关心。假设旧值是A，被改成了B，最后被改成了A。自旋CAS最终认为他们的值没有发生变化。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/19/锁/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-sychronized底层实现原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/18/sychronized底层实现原理/">sychronized底层实现原理</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/18/sychronized底层实现原理/" class="archive-article-date">
-  	<time datetime="2021-03-18T03:24:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-18</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>sychronized底层是JVM基于进入和退出monitor对象来实现的。每个对象都有一个monitor和他相关联。当一个monitor对象被持有时，他就进入锁定状态。当一个线程执行到monitorenter指令时，他会尝试去获取monitor对象。<br>根据JVM规范得获取过程：<br>1.如果monitor进入数为0，则该线程进入monitor，然后将进入数设置为1，该线程即为monitor的拥有者。<br>2.如果该线程拥有monitor，再次进入只是将monitor对象数+1。<br>3.如果其他线程已经占用了monitor对象，则该线程进入阻塞状态，直到monitor为0，再尝试获取。</p>
-<p>退出过程：<br>monitor对象数-1，如果monitor对象数为0，则该线程退出monitor，不再是monitor的拥有者，其他被阻塞的线程可以尝试去获取monitor的所有权。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/18/sychronized底层实现原理/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-线程池的实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/18/线程池的实现/">线程池的实现</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/18/线程池的实现/" class="archive-article-date">
-  	<time datetime="2021-03-18T02:39:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-18</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>线程池的工作流程<br>1.一个任务提交到线程池时，首先判断核心线程池是否已经满了。如果不是，创建一个工作线程来执行任务。如果是的话进入下一个流程。<br>2.判断任务队列是否已经满了。如果不是，则将任务加入队列。如果是，进入下一个流程<br>3.判断线程池是否已经满了，如果不是，创建线程执行任务。如果是的话，将任务交给饱和策略来处理这个任务。<br>拒绝策略包括：1.直接丢弃这个任务2.直接抛出异常 3. 用调用者线程来执行该任务4.丢弃队列里最近的一个任务，并执行当前任务</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/18/线程池的实现/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
