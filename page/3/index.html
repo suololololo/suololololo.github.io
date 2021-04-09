@@ -152,6 +152,76 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-volatile的内存语义" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/16/volatile的内存语义/">volatile的内存语义</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/16/volatile的内存语义/" class="archive-article-date">
+  	<time datetime="2021-03-16T02:48:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-16</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1.线程A对volatile变量的写，实际上是对接下来要读取这个变量的线程发送消息（因为对一个volatile变量的写会使得线程马上将本地内存的写刷新到主内存中）<br>2.线程B对一个volatile变量的读，实际上是线程B接收了之前某个线程发出的消息，即对这个volatile变量的写之前对共享变量的修改<br>3.线程A写一个volatile变量， 线程B读一个volatile变量，实质是两个线程在通信</p>
+<p>volatile的读写屏障</p>
+<p>volatile 写指令会在 指令前加入  StoreStore屏障 禁止 volatile写指令前的普通写与该volatile写重排序 。会在指令后加入StoreLoad指令， 禁止volatile指令和后面的volatile读写指令重排序  。<br>volatile读指令会在指令后先加入LoadLoad指令， 禁止该volatile指令和后面的volatile读指令重排序。后面再加入LoadStore指令，禁止该指令与后面的普通写指令重排序</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/03/16/volatile的内存语义/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-MYSQL索引" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -790,82 +860,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/12/21/java前端编译/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-PCA主成分分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/08/PCA主成分分析/">PCA主成分分析</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/08/PCA主成分分析/" class="archive-article-date">
-  	<time datetime="2020-12-08T01:57:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>PCA的作用就是拿来降维，那为什么要降维呢？因为数据中有些内容没有价值，这些内容会影响算法的性能和准确率。所以就要将这些数据去除，怎样个去除法呢？</p>
-<img src="/2020/12/08/PCA主成分分析/1.png">
-<p>如上图，数据点大多分布在x2方向上，x1方向上的取值相似，就可以直接把x1的坐标去掉。但有些情况就不能直接这样去除</p>
-<img src="/2020/12/08/PCA主成分分析/2.png">
-<p>如上图，数据分布在x1和x2方向上都比较均匀，去除任何一个都会造成较大的影响，但是假如我把这些数据投影到y1，y2的坐标系上，就又变成第一个图的情况<br>现在问题就转变成了如何将数据映射到y1，y2的坐标系上。且我们希望投影到y1上尽可能的分散</p>
-<p>现在我们需要构建一个函数f(Xn<em>m)  n为特征个数， m为样本个数<br>$$Z_k×_m =  f(X_n×_m)  k&lt;n$$<br>这个问题又转化为寻找一个矩阵W_k</em>m<br>$$Z_k×_m =  W_k×_m * X_n×_m  k&lt;n$$</p>
-<p>假设我们要把矩阵的维数降为1，即降维之后只有X只有一个特征值 即k=1<br>目标是使降维后坐标在那个坐标轴的分布尽可能的分散（上图的y2），用方差来衡量数据的分散程度即</p>
-<img src="/2020/12/08/PCA主成分分析/3.png">
-<p>最后就是求解最大特征值<br>所以降维的具体过程就是<br>1.计算协方差矩阵S = Cov(X)<br>2.选择一系列正交特征向量，对应K个最大特征值，得到投影矩阵W<br>3.降维   Z = WX</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/08/PCA主成分分析/">展开全文 >></a>
         </p>
       
 

@@ -152,6 +152,89 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-routerArchitecture" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/15/routerArchitecture/">路由器工作原理</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/15/routerArchitecture/" class="archive-article-date">
+  	<time datetime="2020-07-15T08:34:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>路由器的体系结构</strong></p>
+<img src="/2020/07/15/routerArchitecture/architeture.png">
+
+<p><img src="//yoursite.com/2020/07/15/routerArchitecture/architeture.png" alt></p>
+<ul>
+<li>输入端口。实现将一条输入的物理链路与路由器相连接的物理层功能， 执行与位于入链路远端的数据链路层交互的数据链路层功能。在3部分实现查找功能，查询转发表决定路由器的输出端口</li>
+<li>交换结构。实现将分组从一个输入端口交换到一个输出端口中</li>
+<li>输出端口。存储从交换结构接收的分组，并执行必要的链路层和物理层功能在输入链路上传输这些分组</li>
+<li>路由选择处理器。执行路由选择协议免维护路由选择表以及连接的链路状态信息，并为路由器计算转发表。</li>
+</ul>
+<p><strong>输入端口</strong></p>
+<img src="/2020/07/15/routerArchitecture/input.png">
+
+<p><img src="/routerArchitecture/input.png" alt></p>
+        
+          <a class="article-more-a" href="/2020/07/15/routerArchitecture/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/15/routerArchitecture/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-tcp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -726,84 +809,6 @@ public:
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/10/11/构造函数/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-virtualFunction" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="关于c-虚函数的见解"><a href="#关于c-虚函数的见解" class="headerlink" title="关于c++虚函数的见解"></a>关于c++虚函数的见解</h1><p>c++的虚函数与java的抽象函数有些不同，基本上可以说关系不同。纯虚函数才与抽象函数有些类似。在刚学的时候，不是很明白虚函数的意义。后来仔细研究后发现。</p>
-<pre><code>using namespace std;
-class test {
-public :
-      void ceshi() { cout &lt;&lt; &quot;good&quot;; }
-};
-class testson : public test {
-    void ceshi() { cout &lt;&lt; &quot;sssss&quot;; }
-
-};
-
-
-int main() {
-    test a;
-    test* p;
-    testson b;
-
-    a.ceshi();
-    p = &amp;b;
-    p-&gt;ceshi();
-}</code></pre><p>此时输出结果是goodsssss.</p>
-<p>将基类的成员函数改为</p>
-<p><code>void ceshi() { cout &lt;&lt; &quot;good&quot;; }</code></p>
-<p>此时输出结果为</p>
-<p>goodgood</p>
-<p>从上面的例子就可以看出，虚函数实际上是为了满足多态的特性。与java相比，java也可通过声明引用类型为父类，实际类型为子类的对象，若在子类重写方法，则在调用时，会自动调用子类的方法。或者可以进行显示类型转化。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/10/virtualFunction/">展开全文 >></a>
         </p>
       
 
