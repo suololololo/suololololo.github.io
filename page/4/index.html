@@ -152,6 +152,97 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-java前端编译" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/21/java前端编译/">java前端编译</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/21/java前端编译/" class="archive-article-date">
+  	<time datetime="2020-12-21T13:05:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-21</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>java编译过程大致分为1个准备过程和3个处理过程<br>1.准备过程：初始化插入时注解处理器 （没明白）<br>2.解析和填充符号表</p>
+<ul>
+<li>词法和语法分析，构建抽象语法树</li>
+<li>填充符号表</li>
+</ul>
+<p>3.插入式注解处理器注解处理过程<br>4.分析和字节码生成（语义分析）</p>
+<ul>
+<li>标注检查，检查变量使用前是否已被声明，变量与赋值直接的数据类型是否能够匹配。在这个阶段中编译器会进行一个常量折叠<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a  = <span class="number">1</span> + <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>在抽象语法树中能看到 1，2，+结点，但经过常量折叠后就直接变成3了</p>
+<ul>
+<li>数据及控制流分析， 检查局部变量在使用前是否已经被赋值，方法的每条路径是否都有返回值，是否所有的受查异常都得到了正确处理<br>下面有个关于final修饰符得例子<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法一</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> arg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">final</span> <span class="keyword">int</span> <span class="keyword">var</span> = <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 方法二</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foos</span><span class="params">(<span class="keyword">int</span> arg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> <span class="keyword">var</span>  = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>编译后经过反编译</p>
+<img src="/2020/12/21/java前端编译/1.png">
+<p>发现里面根本没有final关键字，说明在运行期间根本无法检查这个错误，只能在编译期间来检查，具体由com.sun.tools.javac.comp.Flow里得flow()方法完成</p>
+<ul>
+<li>解语法糖，包括擦除泛型，自动装箱拆箱，变长参数，遍历循环等等</li>
+<li>字节码生成 在这个过程中，编译器把语句块，对于实例构造器是{}块，对于类构造器是static{}块，变量初始化，调用父类的实例构造器 收敛到<init>和<clinit>方法中，最后将符号表交到com.sun.tools.javac.jvm.ClassWriter类手上，由这个类的writeClass()方法输出字节码，生成Class文件，编译结束</clinit></init></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/12/21/java前端编译/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-PCA主成分分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -797,73 +888,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/11/02/java泛型/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-GreedyAlgorithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/GreedyAlgorithm/">GreedyAlgorithm</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/GreedyAlgorithm/" class="archive-article-date">
-  	<time datetime="2020-11-01T12:11:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/GreedyAlgorithm/">展开全文 >></a>
         </p>
       
 

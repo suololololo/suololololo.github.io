@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 壴加亻夋的博客</title>
+  <title>springboot自动装配 | 壴加亻夋的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="壴加亻夋的博客">
-<meta property="og:url" content="http://yoursite.com/archives/page/5/index.html">
+  <meta name="description" content="@Configuration 这个注解的作用就是 标明一个类作为ioc容器，可以用javaconfig的形式来配置@ComponentScan：扫描注解。扫描某个包及其包下包含的注解。默认情况下是扫描该类所在的包及其该包下的包含的注解。将@Componet @Service @Controller @Repository 注解加载到IOC容器中。@Service @Controller @Repo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springboot自动装配">
+<meta property="og:url" content="http://yoursite.com/2021/04/18/springboot自动装配/index.html">
 <meta property="og:site_name" content="壴加亻夋的博客">
+<meta property="og:description" content="@Configuration 这个注解的作用就是 标明一个类作为ioc容器，可以用javaconfig的形式来配置@ComponentScan：扫描注解。扫描某个包及其包下包含的注解。默认情况下是扫描该类所在的包及其该包下的包含的注解。将@Componet @Service @Controller @Repository 注解加载到IOC容器中。@Service @Controller @Repo">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2021-04-18T04:09:24.264Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="壴加亻夋的博客">
+<meta name="twitter:title" content="springboot自动装配">
+<meta name="twitter:description" content="@Configuration 这个注解的作用就是 标明一个类作为ioc容器，可以用javaconfig的形式来配置@ComponentScan：扫描注解。扫描某个包及其包下包含的注解。默认情况下是扫描该类所在的包及其该包下的包含的注解。将@Componet @Service @Controller @Repository 注解加载到IOC容器中。@Service @Controller @Repo">
   
     <link rel="alternative" href="/atom.xml" title="壴加亻夋的博客" type="application/atom+xml">
   
@@ -150,296 +154,164 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-springboot自动装配" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      springboot自动装配
+    </h1>
+  
+
+        
+        <a href="/2021/04/18/springboot自动装配/" class="archive-article-date">
+  	<time datetime="2021-04-18T03:17:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-18</time>
+</a>
+        
+      </header>
     
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>@Configuration 这个注解的作用就是 标明一个类作为ioc容器，可以用javaconfig的形式来配置<br>@ComponentScan：扫描注解。扫描某个包及其包下包含的注解。默认情况下是扫描该类所在的包及其该包下的包含的注解。将@Componet @Service @Controller @Repository 注解加载到IOC容器中。<br>@Service @Controller @Repository 底层都是 @Component注解，所以本质上都是在处理@Component，那为什么还要做的不一样呢？因为注解本质上就是一种特殊的注释。区分这样的注解是为了让开发人员，明确当前模块的职责<br>@EnableAutoConfiguration：启动自动注解。底层又是由@Import @AutoConfigurationPackage修饰的<br>@AutoConfigurationPackage：和@ComponentScan类似，也是扫描主配置类所在的包及其子包，将组件注册到ioc容器中。与ComponentScan的区别就是，他还会扫描@Enitity @MapperScan注解。<br>@Import 将某个类的实例导入ioc容器中</p>
+<p><strong>springboot自动装配原理</strong><br>@SpringBootApplication 注解底层主要是三个注解<br>1.@SpringBootConfiguration<br>底层就是@Configuraion 指明这个类是配置类，这个类作为ioc容器，可以用javaconfig的形式来配置<br>2.@ComponentScan<br>扫描注解。扫描某个包及其包下包含的注解。默认情况下是扫描该类所在的包及其该包下的包含的注解。将@Componet @Service @Controller @Repository 注解加载到IOC容器中。<br>3.@EnableAutoConfiguration 启动自动注解<br>底层是@AutoConfigurationPackage 扫描某个包及其包下包含的注解。默认情况下是扫描该类所在的包及其该包下的包含的注解。将@Componet @Service @Controller @Repository 注解加载到IOC容器中。<br>@Import 导入某个类的实例。这是自动装配实现的关键，将AutoConfigurationImportSelector导入了而这个selector会导入spring.factories。这个文件中就包含了自动配置类，将其加载进来，就实现了自动装配</p>
+<p><strong>springbootstarter</strong><br>springbootstarter就是解决依赖管理和简化配置的作用，他就是对一些基本依赖的集成</p>
+<p><strong>javaConfig</strong><br>就是使用java代码+注解 代替xml+注解的方式配置方式</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/01/GreedyAlgorithm/" class="archive-article-date">
-  	<time datetime="2020-11-01T12:11:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/01/GreedyAlgorithm/">GreedyAlgorithm</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2021/04/18/springboot自动装配/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/31/LeetCode题目/" class="archive-article-date">
-  	<time datetime="2020-10-31T02:22:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-31</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/04/08/面试专业技能/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">面试专业技能</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/31/LeetCode题目/">LeetCode题目</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/30/AdaBoost/" class="archive-article-date">
-  	<time datetime="2020-10-30T11:39:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/30/AdaBoost/">AdaBoost</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/29/LinearRegression/" class="archive-article-date">
-  	<time datetime="2020-10-29T07:08:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/29/LinearRegression/">LinearRegression</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/21/pytorch杂记2/" class="archive-article-date">
-  	<time datetime="2020-10-21T11:36:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/21/pytorch杂记2/">pytorch杂记2</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/20/pytorch杂记/" class="archive-article-date">
-  	<time datetime="2020-10-20T01:15:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/20/pytorch杂记/">pytorch杂记</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/19/java多线程/" class="archive-article-date">
-  	<time datetime="2020-10-19T11:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/19/java多线程/">java多线程</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/14/question/" class="archive-article-date">
-  	<time datetime="2020-10-14T07:47:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/14/question/">question</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/13/cnn/" class="archive-article-date">
-  	<time datetime="2020-10-13T03:32:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/13/cnn/">cnn参数量和计算量计算</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/16/NAT/" class="archive-article-date">
-  	<time datetime="2020-07-16T08:36:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/07/16/NAT/">网络地址转换</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/4/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/archives/page/6/">6</a><a class="page-number" href="/archives/page/7/">7</a><a class="extend next" rel="next" href="/archives/page/6/">Next &raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -471,8 +343,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

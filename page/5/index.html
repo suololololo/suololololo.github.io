@@ -152,6 +152,73 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-GreedyAlgorithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/01/GreedyAlgorithm/">GreedyAlgorithm</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/01/GreedyAlgorithm/" class="archive-article-date">
+  	<time datetime="2020-11-01T12:11:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
+</a>
+        
+      </header>
+    
+    <!-- 目录内容 -->
+         
+  <!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/01/GreedyAlgorithm/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-LeetCode题目" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -813,104 +880,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/07/16/NAT/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-ipv4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/16/ipv4/">ipv4</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/16/ipv4/" class="archive-article-date">
-  	<time datetime="2020-07-16T02:49:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
-</a>
-        
-      </header>
-    
-    <!-- 目录内容 -->
-         
-  <!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>网络层的组件</p>
-<ul>
-<li>IP协议</li>
-<li>路由选择协议</li>
-<li>ICMP协议</li>
-</ul>
-<p><strong>ipv4数据报格式</strong></p>
-<img src="/2020/07/16/ipv4/format.png">
-
-<ul>
-    <li>版本号。规定了数据报的IP协议版本</li>
-    <li>首部长度。可以用来确定IP数据报中数据部分实际从哪里开始。一般IP数据报具有20字节的首部</li>
-    <li>服务类型。区分不同类型的IP数据报</li>
-    <li>数据报长度。首部加上数据总长度。理论最大长度为65535字节</li>
-    <li>标识，标志，片偏移。用来ip分片</li>
-    <li>寿命。每当数据报由一台路由器处理时，字段值减1。字段为0时，数据报被丢弃</li>
-    <li>首部校验和。将首部每两个字节当作一个数，用反码运算求和，和的反码作为首部校验和。每台路由器上必须重新计算校验和并再次存放到原处，因为TTL字段和可能的选项字段会改变</li>
-    <li>源和目的ip地址。</li>
-    <li>选项。选项字段允许IP首部被扩展</li>
-    <li>数据</li>
-</ul>
-
-
-
-<p><strong>ip数据分片</strong></p>
-<p>IP数据报在互联网上传输时，可能要经过多个物理网络才能从源端传输到目的端。不同的网络由于链路层和介质的物理特性不同，因此在进行数据传输时，对数据帧的最大长度都有一个限制，这个限制值即最大传输单元MTU（Maximum Transmission Unit）.</p>
-<p>同一个网络上的两台主机之间通信时，该网络的MTU值是确定的，不存在分片问题。分片问题一般只存在于具有不同MTU值的互联网中。</p>
-<p>假设一台互联几条链路的路由器，且每条链路运行具有不同MTU的链路层协议，当输入链路与输出链路的MTU不同，且输出链路的MTU更小，就可能面临分片问题。</p>
-<p>当生成数据报时，发送主机会为数据报贴上标识号，且通常将为它发送的每个数据报的标识号加1。</p>
-        
-          <a class="article-more-a" href="/2020/07/16/ipv4/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/16/ipv4/">展开全文 >></a>
         </p>
       
 
